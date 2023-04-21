@@ -1,0 +1,13 @@
+2023-03-22 13:23:55,403 [main] INFO com.navatar.scripts.AcuityTabAddition - Test Suite Execution Started: 2023-03-22 13:23:55.402
+2023-03-22 13:23:55,440 [main] INFO com.navatar.scripts.AcuityTabAddition - 
+
+*************************Starting: ASTc036_DeleteCreatedRecordType**********************
+
+ 
+2023-03-22 13:23:55,441 [main] INFO com.navatar.scripts.AcuityTabAddition - Test Case: ASTc036_DeleteCreatedRecordType Started At: 2023-03-22 13:23:55.441
+2023-03-22 13:23:55,444 [main] INFO com.navatar.scripts.AcuityTabAddition - Screenshot cannot be taken because window is closed. 
+2023-03-22 13:23:55,447 [main] FATAL com.navatar.scripts.AcuityTabAddition - Failed Test Case: ASTc036_DeleteCreatedRecordType 
+Reason: Cannot invoke "org.openqa.selenium.TakesScreenshot.getScreenshotAs(org.openqa.selenium.OutputType)" because "tss" is null
+2023-03-22 13:23:55,448 [main] INFO com.navatar.scripts.AcuityTabAddition - 
+************************Finidshed TestCase: ASTc036_DeleteCreatedRecordType****************
+

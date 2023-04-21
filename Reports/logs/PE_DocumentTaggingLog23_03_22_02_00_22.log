@@ -1,0 +1,50 @@
+2023-03-22 14:00:22,975 [main] INFO com.navatar.scripts.AcuityTabAddition - Test Suite Execution Started: 2023-03-22 14:00:22.974
+2023-03-22 14:00:25,303 [main] INFO com.navatar.generic.AppListeners - Kindly hold on starting variable intialization........
+2023-03-22 14:00:44,015 [main] INFO com.navatar.generic.AppListeners - Done with intialization. Enjoy the show.
+Total Time Taken: 18 seconds.
+2023-03-22 14:00:44,072 [main] INFO com.navatar.generic.AppListeners - 
+
+*************************Starting: verifyAcuityTabAddedInObjects**********************
+
+ 
+2023-03-22 14:00:44,072 [main] INFO com.navatar.generic.AppListeners - Test Case: verifyAcuityTabAddedInObjects Started At: 2023-03-22 14:00:44.072
+2023-03-22 14:00:47,615 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Successfully cleared the text box.
+2023-03-22 14:00:49,195 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Passed value to element: Username Text Box
+Passed Value: pev4.7.2_trial117_admin@navatarplatform.com.tr6sb12
+2023-03-22 14:00:49,779 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Successfully cleared the text box.
+2023-03-22 14:00:51,123 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Passed value to element: Password Text Box
+Passed Value: navatar@321
+2023-03-22 14:01:10,608 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Clicked on element: Login Button
+2023-03-22 14:01:20,976 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Lighting Pop-Up Close Button. is not present on this page.
+2023-03-22 14:01:21,984 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Going for Lighting
+2023-03-22 14:01:23,167 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Sales Force is Already open in Lighting mode.
+2023-03-22 14:01:23,167 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Successfully Switched to Lighting
+2023-03-22 14:01:24,039 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Clicked on element: setting icon
+2023-03-22 14:01:24,262 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Sussessfully Clicked on setting icon (HomePageBusineesLayer.java:86)
+2023-03-22 14:01:24,983 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Clicked on element: setup link
+2023-03-22 14:01:25,365 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Sussessfully clicked on setup link (HomePageBusineesLayer.java:93)
+2023-03-22 14:01:29,878 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Successfully switched to new window. 
+2023-03-22 14:01:40,641 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Clicked on element: object manager tab
+2023-03-22 14:01:40,641 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - clicked on object manager tab
+2023-03-22 14:01:43,177 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Successfully cleared the text box.
+2023-03-22 14:01:44,532 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Passed value to element: quick search text box in lighting
+Passed Value: Contact
+2023-03-22 14:01:44,532 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - passed value in quick search text box: Contact
+2023-03-22 14:01:44,781 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Contact object has been opened in setup page 
+2023-03-22 14:01:44,790 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - String change: //table[@data-aura-class="uiVirtualDataGrid--default uiVirtualDataGrid"]//a[text()="Contact"]
+2023-03-22 14:01:45,983 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - String change: //table[@data-aura-class="uiVirtualDataGrid--default uiVirtualDataGrid"]//a[text()="Contact"]
+2023-03-22 14:01:46,149 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Element successfully found: Contact object link
+2023-03-22 14:01:46,397 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Clicked on element: Contact object link
+2023-03-22 14:01:46,397 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - click on object link : Contact (SetupPageBusinessLayer.java:217)
+2023-03-22 14:01:46,397 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - String change: //a[contains(text(),"Lightning Record Pages")]
+2023-03-22 14:01:47,927 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Clicked on element: Lightning Record Pages object feature link
+2023-03-22 14:01:47,927 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - clicked on Contact object feature : Lightning Record Pages (SetupPageBusinessLayer.java:222)
+2023-03-22 14:01:48,117 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - clicked on lightning Record Pages of object feature of Contact object 
+2023-03-22 14:01:53,525 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Able to Clicked using JavaScript
+2023-03-22 14:02:01,767 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Able to Clicked using JavaScript
+2023-03-22 14:02:03,687 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Title Match Successfull. Expected: Login | Salesforce	Actual Title: Login | Salesforce
+2023-03-22 14:02:03,687 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - User successfully Logged Out
+2023-03-22 14:02:03,864 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - Pass: verifyAcuityTabAddedInObjects
+2023-03-22 14:02:03,869 [main] INFO com.navatar.pageObjects.BasePageBusinessLayer - 
+************************Finidshed TestCase: verifyAcuityTabAddedInObjects****************
+
