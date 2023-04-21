@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -29,43 +30,42 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 	}
 
 
-	/**
-	 * @author Sourabh saini
-	 * @param projectName, fieldName, value, Condition="Only Activated or Deactivated in the Condition"
-	 * @return true if able to activated or deactivated the picklist
-	 */
-	public boolean activateOrDeactivatePiclistValueOfField(String projectName, String fieldName,String value, Condition condition)
+	
+	public boolean activateOrAddPicklistValueOfField(String projectName, String fieldName,String value, Condition condition)
 	{
-		String xPath="";
+		SetupPageBusinessLayer setup =new SetupPageBusinessLayer(driver);
 		WebElement ele;
+		
 		boolean flag=false;
-		if(CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50),fieldName , "Field", action.SCROLLANDBOOLEAN))
-		{
-			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
-			CommonLib.ThreadSleep(6000);
-			xPath="//span[text()='"+fieldName+"']";
-			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
-			if (CommonLib.click(driver, ele,fieldName+" field" , action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
-				CommonLib.ThreadSleep(7000);
-				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
-				CommonLib.ThreadSleep(2000);
-				
-				ele = getObjectFieldLink(fieldName, 20);
+		CommonLib.ThreadSleep(5000);
+				CommonLib.switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
+				CommonLib.ThreadSleep(5000);
+				String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td";
+				ele =FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 				if(ele!=null) {
-					String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[text()='Activate']";
+					 xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
 					ele =FindElement(driver, xpath, "", action.BOOLEAN, 10);
-					String actionStatus=CommonLib.getText(driver, ele, fieldName+" Field", action.SCROLLANDBOOLEAN);
+					String actionStatus=CommonLib.getText(driver, ele, value+" Field", action.SCROLLANDBOOLEAN);
 					if(condition.toString().equals("activate"))
 					{
 						if(!actionStatus.equalsIgnoreCase("Deactivate"))
 						{
 							if (CommonLib.click(driver, ele,value+" activate button" , action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on the activate button of " +value, YesNo.No);
-								CommonLib.ThreadSleep(20000);
+								CommonLib.ThreadSleep(10000);
 								CommonLib.switchToDefaultContent(driver);
 								CommonLib.ThreadSleep(3000);
 								flag =true;
+								if(fieldName.equalsIgnoreCase("Industry")) {
+									CommonVariables.industryAactivatedFields.add(value);
+								}else if(fieldName.equalsIgnoreCase("type")) {
+									CommonVariables.typeAactivatedFields.add(value);
+
+								}else {
+									CommonVariables.accountSourceAactivatedFields.add(value);
+
+								}
+								
 							}					
 						}
 						else
@@ -81,20 +81,30 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 					
 					if(CommonLib.click(driver, getpicklistNewButton(60), "New Button for Picklist", action.SCROLLANDBOOLEAN))
 					{
+						CommonLib.ThreadSleep(3000);
 						log(LogStatus.INFO, "clicked on the New button", YesNo.No);
 						CommonLib.switchToDefaultContent(driver);
-						CommonLib.switchToFrame(driver, 50, getaddPicklistIFrame(50));
-						if(CommonLib.sendKeys(driver, getaddPicklistTextArea(50), fieldName, "Textarea", action.SCROLLANDBOOLEAN))
+						CommonLib.ThreadSleep(3000);
+						CommonLib.switchToFrame(driver, 30, getaddPicklistIFrame(30));
+						CommonLib.ThreadSleep(5000);
+						if(CommonLib.sendKeys(driver, getaddPicklistTextArea(50), value, "Textarea", action.SCROLLANDBOOLEAN))
 						{
+							
 							log(LogStatus.INFO, "Value has been passed into the Picklist textarea", YesNo.No);
-							if(CommonLib.click(driver, getsaveButton(50),"Save Button", action.SCROLLANDBOOLEAN))
+
+							if(CommonLib.click(driver, getallRecordTypeCheckbox(20), "New Button for Picklist", action.SCROLLANDBOOLEAN)) {
+								
+								log(LogStatus.INFO, "able to click on all record type checkbox", YesNo.No);
+
+							if(CommonLib.click(driver, getsaveButton(20),"Save Button", action.SCROLLANDBOOLEAN))
 							{
+								CommonLib.ThreadSleep(7000);
 								log(LogStatus.INFO, "Save button has been clicked", YesNo.No);
 								CommonLib.switchToDefaultContent(driver);
 								CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
 								try
 								{
-									ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+fieldName+"']")));
+									ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+value+"']")));
 								}
 								catch(Exception ex)
 								{
@@ -106,6 +116,17 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 								{
 									log(LogStatus.PASS, "Option has been created in the Piclist", YesNo.No);
 									flag=true;
+									if(fieldName.equalsIgnoreCase("Industry")) {
+										CommonVariables.industryAddedFields.add(value);
+									}else if(fieldName.equalsIgnoreCase("type")) {
+										CommonVariables.typeAddedFields.add(value);
+
+									}else {
+										CommonVariables.accountSourceAddedFields.add(value);
+
+									}
+									CommonLib.switchToDefaultContent(driver);
+									CommonLib.ThreadSleep(3000);
 								}
 								else
 								{
@@ -118,6 +139,11 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 								log(LogStatus.ERROR,"Could not click on the save button",YesNo.Yes);
 								flag=false;
 							}
+							
+							}else {
+								log(LogStatus.ERROR,"Could not click on the all record type checkbox button",YesNo.Yes);
+								flag=false;
+							}	
 						}
 						else
 						{
@@ -132,19 +158,58 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 					}
 					
 				}			
-			}
+		
 
-			else
-			{
-				log(LogStatus.ERROR,"Could not click on the "+fieldName,YesNo.Yes);
-				flag=false;
-			}
-		}
-		else
-		{
-			log(LogStatus.ERROR,"Could not pass the Field value "+fieldName,YesNo.Yes);
-			flag=false;
-		}
+
+		return flag;
+
+	}
+	
+	public boolean deactivatePicklistValueOfField(String projectName, String fieldName,String value, Condition condition)
+	{
+		SetupPageBusinessLayer setup =new SetupPageBusinessLayer(driver);
+		WebElement ele;
+		
+		boolean flag=false;
+		CommonLib.ThreadSleep(5000);
+				CommonLib.switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
+				CommonLib.ThreadSleep(5000);
+				String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td";
+				ele =FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+				if(ele!=null) {
+					 xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
+					ele =FindElement(driver, xpath, "", action.BOOLEAN, 10);
+					String actionStatus=CommonLib.getText(driver, ele, value+" Field", action.SCROLLANDBOOLEAN);
+					if(condition.toString().equalsIgnoreCase("deactivate"))
+					{
+						if(!actionStatus.equalsIgnoreCase("Activate"))
+						{
+							if (CommonLib.click(driver, ele,value+" Activate button" , action.SCROLLANDBOOLEAN)) {
+
+								if(!CommonLib.isAlertPresent(driver))
+								{		
+									CommonLib.clickUsingJavaScript(driver, ele,value+" field" , action.SCROLLANDBOOLEAN);
+
+								}
+
+								CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+								CommonLib.ThreadSleep(20000);
+								CommonLib.switchToDefaultContent(driver);
+								CommonLib.ThreadSleep(3000);
+								log(LogStatus.INFO, "clicked on the Activate button of " +value, YesNo.No);	
+
+								flag=true;
+							}					
+						}
+						else
+						{
+							log(LogStatus.INFO, value+" is already Deactivated", YesNo.No);
+							CommonLib.switchToDefaultContent(driver);
+							CommonLib.ThreadSleep(3000);
+							flag=true;
+						}
+					}
+				}
 
 
 		return flag;

@@ -7711,32 +7711,5 @@ public class SetupPageBusinessLayer extends SetupPage {
 		return flag;
 	}
 	
-	public boolean searchAndClickOnObjectFields(String environment, String mode, String fieldName) {
-		FieldAndRelationshipPageBusinessLayer fr =new FieldAndRelationshipPageBusinessLayer(driver);
-		if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10),fieldName, "Quick find", action.BOOLEAN)) {
-			
-			if(click(driver, getObjectFieldLink(fieldName, 20), "", action.BOOLEAN)) {
-				
-				CommonLib.ThreadSleep(3000);
-				switchToFrame(driver, 20, getSetUpPageIframe(20));
-				CommonLib.ThreadSleep(5000);
-				
-				if(fr.activateOrDeactivatePiclistValueOfField("", "Industry", "",Condition.activate)) {
-				
-				}else {
-				
-				}
-			
-			
-			}else {
-				
-			}
-			
-			
-		}else {
-			
-		}
-		return false;
-
-	}
+	
 }

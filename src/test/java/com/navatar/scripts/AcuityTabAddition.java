@@ -56,6 +56,7 @@ import org.testng.annotations.Test;
 import com.github.dockerjava.api.model.Image;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
@@ -118,16 +119,12 @@ public class AcuityTabAddition extends BaseLib {
 	@Test(priority =6 ,enabled=false)
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
-
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 
 		String parentWindow = null;
-		String[] tabName = { "Deal", "Fundraising", "Fund" };
 		String xPath;
-		WebElement ele;
 
 		try {
 			CommonLib.ThreadSleep(3000);
@@ -288,10 +285,8 @@ public class AcuityTabAddition extends BaseLib {
 	@Test(priority = 2,enabled =false)
 	public void VerifyAcuityNavatarSetting() {
 
-		String projectName = "";
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
@@ -374,7 +369,7 @@ public class AcuityTabAddition extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 2,enabled =false)
 	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -715,165 +710,15 @@ public class AcuityTabAddition extends BaseLib {
 
 	}
 	
-	@Test(priority =7 ,enabled=false)
-	public void verifyAddPicklistValueforObjects() {
-		String projectName = "";
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		
-		String parentWindow = null;
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech","",
-				"Communications","Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
-				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
-				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
-				"Transportation","Utilities","Semi Conductor"};
-		
-		String[] type = {"Analyst","Competitor","Customer","Integrator","Investor","Partner","Other","Press","Prospect","Reseller"};
-		
-		String[] AccountSource = {"Advertisement","Employee Referral","External Referral","Public Relations","Seminar - Internal","Seminar - Partner",
-				"Trade Show","Word of mouth","Partner","Web","Other"};
-		try {
-			CommonLib.ThreadSleep(3000);
-			if (home.clickOnSetUpLink()) {
-
-				parentWindow = switchOnWindow(driver);
-				if (parentWindow == null) {
-					sa.assertTrue(false,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					log(LogStatus.FAIL,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-							YesNo.Yes);
-					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-				}
-			}
-
-			object[] objects = { object.Institution};
-			for (object obj : objects) {
-				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
-				try {
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
-						CommonLib.ThreadSleep(3000);
-						
-						
-						// industry
-						if (setup.clickOnObjectFeature(projectName, mode, obj,
-								ObjectFeatureName.FieldAndRelationShip)) {
-							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "
-									+ obj.toString() + " object", YesNo.Yes);
-							
-							for(String value:industry) {
-							if(fr.activateOrDeactivatePiclistValueOfField("", "Industry", value, Condition.activate)) {
-								log(LogStatus.PASS, value+" :value activated and created sucessfully ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL,
-										value+" :value Not activated and Not created sucessfully ",
-										YesNo.Yes);
-								sa.assertTrue(false,
-										value+" :value Not activated and Not created sucessfully ");
-								
-							}
-							}
-						} else {
-							log(LogStatus.FAIL,
-									"Not able to click on Record type of object feature of " + obj + " object",
-									YesNo.Yes);
-							sa.assertTrue(false,
-									"Not able to click on Record type of object feature of " + obj + " object");
-						}
-						
-						/// type
-						ThreadSleep(2000);
-						if (setup.clickOnObjectFeature(projectName, mode, obj,
-								ObjectFeatureName.FieldAndRelationShip)) {
-							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "
-									+ obj.toString() + " object", YesNo.Yes);
-							
-							for(String value:type) {
-							if(fr.activateOrDeactivatePiclistValueOfField("", "Type", value, Condition.activate)) {
-								log(LogStatus.PASS, value+" :value activated and created sucessfully ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL,
-										value+" :value Not activated and Not created sucessfully ",
-										YesNo.Yes);
-								sa.assertTrue(false,
-										value+" :value Not activated and Not created sucessfully ");
-								
-							}
-							}
-						} else {
-							log(LogStatus.FAIL,
-									"Not able to click on Record type of object feature of " + obj + " object",
-									YesNo.Yes);
-							sa.assertTrue(false,
-									"Not able to click on Record type of object feature of " + obj + " object");
-						}
-						
-						//account source
-						ThreadSleep(2000);
-						if (setup.clickOnObjectFeature(projectName, mode, obj,
-								ObjectFeatureName.FieldAndRelationShip)) {
-							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "
-									+ obj.toString() + " object", YesNo.Yes);
-							
-							for(String value:AccountSource) {
-							if(fr.activateOrDeactivatePiclistValueOfField("","Account Source", value, Condition.activate)) {
-								log(LogStatus.PASS, value+" :value activated and created sucessfully ", YesNo.No);
-							}else {
-								log(LogStatus.FAIL,
-										value+" :value Not activated and Not created sucessfully ",
-										YesNo.Yes);
-								sa.assertTrue(false,
-										value+" :value Not activated and Not created sucessfully ");
-								
-							}
-							}
-						} else {
-							log(LogStatus.FAIL,
-									"Not able to click on Record type of object feature of " + obj + " object",
-									YesNo.Yes);
-							sa.assertTrue(false,
-									"Not able to click on Record type of object feature of " + obj + " object");
-						}
-					} else {
-						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not able to open " + obj + " object");
-					}
-				} catch (Exception e) {
-					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
-					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
-					continue;
-				}
-			}
-
-		} catch (Exception e) {
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-			}
-			sa.assertAll();
-		}
-
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-		}
-		sa.assertAll();
-
-	}
-
-	@Test(priority =8 ,enabled=true)
-	public void verifyAddPicklistValueforObject() {
+	@Test(priority =8 ,enabled=false)
+	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 		String projectName = "";
 		String[] appName = {"PE", "FOF"}; 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
 		
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
 		for(int i = 0; i < appName.length; i++ ) {
 		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
 			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
@@ -903,7 +748,7 @@ public class AcuityTabAddition extends BaseLib {
 	}
 	
 	@Test(priority = 3,enabled =true)
-public void VerifyHelpmenutodisplaycustomdetails() {
+	public void VerifyHelpmenutodisplaycustomdetails() {
 		
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1007,7 +852,330 @@ public void VerifyHelpmenutodisplaycustomdetails() {
 		sa.assertAll();
 
 }
+	
+	@Test(priority =1 ,enabled=true)
+	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		String xpath =null;
+		WebElement ele = null;
+		String[] industry = {"INTest1","INTest2","INTest3"};
+//		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech","",
+//				"Communications","Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
+//				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
+//				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
+//				"Transportation","Utilities","Semi Conductor"};
+//		
+//		String[] type = {"Analyst","Competitor","Customer","Integrator","Investor","Partner","Other","Press","Prospect","Reseller"};
+//		
+//		String[] AccountSource = {"Advertisement","Employee Referral","External Referral","Public Relations","Seminar - Internal","Seminar - Partner",
+//				"Trade Show","Word of mouth","Partner","Web","Other"};
+		
+		String[] type = {"TTest1","TTest2","TTest3"};
+		String[] AccountSource = {"ASTest1","ASTest2","ASTest3"};
+
+		
+		for(int i=0;i<3;i++) {
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			String[] fields =null;
+			String fieldName =null;
+			object obj =object.Institution;
+			
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.No);
+				
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.No);
+						CommonLib.ThreadSleep(3000);
+						
+			
+							if(i==0) {
+								fields =industry;
+								fieldName ="Industry";
+							}else if(i==1) {
+								fields =type;
+								fieldName ="Type";
+							}else {
+								fields=AccountSource;
+								fieldName ="Account Source";
+							}
+						// industry
+						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
+							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ obj.toString() + " object", YesNo.No);
+							
+							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
+								CommonLib.ThreadSleep(6000);
+								xpath = "//span[text()='" + fieldName + "']";
+								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
+								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
+									
+									for(String value:fields) {
+
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, value, Condition.activate)) {
+											log(LogStatus.PASS, value+" :value activated or created sucessfully ", YesNo.No);
+
+										}else {
+											log(LogStatus.FAIL,
+													value+" :value Not activated and Not created sucessfully ",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													value+" :value Not activated and Not created sucessfully ");
+											
+										}
+										
+									}
+									if(i==0) {
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+										CommonLib.ThreadSleep(2000);
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.industryAddedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.industryAddedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+									}else if(i==1) {
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+										CommonLib.ThreadSleep(2000);
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.typeAddedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.typeAddedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+									}else {
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+										CommonLib.ThreadSleep(2000);
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+									}
+									
+									if (parentWindow != null) {
+
+										driver.close();
+										driver.switchTo().window(parentWindow);
+										parentWindow=null;
+									}
+
+								}else {
+									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ obj + " object");
+								}
+							} else {
+								log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
+								sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+							}
+							
+						} else {
+							log(LogStatus.FAIL,"Not able to click on Record type of object feature of " + obj + " object",YesNo.Yes);
+							sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+						}
+						
+						
+						
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+			
+			
+					}
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			
+		}
+		
+		}
+		
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
 	}
+	
+	@Test(priority =2 ,enabled=true)
+	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		String xpath =null;
+		WebElement ele = null;
+		
+		for(int i=0;i<3;i++) {
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			String fieldName =null;
+			
+
+			object obj =object.Institution;
+			
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.No);
+				
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.No);
+						CommonLib.ThreadSleep(3000);
+						
+			
+							if(i==0) {
+								fieldName ="Industry";
+								
+							}else if(i==1) {
+								fieldName ="Type";
+							}else {
+								fieldName ="Account Source";
+							}
+						// industry
+						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
+							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ obj.toString() + " object", YesNo.No);
+							
+							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
+								CommonLib.ThreadSleep(6000);
+								xpath = "//span[text()='" + fieldName + "']";
+								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
+								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
+									CommonLib.ThreadSleep(3000);
+								String text	 = FindElement(driver, "//th[@scope='row' and contains(text(),'"+fieldName+"Activated_"+"')]", fieldName + "xpath", action.SCROLLANDBOOLEAN, 30).getText();
+								String text2	 = FindElement(driver, "//th[@scope='row' and contains(text(),'"+fieldName+"Added_"+"')]", fieldName + "xpath", action.SCROLLANDBOOLEAN, 30).getText();
+
+								String[] deactivated =text.split("_")[1].replaceAll("[", "").replaceAll("]", "").split(",");	
+								String[] deleted =text2.split("_")[1].replaceAll("[", "").replaceAll("]", "").split(",");	
+								
+									for(Object valueObj:deactivated) {
+										String value =valueObj.toString();
+										if(fr.deactivatePicklistValueOfField("", fieldName, value, Condition.deactivate)) {
+											log(LogStatus.PASS, value+" :value deactivated and revert action sucessfully ", YesNo.No);
+											
+										}else {
+											log(LogStatus.FAIL,
+													value+" :value Not deactivated and revert action not done ",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													value+" :value Not deactivated and revert action not done ");
+											
+										}
+										
+									}
+									
+									for(Object delete:deleted) {
+										
+										String value = delete.toString();
+										if(fr.deletePicklistOptionAndReplaceValue(projectName, fieldName, value, xpath, null)) {
+											log(LogStatus.PASS, value+" :value deleted and revert action successfully ", YesNo.No);
+											
+											
+										}else {
+											log(LogStatus.FAIL,
+													value+" :value Not deleted as for revert action ",
+													YesNo.Yes);
+											sa.assertTrue(false,
+													value+" :value Not activated and Not created sucessfully ");
+											
+										}
+									}
+
+									if (parentWindow != null) {
+
+										driver.close();
+										driver.switchTo().window(parentWindow);
+										parentWindow=null;
+									}
+
+								}else {
+									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ obj + " object");
+								}
+							} else {
+								log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
+								sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+							}
+							
+						} else {
+							log(LogStatus.FAIL,"Not able to click on Record type of object feature of " + obj + " object",YesNo.Yes);
+							sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+						}
+						
+						
+						
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+			
+			
+					}
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			
+		}
+		
+		}
+		
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
+	}
+	
+}
 
 
 

@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
@@ -45,6 +47,15 @@ public class CommonVariables {
 
 	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
 	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
+	public static List<String> industryAddedFields =new ArrayList<>();
+	
+	public static List<String> industryAactivatedFields =new ArrayList<>();
+
+	public static List<String> typeAddedFields =new ArrayList<>();
+	public static List<String> typeAactivatedFields =new ArrayList<>();
+
+	public static List<String> accountSourceAddedFields =new ArrayList<>();
+	public static List<String> accountSourceAactivatedFields =new ArrayList<>();
 
 
 	public static String todaysDateSingleMonth,todaysDateSingleDate,todaysDateSingleDateSingleMonth;

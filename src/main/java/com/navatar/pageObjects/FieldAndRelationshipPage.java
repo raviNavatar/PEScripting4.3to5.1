@@ -37,7 +37,7 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 
 	
 	public WebElement getfieldsAndRelationshipsIframe(int timeOut) {
-		ThreadSleep(15000);
+		ThreadSleep(3000);
 		return isDisplayed(driver, fieldsAndRelationshipsIframe, "Visibility", timeOut, "Fields & Relationships iframe");
 	}
 	
@@ -94,7 +94,7 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, replaceValueWithNull, "Visibility", timeOut, "Replace Value with Null Value");
 	}
 	
-	@FindBy(xpath="//input[@title='New Industry Picklist Values']")
+	@FindBy(xpath="//input[@name='new'][contains(@title,'Picklist')]")
 	private WebElement picklistNewButton;
 
 	public WebElement getpicklistNewButton(int timeOut) {
@@ -102,7 +102,7 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, picklistNewButton, "Visibility", timeOut, "New Button for Picklist");
 	}
 	
-	@FindBy(xpath="//iframe[@title='Add Picklist Values: Industry ~ Salesforce - Enterprise Edition']")
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement addPicklistIFrame;
 
 	public WebElement getaddPicklistIFrame(int timeOut) {
@@ -179,6 +179,14 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 
 	public WebElement getactivePicklist(int timeOut) {	
 		return isDisplayed(driver, activePicklist, "Visibility", timeOut, "Active Picklist");
+	}
+	
+
+	@FindBy(xpath="//input[@id='allBox']")
+	private WebElement allRecordTypeCheckbox;
+
+	public WebElement getallRecordTypeCheckbox(int timeOut) {	
+		return isDisplayed(driver, allRecordTypeCheckbox, "Visibility", timeOut, "Active Picklist");
 	}
 	
 
