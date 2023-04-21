@@ -901,6 +901,114 @@ public class AcuityTabAddition extends BaseLib {
 		
 		sa.assertAll();
 	}
+	
+	@Test(priority = 3,enabled =true)
+public void VerifyHelpmenutodisplaycustomdetails() {
+		
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		String domainurl = "";
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
+				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+			
+				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
+				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
+				 domainurl = ele.getText();
+				domainurl="https://"+domainurl+"/c/NavatarHelpandSupport.app";
+			}else {
+			
+			
+			}
+			
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+				}
+				sa.assertAll();
+			}
+
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(3000);
+			try {
+					CommonLib.ThreadSleep(3000);
+					if (home.clickOnSetUpLink()) {
+
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,
+									"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							log(LogStatus.FAIL,
+									"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+									YesNo.Yes);
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						}
+					}
+				if (setup.searchStandardOrCustomObject(projectName, mode,  object.Help_Menu)) {
+					log(LogStatus.PASS,  object.Help_Menu + " object has been opened in setup page", YesNo.Yes);
+					CommonLib.ThreadSleep(3000);
+					
+				if (setup.CreateHelpMenu(projectName, mode,"Navatar Help","View Our User Guide",domainurl, 10)) {
+					//flag1 = true;
+					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
+				}else {
+					log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
+					sa.assertTrue(false, "Not able to setup ulr in help menu");
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to open " + object.Help_Menu + " object", YesNo.Yes);
+				sa.assertTrue(false, "Not able to open " + object.Help_Menu + " object");
+			}
+		}
+
+		catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
 }
+	}
+
+
 
 	
