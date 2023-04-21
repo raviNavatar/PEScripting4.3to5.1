@@ -424,7 +424,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 		public String toString() {
 			return CommonVariables.tabCustomObj;
 		}
-	},Navigation,navatarEdgeMenu, Affiliation, Financing,Commitment, Advisor,User, Company_Information,
+	},Navigation,navatarEdgeMenu,Help_Menu,My_Domain, Affiliation, Financing,Commitment, Advisor,User, Company_Information,
 		Rename_Tabs_And_Labels{
 		@Override
 		public String toString() {

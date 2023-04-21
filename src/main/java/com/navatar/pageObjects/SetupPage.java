@@ -294,6 +294,20 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getCustomFieldSaveBtn(int timeOut) {
 		return isDisplayed(driver, customFieldSaveBtn, "Visibility", timeOut, "custom field save button");
 	}
+	
+	@FindBy(xpath = "//button[@title='Save']")
+	private WebElement inputSaveBtn;
+
+	public WebElement getinputSaveBtn(int timeOut) {
+		return isDisplayed(driver, inputSaveBtn, "Visibility", timeOut, "input Save Btn");
+	}
+	
+	@FindBy(xpath = "//h2[text()='Customize the Help Menu']//ancestor::li//span[@class='slds-checkbox_faux']")
+	private WebElement helpmenutogglebutton;
+
+	public WebElement gethelpmenutogglebutton(int timeOut) {
+		return isDisplayed(driver, helpmenutogglebutton, "Visibility", timeOut, "help menu toggle button");
+	}
 
 	public WebElement getObjectFeatureNewButton(ObjectFeatureName objectFeatureName, int timeOut) {
 		String xpath = "//button[@title='" + objectFeatureName + "']";
@@ -1427,6 +1441,93 @@ public class SetupPage extends BasePageBusinessLayer {
 				"filesRelatedListOptionLink");
 	}
 	
+	@FindBy(xpath="//label[text()='Section Title Label']/following-sibling::div//input")
+	private WebElement SectionTitleLabel;
+
+	/**
+	 * @return the SectionTitleLabel
+	 */
+	public WebElement getSectionTitleLabel(String projectName,int timeOut) {
+
+		return isDisplayed(driver, SectionTitleLabel, "Visibility", timeOut, "Section Title Label");
+
+
+	}
+	
+	@FindBy(xpath="//*[@data-label='Label']")
+	private WebElement Labeltextbox;
+
+	/**
+	 * @return the Labeltextbox
+	 */
+	public WebElement getLabeltextbox(String projectName,int timeOut) {
+
+		return isDisplayed(driver, Labeltextbox, "Visibility", timeOut, "Label text box");
+
+
+	}
+	@FindBy(xpath="//*[@data-label='URL']")
+	private WebElement Urltextbox;
+
+	/**
+	 * @return the Urltextbox
+	 */
+	public WebElement getUrltextbox(String projectName,int timeOut) {
+
+		return isDisplayed(driver, Urltextbox, "Visibility", timeOut, "Url text box");
+
+
+	}
+	@FindBy(xpath="//*[@data-label='Label']//button")
+	private WebElement Labelpencilicon;
+
+	/**
+	 * @return the Labelpencilicon
+	 */
+	public WebElement getLabelpencilicon(String projectName,int timeOut) {
+
+		return isDisplayed(driver, Labelpencilicon, "Visibility", timeOut, "Label pencil icon");
+
+
+	}
+	@FindBy(xpath="//*[@data-label='URL']//button")
+	private WebElement Urlpencilicon;
+
+	/**
+	 * @return the Urlpencilicon
+	 */
+	public WebElement getUrlpencilicon(String projectName,int timeOut) {
+
+		return isDisplayed(driver, Urlpencilicon, "Visibility", timeOut, "Url pencil icon");
+
+
+	}
+	
+	@FindBy(xpath="//input[@name='dt-inline-edit-text']")
+	private WebElement inputtextbox;
+
+	/**
+	 * @return the inputtextbox
+	 */
+	public WebElement getinputtextbox(String projectName,int timeOut) {
+
+		return isDisplayed(driver, inputtextbox, "Visibility", timeOut, "input text box");
+
+
+	}
+	
+	@FindBy(xpath="//input[@name='dt-inline-edit-url']")
+	private WebElement urlinputtextbox;
+
+	/**
+	 * @return the urlinputtextbox
+	 */
+	public WebElement geturlinputtextbox(String projectName,int timeOut) {
+
+		return isDisplayed(driver, urlinputtextbox, "Visibility", timeOut, "url input text box");
+
+
+	}
 	
 	@FindBy(xpath = "//div[@id='troughCategory__RelatedList']")
 	private WebElement relatedListOptionLink;
