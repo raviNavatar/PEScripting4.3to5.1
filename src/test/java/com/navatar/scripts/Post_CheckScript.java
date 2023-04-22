@@ -11,27 +11,12 @@ import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
-import static com.navatar.generic.CommonVariables.*;
 
-import java.applet.AudioClip;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GridLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.text.NumberFormat;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
@@ -73,11 +58,11 @@ import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.LogStatus;
 
-public class AcuityTabAddition extends BaseLib {
+public class Post_CheckScript extends BaseLib {
 	static int interval;
 	static Timer timer;
 	String markup = "<html><font=inherit color=#000000 size=+0> "+ "Do not touch keyboard or mouse or disconnect from internet or refresh the page" + "</html>";
-		String markup2 = "<html><font=inherit color=#008000 size=+1> "+"Script Execution is in progress!! " + "</html>";
+		String markup2 = "<html><font=inherit color=#000000 size=+1> "+"Script Execution is in progress!! " + "</html>";
 		JLabel l = new JLabel(markup);
 		JLabel hello = new JLabel(markup2,JLabel.CENTER);
 		JPanel p = new JPanel(new java.awt.GridLayout(2, 2));
@@ -543,7 +528,6 @@ public class AcuityTabAddition extends BaseLib {
 
 }
 	
-
 	@Test(priority =6 ,enabled=false)
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -710,7 +694,6 @@ public class AcuityTabAddition extends BaseLib {
 
 	}
 
-
 	@Test(priority =7 ,enabled=false)
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 		String projectName = "";
@@ -750,7 +733,7 @@ public class AcuityTabAddition extends BaseLib {
 	
 
 	/// Pre-check ///
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 1,enabled =true)
 	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -869,21 +852,17 @@ public class AcuityTabAddition extends BaseLib {
 		CommonLib.ThreadSleep(3000);
 		String xpath =null;
 		WebElement ele = null;
-		String[] industry = {"INTest1","INTest2","INTest3"};
-//		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech","",
-//				"Communications","Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
-//				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
-//				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
-//				"Transportation","Utilities","Semi Conductor"};
-//		
-//		String[] type = {"Analyst","Competitor","Customer","Integrator","Investor","Partner","Other","Press","Prospect","Reseller"};
-//		
-//		String[] AccountSource = {"Advertisement","Employee Referral","External Referral","Public Relations","Seminar - Internal","Seminar - Partner",
-//				"Trade Show","Word of mouth","Partner","Web","Other"};
+		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech","",
+				"Communications","Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
+				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
+				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
+				"Transportation","Utilities","Semi Conductor"};
 		
-		String[] type = {"TTest1","TTest2","TTest3"};
-		String[] AccountSource = {"ASTest1","ASTest2","ASTest3"};
-
+		String[] type = {"Analyst","Competitor","Customer","Integrator","Investor","Partner","Other","Press","Prospect","Reseller"};
+		
+		String[] AccountSource = {"Advertisement","Employee Referral","External Referral","Public Relations","Seminar - Internal","Seminar - Partner",
+				"Trade Show","Word of mouth","Partner","Web","Other"};
+		
 		
 		for(int i=0;i<3;i++) {
 		try {
@@ -948,37 +927,6 @@ public class AcuityTabAddition extends BaseLib {
 										}
 										
 									}
-									if(i==0) {
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-										CommonLib.ThreadSleep(2000);
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.industryAddedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.industryAddedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-									}else if(i==1) {
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-										CommonLib.ThreadSleep(2000);
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.typeAddedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.typeAddedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-									}else {
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-										CommonLib.ThreadSleep(2000);
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-									}
 									
 									if (parentWindow != null) {
 
@@ -1032,7 +980,7 @@ public class AcuityTabAddition extends BaseLib {
 	
 	///// Pre-check ///
 	
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
