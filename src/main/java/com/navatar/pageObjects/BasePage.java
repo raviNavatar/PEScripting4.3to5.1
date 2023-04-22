@@ -1400,6 +1400,9 @@ public abstract class BasePage extends BaseLib {
 	
 	@FindBy(xpath = "//iframe[contains(@title,'Activity Settings')]")
 	private WebElement activitySettingFrame;
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
+	private WebElement enterpriseeditionFrame;
 
 	@FindBy(xpath = "//iframe[@title='Investor_Portal_Institution_Enabled']")
 	private WebElement institutionPageFrame;
@@ -1466,6 +1469,10 @@ public abstract class BasePage extends BaseLib {
 	
 	public WebElement getActivitySettingFrame(int timeOut) {
 		return isDisplayed(driver, activitySettingFrame, "Visibility", timeOut, "activity Setting Frame");
+	}
+	
+	public WebElement getenterpriseeditionFrame(int timeOut) {
+		return isDisplayed(driver, enterpriseeditionFrame, "Visibility", timeOut, "enterprise edition Frame");
 	}
 
 	@FindBy(xpath = "//iframe[contains(@title,'Visualforce Pages')]")

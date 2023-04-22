@@ -73,7 +73,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 				|| objectName == object.App_Manager || objectName == object.Lightning_App_Builder
 				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
 				|| objectName == object.Users || objectName == object.Sharing_Settings
-				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types|| objectName == object.Data_Export) {
+				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types|| objectName == object.Data_Export 
+				|| objectName == object.My_Domain || objectName == object.Help_Menu) {
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";
 			}
@@ -7642,34 +7643,73 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		return flag;
 	}
-
-	
-	public boolean searchAndClickOnObjectFields(String environment, String mode, String fieldName) {
-		FieldAndRelationshipPageBusinessLayer fr =new FieldAndRelationshipPageBusinessLayer(driver);
-		if(sendKeys(driver, getQuickSearchInObjectManager_Lighting(10),fieldName, "Quick find", action.BOOLEAN)) {
-			
-			if(click(driver, getObjectFieldLink(fieldName, 20), "", action.BOOLEAN)) {
-				
-				CommonLib.ThreadSleep(3000);
-				switchToFrame(driver, 20, getSetUpPageIframe(20));
-				CommonLib.ThreadSleep(5000);
-				
-				if(fr.activateOrDeactivatePiclistValueOfField("", "Industry", "",Condition.activate)) {
-				
-				}else {
-				
+	public boolean CreateHelpMenu(String projectName, String mode, String SectionTitleLabel, String labelvalue,
+			String urlvalue,int timeOut) {
+		boolean flag = false;
+		ThreadSleep(3000);
+		if (sendKeys(driver, getSectionTitleLabel(projectName, timeOut), SectionTitleLabel, "Section Title Label box",
+				action.SCROLLANDBOOLEAN)) {
+			appLog.info("passed data in text box: " + SectionTitleLabel);
+			ThreadSleep(1000);
+			if (click(driver, getLabeltextbox(mode, timeOut), "Label text box",
+					action.SCROLLANDBOOLEAN)) {
+				appLog.info("click on Label  text box");
+				ThreadSleep(1000);
+				if (click(driver, getLabelpencilicon(mode, timeOut), "Label pencil icon",
+						action.BOOLEAN)) {
+					appLog.info("click on Label pencil icon");
+					ThreadSleep(1000);
+					if (sendKeysAndPressEnter(driver, getinputtextbox(projectName, timeOut), labelvalue, "input text box",
+							action.BOOLEAN)) {
+						appLog.info("passed data in input text box: " + labelvalue);
+						ThreadSleep(1000);
+						if (click(driver, getUrltextbox(mode, timeOut), "Url text box",
+								action.BOOLEAN)) {
+							appLog.info("click on Url text box");
+							ThreadSleep(1000);
+							if (click(driver, getUrlpencilicon(mode, timeOut), "Url pencil icon",
+									action.BOOLEAN)) {
+								appLog.info("click on Url pencil icon");
+								ThreadSleep(1000);
+								if (sendKeysAndPressEnter(driver, geturlinputtextbox(projectName, timeOut), urlvalue, "input text box",
+										action.BOOLEAN)) {
+									appLog.info("passed data in input text box: " + urlvalue);
+									ThreadSleep(1000);
+											if (click(driver, getinputSaveBtn(30), "toggle button", action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on the toggle button", YesNo.No);
+											flag= true;
+											ThreadSleep(2000);
+											if (click(driver, gethelpmenutogglebutton(30), "Save button", action.SCROLLANDBOOLEAN)) {
+												log(LogStatus.INFO, "clicked on the save button", YesNo.No);
+										} else {
+											log(LogStatus.ERROR, "Not able to click on toggle button", YesNo.No);
+										}
+									} else {
+										log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+									}
+								} else {
+									log(LogStatus.ERROR, "Not able to enter value in input text box", YesNo.No);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to click on click on Url pencil icon", YesNo.No);
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to click on click on Url text box", YesNo.No);
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to enter value in input text box", YesNo.No);
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to click on click on Label pencil icon", YesNo.No);
 				}
-			
-			
-			}else {
-				
+			} else {
+				log(LogStatus.ERROR, "Not able to click on click on Label text box", YesNo.No);
 			}
-			
-			
-		}else {
-			
+		} else {
+			log(LogStatus.ERROR, "Not able to enter value in Section Title Label box", YesNo.No);
 		}
-		return false;
-
+		return flag;
 	}
+	
+	
 }
