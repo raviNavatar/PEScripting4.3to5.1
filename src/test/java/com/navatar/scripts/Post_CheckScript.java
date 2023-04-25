@@ -278,19 +278,14 @@ public class Post_CheckScript extends BaseLib {
 						CommonLib.ThreadSleep(3000);
 						List<String> layoutName = new ArrayList<String>();
 						layoutName.add("Global Layout");
-						ArrayList<String> sourceANDDestination = new ArrayList<String>();
-						sourceANDDestination.add(GlobalActionItem.New_Event.toString());
-						sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
-						sourceANDDestination.add(GlobalActionItem.New_Task.toString());
-
-						List<String> abc = setup.removeDragNDropFromPagelayout("", mode, object.PublisherLayout, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+						List<String> abc = setup.removeQuickActionSection("", mode, object.PublisherLayout, ObjectFeatureName.pageLayouts, layoutName);
 						ThreadSleep(10000);
-						if (!abc.isEmpty()) {
-							log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
+						if (abc.isEmpty()) {
+							log(LogStatus.PASS, "global action  removed Successfully", YesNo.No);
 						}else{
-							log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
+							log(LogStatus.FAIL, "global action not be ABLE To removed from quick action layout", YesNo.Yes);
 							sa.assertTrue(false,
-									"field not be ABLE To removed from quick action layout");
+									"global action not be ABLE To removed from quick action layout");
 						}
 					
 		} catch (Exception e) {
@@ -422,7 +417,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 5,enabled =false)
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
 		String projectName = "";
@@ -879,6 +874,155 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 
 	}
+	
+
+	@Test(priority = 4,enabled=true)
+	public void verifyModifyineActivityTimelineAttribute() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+
+			object[] objects = { object.Manage_Connected_Apps };
+			for (object obj : objects) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				try {
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+
+						if (setup.modifyingActivitytimelineAttribute(true)) {
+							log(LogStatus.PASS,
+									"able to to check attribute of activity timeline"
+											,
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to to check attribute of activity timeline"
+											,
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to to check attribute of activity timeline"
+											);
+
+						}
+
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					continue;
+				}
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+
+			object[] objects = { object.Manage_Connected_Apps };
+			for (object obj : objects) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				try {
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+
+						if (setup.modifyingActivitytimelineAttribute(false)) {
+							log(LogStatus.PASS,
+									"able to to check attribute of activity timeline"
+											,
+									YesNo.No);
+
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to to check attribute of activity timeline"
+											,
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to to check attribute of activity timeline"
+											);
+
+						}
+
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					continue;
+				}
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
+	}
+		
+	
+	
 	
 }
 

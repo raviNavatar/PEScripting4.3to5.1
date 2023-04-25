@@ -134,6 +134,36 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getCreateUserSaveBtn_Lighting(int timeOut) {
 		return isDisplayed(driver, createUserSaveBtn_Lighting, "Visibility", timeOut, " save button in lighting");
 	}
+	
+	@FindBy(xpath = "//h3[text()='Custom Attributes']/ancestor::tr//input[@name='new']")
+	private WebElement customAttributeNewButton;
+
+	/**
+	 * @return the createUserSaveBtn
+	 */
+	public WebElement getcustomAttributeNewButton(int timeOut) {
+		return isDisplayed(driver, customAttributeNewButton, "Visibility", timeOut, "customAttributeNewButton");
+	}
+	
+	@FindBy(xpath = "//input[@id='key']")
+	private WebElement attributeKeyInput;
+
+	/**
+	 * @return the createUserSaveBtn
+	 */
+	public WebElement getAttributeKeyInput(int timeOut) {
+		return isDisplayed(driver, attributeKeyInput, "Visibility", timeOut, "attributeKeyInput");
+	}
+
+	@FindBy(xpath = "//textarea[@id='value']")
+	private WebElement attributeValueInput;
+
+	/**
+	 * @return the createUserSaveBtn
+	 */
+	public WebElement getAttributeValueInput(int timeOut) {
+		return isDisplayed(driver, attributeValueInput, "Visibility", timeOut, "attributeValueInput");
+	}
 
 	@FindBy(xpath = "//h3[text()='Installed Packages']/../../../../../..//*[contains(text(),'Navatar PE ')]/../..//td[4]")
 	private WebElement installedPackageVersionNo;

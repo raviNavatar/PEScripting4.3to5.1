@@ -434,7 +434,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 		public String toString() {
 			return "Data Export";
 		}
-	}
+	}, Manage_Connected_Apps
 	};
 
 	
