@@ -96,7 +96,67 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editPageLayoutFrame_Lighting, "Visibility", timeOut,
 				"edit page layout frame in lighting");
 	}
+	
+	@FindBy(xpath = "//input[@name='sectionName']")
+	private WebElement sectionNameInput;
 
+	public WebElement getSectionNameInput(int timeOut) {
+		return isDisplayed(driver, sectionNameInput, "Visibility", timeOut,
+				"Section Name Input");
+	}
+
+	@FindBy(xpath = "//input[@name='section_show_detail']")
+	private WebElement detailPageCheckbox;
+
+	public WebElement getDetailPageCheckbox(int timeOut) {
+		return isDisplayed(driver, detailPageCheckbox, "Visibility", timeOut,
+				"Detail Page Checkbox");
+	}
+	
+	@FindBy(xpath = "//input[@name='section_show_edit']")
+	private WebElement editPageCheckbox;
+
+	public WebElement getEditPageCheckbox(int timeOut) {
+		return isDisplayed(driver, editPageCheckbox, "Visibility", timeOut,
+				"Edit Page Checkbox");
+	}
+	
+	@FindBy(xpath = "//Label[text()='2-Column']/../..//input")
+	private WebElement twoColumnRadioBtn;
+
+	public WebElement getTwoColumnRadioBtn(int timeOut) {
+		return isDisplayed(driver, twoColumnRadioBtn, "Visibility", timeOut,
+				"Two Column Radio Button");
+	}
+	
+	@FindBy(xpath = "//label[text()='Left-Right']/../..//input")
+	private WebElement leftRightRadioBtn;
+
+	public WebElement getLeftRightRadioBtn(int timeOut) {
+		return isDisplayed(driver, leftRightRadioBtn, "Visibility", timeOut,
+				"Left Right Radio Button");
+	}
+	
+	@FindBy(xpath = "//button[text()='OK']")
+	private WebElement okBtn;
+
+	public WebElement getOkBtn(int timeOut) {
+		return isDisplayed(driver, okBtn, "Visibility", timeOut,
+				"OK Button");
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Edit Page Layout: Institution ~ Salesforce - Enterprise Edition')]")
+	private WebElement editPageLayoutFrame;
+
+	/**
+	 * @return the editPageLayoutFrame_Lighting
+	 */
+	public WebElement getEditPageLayoutFrame(int timeOut) {
+		return isDisplayed(driver, editPageLayoutFrame, "Visibility", timeOut,
+				"edit page layout frame in lighting");
+	}
+	
+	
 	@FindBy(xpath = "//em[@class='x-btn-split']//button[@type='button'][contains(text(),'Save')]")
 	private WebElement pageLayoutSaveBtn;
 
@@ -214,6 +274,20 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	public WebElement getquickFindSearch(int timeOut) {
 		return isDisplayed(driver, quickFindSearch, "Visibility", timeOut, "quickFindSearch");
+	}
+	
+	@FindBy(xpath = "//h3[text()='Salesforce Mobile and Lightning Experience Actions']/..//..//..//div[@id='__PLATFORM_ACTION']//div[@class='btn customButton'][1]")
+	private WebElement quickFindSearch1;
+
+	public WebElement getquickFindSearch1(int timeOut) {
+		return isDisplayed(driver, quickFindSearch1, "Visibility", timeOut, "quickFindSearch1");
+	}
+	
+	@FindBy(xpath = "//div[text()='Mobile & Lightning Actions']")
+	private WebElement MobileLightning;
+
+	public WebElement getMobileLightning(int timeOut) {
+		return isDisplayed(driver, MobileLightning, "Visibility", timeOut, "MobileLightning");
 	}
 
 	@FindBy(xpath = "//button[@title='Custom Field']")
@@ -1484,6 +1558,56 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath="//span[text()='New Task']/ancestor::tr//a[@class='rowActionsPlaceHolder slds-button slds-button--icon-border-filled']")
+	private WebElement NewTaskdropdown;
+
+	/**
+	 * @return the NewTaskdropdown
+	 */
+	public WebElement getNewTaskdropdown(int timeOut) {
+
+		return isDisplayed(driver, NewTaskdropdown, "Visibility", timeOut, "New Task drop down");
+
+
+	}
+	
+	@FindBy(xpath="//span[text()='New Event']/ancestor::tr//a[@class='rowActionsPlaceHolder slds-button slds-button--icon-border-filled']")
+	private WebElement NewEventdropdown;
+
+	/**
+	 * @return the NewTaskdropdown
+	 */
+	public WebElement getNewEventdropdown(int timeOut) {
+
+		return isDisplayed(driver, NewEventdropdown, "Visibility", timeOut, "New Event drop down");
+
+
+	}
+	@FindBy(xpath="//span[text()='View']/ancestor::tr//a[@class='rowActionsPlaceHolder slds-button slds-button--icon-border-filled']")
+	private WebElement Viewdropdown;
+
+	/**
+	 * @return the Viewdropdown
+	 */
+	public WebElement getViewdropdown(int timeOut) {
+
+		return isDisplayed(driver, Viewdropdown, "Visibility", timeOut, "View drop down");
+
+
+	}
+	
+	@FindBy(xpath="//div[contains(@class,'actionMenu')]//a[@title='Edit']")
+	private WebElement NewTaskEditbutton;
+
+	/**
+	 * @return the SectionTitleLabel
+	 */
+	public WebElement getNewTaskEditbutton(int timeOut) {
+
+		return isDisplayed(driver, NewTaskEditbutton, "Visibility", timeOut, "New Task Edit button");
+
+
+	}
 	@FindBy(xpath="//*[@data-label='Label']")
 	private WebElement Labeltextbox;
 
@@ -1493,6 +1617,32 @@ public class SetupPage extends BasePageBusinessLayer {
 	public WebElement getLabeltextbox(String projectName,int timeOut) {
 
 		return isDisplayed(driver, Labeltextbox, "Visibility", timeOut, "Label text box");
+
+
+	}
+	
+	@FindBy(xpath="(//*[text()='Lightning Experience Override']/../..//input[@name='LexOverrides'])[1]")
+	private WebElement Lightningcomponent;
+
+	/**
+	 * @return the Labeltextbox
+	 */
+	public WebElement getLightningcomponent(String projectName,int timeOut) {
+
+		return isDisplayed(driver, Lightningcomponent, "Visibility", timeOut, "Lightning component");
+
+
+	}
+	
+	@FindBy(xpath="(//*[text()='Mobile Override']/../..//input[@name='S1Overrides'])[1]")
+	private WebElement MobileOverride;
+
+	/**
+	 * @return the Labeltextbox
+	 */
+	public WebElement getMobileOverride(String projectName,int timeOut) {
+
+		return isDisplayed(driver, MobileOverride, "Visibility", timeOut, "Mobile Override");
 
 
 	}
@@ -1520,6 +1670,21 @@ public class SetupPage extends BasePageBusinessLayer {
 
 
 	}
+	
+	@FindBy(xpath = "(//*[text()='Lightning component']/../..//select)[1]")
+	private WebElement Lightningcomponent1;
+
+	public WebElement getLightningcomponent1(String projectName, int timeOut) {
+		return isDisplayed(driver, Lightningcomponent1, "Visibility", timeOut, "Lightning component1");
+	}
+	
+	@FindBy(xpath = "//*[text()='Mobile Override']/../..//*[text()='Lightning component']/../..//select")
+	private WebElement Lightningcomponent2;
+
+	public WebElement getLightningcomponent2(String projectName, int timeOut) {
+		return isDisplayed(driver, Lightningcomponent2, "Visibility", timeOut, "Lightning component2");
+	}
+	
 	@FindBy(xpath="//*[@data-label='URL']//button")
 	private WebElement Urlpencilicon;
 
@@ -1557,6 +1722,22 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, urlinputtextbox, "Visibility", timeOut, "url input text box");
 
 
+	}
+	
+	@FindBy(xpath = "//input[@id='globalQuickfind']")
+	private WebElement searchTextboxFieldsAndRelationships;
+
+	public WebElement getsearchTextboxFieldsAndRelationships(int timeOut) {
+		return isDisplayed(driver, searchTextboxFieldsAndRelationships, "Visibility", timeOut,
+				"search Textbox on Fields And Relationships");
+	}
+	
+	@FindBy(xpath = "//h3[text()='Salesforce Mobile and Lightning Experience Actions']")
+	private WebElement SalesforceMobileandLightningExperienceActions;
+
+	public WebElement getSalesforceMobileandLightningExperienceActions(int timeOut) {
+		return isDisplayed(driver, SalesforceMobileandLightningExperienceActions, "Visibility", timeOut,
+				"Sales force Mobile and Lightning Experience Actions");
 	}
 	
 	@FindBy(xpath = "//div[@id='troughCategory__RelatedList']")
