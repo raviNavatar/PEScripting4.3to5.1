@@ -44,6 +44,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -56,12 +57,20 @@ import javax.swing.SwingConstants;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -22846,10 +22855,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	    System.out.println("Time's Up!");
 	}
 
-
 	 public  void popupPassed() {
 		 Color color = Color.green;
-			String markup = "<html><font=inherit color="+"#008000"+" size=+0> " + "Automation Script Status : PASS"+ "</html>";
+			String markup = "<html><br></br><font=inherit color="+"#000000"+" size=+0> " + "Automation Script Status :</font> <font color=#008000 size=+0> PASS <br></br </html>";
 			String markup2 = "<html><font=inherit color="+"#000000"+" size=-1> " + "Client Org has been successfully upgraded."+ "</html>";
 
 	        JLabel l = new JLabel(markup, JLabel.CENTER);
@@ -22872,12 +22880,58 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
     }
 	 
+	 public  void FailedPopupWithReport() {
+		 String a="file:///"+System.getProperty("user.dir")+"/Reports/ExtentReports/ExtentLog"+reportNameWithTime+".html";
+		 try {
+		 URI uri= new URI(a).resolve(a);
+			class OpenUrlAction implements ActionListener {
+			      public void actionPerformed(ActionEvent e) {
+			        open(uri);
+			      }
+			    }
+		 
+		    JFrame frame = new JFrame("Result");
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    frame.setSize(500,150);
+		    frame.setAlwaysOnTop(true);
+		    frame.setLocationRelativeTo(null);
+		    frame.setFont(new Font("Arial Bold", Font.BOLD, 14));
+		    Container container = frame.getContentPane();
+		    container.setLayout(new GridBagLayout());
+
+		    JButton button = new JButton();
+		    button.setText("<HTML><font=inherit color=#000000 size=+1> Automation Script Status:</font><font color=#FF0000 size=+1> FAILED <br> "
+		    		+ "<font color=#000000 size=-1  style=\"text-align:center;\" ><center>Click here for detailed report. <U> <font color=#0000FF size =+0>HyperLink</U></center></font> </HTML>");
+
+		    button.setHorizontalAlignment(SwingConstants.LEFT);
+		    button.setBorderPainted(false);
+		    button.setOpaque(false);
+		    button.setBackground(Color.WHITE);
+		    button.setToolTipText(uri.toString());
+		    button.addActionListener(new OpenUrlAction());
+		    container.add(button);
+		    frame.setVisible(true);
+		 }catch (URISyntaxException e) {
+				// TODO: handle exception
+			 }
+		  }
+		
+
+	private  void open(URI uri) {
+	    if (Desktop.isDesktopSupported()) {
+	      try {
+	        Desktop.getDesktop().browse(uri);
+	      } catch (Exception e) { /* TODO: error handling */ }
+	    } else { /* TODO: error handling */ }
+	  }
+
 	 public  void popupFailed(List<String> list) {
 		 Color color = Color.red;
-			String markup = "<html><font=inherit color="+"#FF0000"+" size=+0> " + "Automation Script Status: FAILED "+ "</html>";
-			//String markup2 = "<html><font=inherit color="+"#000000"+" size=+1> ""+ "</html>";
+			String markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0>  Automation Script Status: FAILED <a href=\"C:\\Users\\Ravi Kumar\\git\\PEScripting\\Reports\\ExtentReports\\ExtentLog23_03_22_01_21_13.html\">Report</a></font></body></html>";
 
+			
 	        JLabel l = new JLabel(markup, JLabel.CENTER);
+	        
 	        //JLabel hello = new JLabel, JLabel.CENTER);
 	        l.setHorizontalAlignment(SwingConstants.CENTER);
 	        l.setFont(new Font("Arial Bold", Font.BOLD, 8));
@@ -22888,7 +22942,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	        
 	        p.add(l);
 	        JFrame  f = new JFrame("Result");
-	        f.setSize(300,150);
+	        f.setSize(400,150);
 	        //f.setFont(new Font("System", Font.PLAIN, 12));
 	        f.setContentPane(p);
 	        f.setAlwaysOnTop(true);
@@ -22924,9 +22978,9 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
          while (System.currentTimeMillis() < (startTime + 4000)) {
              f.setVisible(true);
          }
-         f.setVisible(false);
-         f.dispose();
-         f=null;
+//         f.setVisible(false);
+//         f.dispose();
+//         f=null;
      }
 	 
 	 public boolean openAppFromAppLauncher(int timeOut, String objectName) {

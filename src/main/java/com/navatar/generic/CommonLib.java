@@ -1441,7 +1441,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	 */
 	public static WebElement FindElement(WebDriver driver, String xpath, String elementName, action action,
 			int timeOut) {
-		xpath = replaceApostrophyWithQuotes(xpath);
+		//xpath = replaceApostrophyWithQuotes(xpath);
 		appLog.info("String change: " + xpath);
 		try {
 			int timeout = 0;
@@ -1842,24 +1842,6 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 	public static String[] removeNumbersFromString(String value) {
 		return value.split("(?<=\\D)(?=\\d)");
 
-	}
-
-	public static String replaceApostrophyWithQuotes(String xpath) {
-		int len = xpath.length();
-		StringBuilder str = new StringBuilder(xpath);
-		for (int i = 0; i < len; i++) {
-			char character = xpath.charAt(i);
-			if (String.valueOf(character).equalsIgnoreCase("'")) {
-				if (xpath.charAt(i - 1) == '=' || xpath.charAt(i - 1) == ',' || xpath.charAt(i + 1) == ')'
-						|| (xpath.charAt(i + 1) == ' ' && xpath.charAt(i + 2) == ' ') || xpath.charAt(i + 1) == ']'
-						|| (xpath.charAt(i + 1) == ' ' && xpath.charAt(i + 2) == 'o')) {
-					str.setCharAt(i, '\"');
-				}
-			}
-		}
-		// appLog.info("Original Xpath: "+xpath+"\tString builder: "+str);
-		System.out.println("Original Xpath: " + xpath + "\tString builder: " + str);
-		return String.valueOf(str);
 	}
 
 	public static String getText(WebDriver driver, WebElement element, String elementName, action action) {

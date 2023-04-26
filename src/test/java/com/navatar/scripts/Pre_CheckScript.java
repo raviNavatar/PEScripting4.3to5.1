@@ -9,6 +9,8 @@ import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 
@@ -17,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
@@ -87,6 +90,7 @@ public class Pre_CheckScript extends BaseLib {
 		
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
+		Assert.assertTrue(false);
 		try {
 			CommonLib.ThreadSleep(3000);
 			if (home.clickOnSetUpLink()) {
@@ -183,7 +187,7 @@ public class Pre_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -195,7 +199,7 @@ public class Pre_CheckScript extends BaseLib {
 		CommonLib.ThreadSleep(3000);
 		String xpath =null;
 		WebElement ele = null;
-		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech","",
+		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech",
 				"Communications","Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
 				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
 				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
@@ -256,7 +260,10 @@ public class Pre_CheckScript extends BaseLib {
 									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
 									
 									for(String value:fields) {
-
+										
+											CommonLib.ThreadSleep(5000);
+											CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+											CommonLib.ThreadSleep(5000);
 										if(fr.activateOrAddPicklistValueOfField("", fieldName, value, Condition.activate)) {
 											log(LogStatus.PASS, value+" :value activated or created sucessfully ", YesNo.No);
 

@@ -19,6 +19,12 @@ import static com.navatar.generic.CommonLib.isDisplayed;
 import static com.navatar.generic.CommonLib.log;
 
 import java.util.function.Function;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -111,7 +117,17 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		
 		if(!flag) {
 			
-			bp.popup("Error", "You have not initiated the process",null,"#FFFFFF");
+			
+				 String markup = "<html><font=Arial color=#FF0000 size=+0> " + "You have NOT initiated the process." + "</html>";
+		         JLabel l = new JLabel(markup);
+		         l.setHorizontalAlignment(SwingConstants.CENTER);
+		         JPanel p = new JPanel(new java.awt.GridLayout(0, 1));
+		         p.add(l);
+		         JFrame f = new JFrame("Error");
+		         f.setContentPane(p);
+		         f.setSize(300,150);
+		         f.setLocationRelativeTo(null);
+		         f.setVisible(true);
 			driver.close();	
 		}
 		if (mode.contains("Light") || mode.contains("light") ) {

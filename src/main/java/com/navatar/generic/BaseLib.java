@@ -1,9 +1,17 @@
 package com.navatar.generic;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Desktop;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,6 +28,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 
 import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebDriver;
@@ -79,13 +90,15 @@ public class BaseLib extends AppListeners {
 	public static String commaSP = ",";
 	public static	String colonSP = ":";
 	public static String emptyString="";
+	public static String reportNameWithTime="";
 	
 	@BeforeSuite
 	public void reportConfig(){
 		DateFormat dateFormat = new SimpleDateFormat("yy_MM_dd_hh_mm_ss");
 		Date date = new Date();
+		reportNameWithTime=dateFormat.format(date);
 		extentReport = new ExtentReports(
-				System.getProperty("user.dir") + "/Reports/ExtentReports/ExtentLog" + dateFormat.format(date) + ".html",
+				System.getProperty("user.dir") + "/Reports/ExtentReports/ExtentLog" + reportNameWithTime + ".html",
 				true);
 		try {
 			extentReport.addSystemInfo("Host Name", InetAddress.getLocalHost().getHostName());

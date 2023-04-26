@@ -33,15 +33,13 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 	
 	public boolean activateOrAddPicklistValueOfField(String projectName, String fieldName,String value, Condition condition)
 	{
-		SetupPageBusinessLayer setup =new SetupPageBusinessLayer(driver);
 		WebElement ele;
 		
 		boolean flag=false;
-		CommonLib.ThreadSleep(5000);
-				CommonLib.switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
-				CommonLib.ThreadSleep(5000);
-				String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td";
-				ele =FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
+		
+		
+				String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
+				ele = CommonLib.isDisplayed(driver, FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10), "visibility", 20, "");
 				if(ele!=null) {
 					 xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
 					ele =FindElement(driver, xpath, "", action.BOOLEAN, 10);
@@ -100,6 +98,11 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 							{
 								CommonLib.ThreadSleep(7000);
 								log(LogStatus.INFO, "Save button has been clicked", YesNo.No);
+								 WebElement cancel =FindElement(driver, "//input[@name='cancel']", "", action.SCROLLANDBOOLEAN, 10);
+								if(cancel!=null) {
+									CommonLib.click(driver, cancel,"Save Button", action.SCROLLANDBOOLEAN);
+									CommonLib.ThreadSleep(1000);
+								}
 								CommonLib.switchToDefaultContent(driver);
 								CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
 								try
