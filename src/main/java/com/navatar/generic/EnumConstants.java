@@ -63,7 +63,7 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name
 			
-		, Stage, Source, Source_Firm, Source_Contact, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
+		, Stage, Source, Source_Firm, Source_Contact,New_Task,New_Event,View, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
 			@Override
 			public String toString() {
 				return "Date Received";
@@ -424,7 +424,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 		public String toString() {
 			return CommonVariables.tabCustomObj;
 		}
-	},Navigation,navatarEdgeMenu,Help_Menu,My_Domain, Affiliation, Financing,Commitment, Advisor,User, Company_Information,
+	},Navigation,navatarEdgeMenu,Help_Menu,My_Domain,Scheduled_Jobs ,Affiliation, Financing,Commitment, Advisor,User, Company_Information,
 		Rename_Tabs_And_Labels{
 		@Override
 		public String toString() {
@@ -1330,7 +1330,7 @@ public static enum PermissionType{
 	}
 	
 	public static enum GlobalActionItem{
-		New_Event,New_Task,Log_a_Call,Meeting;
+		New_Event,New_Task,Log_a_Call,Meeting,Email,Mobile_Smart_Actions,Create_Task,Bulk_Fundraising ,New_Fundraising,New_Fundraising_Contact,Create_Commitments,Import,New_Lender,New_Team_Member,New_Review,Convert_to_Portfolio, New_Partnership,New_Contact,New_Deal_Contact,New_Sourced_Deal,New_Deal,Add_To_Theme,Export,New_Affiliation,New_Financing,New_Investor,New_Advisor,New_Client,New_Commitment,New_Referral,Edit;
 	}
 	
 	public static enum Priority {

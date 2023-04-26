@@ -7,6 +7,7 @@ import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
 import static com.navatar.generic.CommonLib.log;
+import static com.navatar.generic.CommonLib.sendKeys;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToFrame;
@@ -44,6 +45,7 @@ import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
@@ -64,6 +66,7 @@ import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.excelLabel;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
@@ -116,7 +119,7 @@ public class AcuityTabAddition extends BaseLib {
 		
 	}
 	
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 10,enabled =false)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -264,6 +267,488 @@ public class AcuityTabAddition extends BaseLib {
 		
 	}
 	
+	@Test(priority = 4,enabled=true)
+	public void verifyAddQuickActiononPageLayoutsofObjects () {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		String parentWindow = null;
+		
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			
+			List<String> layoutName = new ArrayList<String>();
+			ArrayList<String> sourceANDDestination = new ArrayList<String>();
+			
+			object[] objects = { /* object.Contact, object.Fund, object.Fundraising, object.Deal, */ object.Firm };
+			for (object obj : objects) {
+			log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+			if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+				log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				if (setup.clickOnObjectFeature(environment, mode, obj,
+						ObjectFeatureName.pageLayouts)) {
+					log(LogStatus.PASS, "clicked on page layout of object feature of "
+							+ obj.toString() + " object", YesNo.Yes);
+					List<WebElement> allElements = setup.getAllPageLayoutList();
+					int no = allElements.size();
+					 for(int i=0;i<no;i++) {
+					String name = null;
+						allElements = setup.getAllPageLayoutList();
+						WebElement labelElement = allElements.get(i);
+						name = labelElement.getText();
+						 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
+						|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+//								 for(int j=0;j<allElements.size();j++) {
+//							String value = allElements.get(j).getText().trim();
+//							if(value.equalsIgnoreCase("Fund Manager") ||value.equalsIgnoreCase("Fund Manager’s Fund")) {
+//								allElements.remove(j);
+//							}
+//						}
+//						 labelElement = allElements.get(i);
+						
+							
+									
+									if(name.equals("Advisor")) {
+
+//										if (click(driver, labelElement, "lightning record  page label :" + labelElement,
+//												action.SCROLLANDBOOLEAN)) {
+//											log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+//													YesNo.No);
+//													CommonLib.ThreadSleep(3000);
+//											switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
+										
+									    sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+										
+									} else if(name.equals("Company")) {
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+
+									} else if((name.equals("Individual Investor"))|| (name.equals("Institution"))) {
+
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+									} else if(name.equals("Intermediary")){
+										
+//										 sourceANDDestination = new ArrayList<String>();
+//										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+//										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+//										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+//										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+//										sourceANDDestination.add(GlobalActionItem.Email.toString());
+									
+									} else if(name.equals("Lender")){
+
+//										 sourceANDDestination = new ArrayList<String>();
+//										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+//										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+//										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+//										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+//										sourceANDDestination.add(GlobalActionItem.Email.toString());
+
+									} else if(name.equals("Limited Partner")){
+
+//										 sourceANDDestination = new ArrayList<String>();
+//										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+//										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+//										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+//										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+//										sourceANDDestination.add(GlobalActionItem.Email.toString());
+									
+									} else if(name.equals("Portfolio Company")){
+
+//										 sourceANDDestination = new ArrayList<String>();
+//										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+//										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+//										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+//										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+//										sourceANDDestination.add(GlobalActionItem.Email.toString());
+										
+									} else if(name.equals("Private Equity")){
+
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+										
+									} else if(name.equals("Contact Layout")){
+										
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+									
+									} else if(name.equals("Fund Layout")){
+										
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+											
+									} else if(name.equals("Fundraising Layout")){
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+											
+									} else if(name.equals("Pipeline Layout")){
+										 sourceANDDestination = new ArrayList<String>();
+										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
+										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
+										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
+										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
+										sourceANDDestination.add(GlobalActionItem.Email.toString());
+
+									} else {
+
+									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
+
+									}
+										if (click(driver, labelElement, "lightning record  page label :" + labelElement,
+												action.SCROLLANDBOOLEAN)) {
+											log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+													YesNo.No);
+													CommonLib.ThreadSleep(3000);
+											switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
+											
+									List<String> abc = setup.removeDragNDropFromPagelayoutContact("", mode, obj, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
+									ThreadSleep(10000);
+									if (!abc.isEmpty()) {
+										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
+									}else{
+										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
+										sa.assertTrue(false,
+												"field not be ABLE To removed from quick action layout");
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to clicked on the page layout of  page label:" + name,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to clicked on the page layout of  page label:" + name);
+
+								}
+						 }
+						 }
+					 
+					} else {
+						log(LogStatus.ERROR,
+								"clicked on page layout of object feature of "
+										+ obj.toString() + " object", YesNo.Yes);
+						sa.assertTrue(false,
+								"clicked on page layout of object feature of "
+										+ obj.toString() + " object");
+						}
+				} else {
+					log(LogStatus.ERROR,
+							obj + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false,
+							obj + " object has been opened in setup page");
+					}
+			}
+		
+			
+		
+			
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+				CommonLib.ThreadSleep(3000);
+				if (home.clickOnSetUpLink()) {
+
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.FAIL,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					}
+				}
+				object[] objects = { /* object.Contact, object.Fund, object.Fundraising, object.Deal , */object.Firm };
+									for (object obj : objects) {
+									log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);			
+									
+				if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+					log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+					CommonLib.ThreadSleep(3000);
+					if (setup.clickOnObjectFeature(environment, mode, obj,
+							ObjectFeatureName.pageLayouts)) {
+						log(LogStatus.PASS, "clicked on page layout of object feature of "
+								+ obj.toString() + " object", YesNo.Yes);
+						List<WebElement> allElements = setup.getAllPageLayoutList();
+						int no = allElements.size();
+						 for(int i=0;i<no;i++) {
+						String name = null;
+							allElements = setup.getAllPageLayoutList();
+							WebElement labelElement = allElements.get(i);
+							name = labelElement.getText();
+							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
+										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+//							for(int j=0;j<allElements.size();j++) {
+//								String value = allElements.get(j).getText().trim();
+//								if(value.equalsIgnoreCase("Fund Manager") ||value.equalsIgnoreCase("Fund Manager’s Fund")) {
+//									allElements.remove(j);
+//								}
+//							}
+						 	
+							
+								
+					
+									List<String> layoutName1 = new ArrayList<String>();
+									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
+									if(name.equals("Advisor")) {
+
+										layoutName1 = new ArrayList<String>();
+										layoutName1.add("Advisor");
+										sourceANDDestination1 = new ArrayList<String>();
+										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Client.toString());
+										
+									} else if(name.equals("Company")) {
+										layoutName1 = new ArrayList<String>();
+										layoutName1.add("");
+										sourceANDDestination1 = new ArrayList<String>();
+										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
+										sourceANDDestination1.add(GlobalActionItem.Export.toString());
+										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
+
+									} else if((name.equals("Individual Investor"))|| (name.equals("Institution"))) {
+
+										layoutName1 = new ArrayList<String>();
+										layoutName1.add("Advisor");
+										 sourceANDDestination1 = new ArrayList<String>();
+										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Advisor.toString());
+
+									} else if(name.equals("Intermediary")){
+										
+									layoutName1 = new ArrayList<String>();
+									layoutName1.add("Advisor");
+									 sourceANDDestination1 = new ArrayList<String>();
+									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+									sourceANDDestination1.add(GlobalActionItem.Edit.toString());
+									sourceANDDestination1.add(GlobalActionItem.Export.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+									
+									} else if(name.equals("Lender")){
+
+										layoutName1 = new ArrayList<String>();
+										layoutName1.add("Advisor");
+										sourceANDDestination1 = new ArrayList<String>();
+										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Financing.toString());
+
+									} else if(name.equals("Limited Partner")){
+
+									layoutName1 = new ArrayList<String>();
+									layoutName1.add("Advisor");
+									sourceANDDestination1 = new ArrayList<String>();
+									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Fundraising.toString());
+									
+									} else if(name.equals("Portfolio Company")){
+
+										layoutName1 = new ArrayList<String>();
+										layoutName1.add("Advisor");
+										sourceANDDestination1 = new ArrayList<String>();
+										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
+										
+									} else if(name.equals("Private Equity")){
+
+										layoutName1 = new ArrayList<String>();
+										layoutName1.add("Advisor");
+										sourceANDDestination1 = new ArrayList<String>();
+										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+										sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+										
+									} else if(name.equals("Contact Layout")){
+								   layoutName1 = new ArrayList<String>();
+									layoutName1.add("Advisor");
+									 sourceANDDestination1 = new ArrayList<String>();
+									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
+									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+									sourceANDDestination1.add(GlobalActionItem.Export.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Referral.toString());
+									
+									} else if(name.equals("Fund Layout")){
+										   layoutName1 = new ArrayList<String>();
+											layoutName1.add("Advisor");
+											 sourceANDDestination1 = new ArrayList<String>();
+											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+											sourceANDDestination1.add(GlobalActionItem.Bulk_Fundraising.toString());
+											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+											sourceANDDestination1.add(GlobalActionItem.New_Partnership.toString());
+											
+									} else if(name.equals("Fundraising Layout")){
+										   layoutName1 = new ArrayList<String>();
+											layoutName1.add("Advisor");
+											 sourceANDDestination1 = new ArrayList<String>();
+											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());
+											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+											sourceANDDestination1.add(GlobalActionItem.Create_Commitments.toString());
+											
+									} else if(name.equals("Pipeline Layout")){
+										   layoutName1 = new ArrayList<String>();
+											layoutName1.add("Advisor");
+											 sourceANDDestination1 = new ArrayList<String>();
+											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+											sourceANDDestination1.add(GlobalActionItem.New_Team_Member.toString());
+											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+											sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
+											sourceANDDestination1.add(GlobalActionItem.New_Review.toString());
+											sourceANDDestination1.add(GlobalActionItem.Convert_to_Portfolio.toString());
+											sourceANDDestination1.add(GlobalActionItem.New_Lender.toString());
+
+									} else {
+
+									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
+
+									}
+									if (click(driver, labelElement, "lightning record  page label :" + name,
+											action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+												YesNo.No);
+												CommonLib.ThreadSleep(3000);
+										switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
+									
+									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, obj, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
+									ThreadSleep(10000);
+									if (!abc1.isEmpty()) {
+										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
+									}else{
+										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
+										sa.assertTrue(false,
+												"field not be ABLE To removed from quick action layout");
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to clicked on the page layout of  page label:" + name,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to clicked on the page layout of  page label:" + name);
+
+								}
+						 }
+						 }
+					} else {
+						log(LogStatus.ERROR,
+								"clicked on page layout of object feature of "
+										+ obj.toString() + " object", YesNo.Yes);
+						sa.assertTrue(false,
+								"clicked on page layout of object feature of "
+										+ obj.toString() + " object");
+						}
+				} else {
+					log(LogStatus.ERROR,
+							obj + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false,
+							obj + " object has been opened in setup page");
+					}
+			}
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
+	}
 	@Test(priority = 3,enabled =false)
 	public void VerifyRemovingGlobalAction() {
 		
@@ -437,7 +922,247 @@ public class AcuityTabAddition extends BaseLib {
 
 	}
 	
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 4,enabled=false)
+	public void verifyOverridingtheTaskEventstandardbuttons() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+				if (setup.searchStandardOrCustomObject(projectName, mode, object.Task)) {
+					log(LogStatus.PASS, object.Task + " object has been opened in setup page", YesNo.Yes);
+					CommonLib.ThreadSleep(3000);
+					if (setup.clickOnObjectFeature(projectName, mode, object.Task,
+							ObjectFeatureName.ButtonLinksAndActions)) {
+						log(LogStatus.PASS, "clicked on page layout of object feature of "
+								+ object.Task.toString() + "Task", YesNo.Yes);
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
+								excelLabel.New_Task.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+							log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
+							ThreadSleep(3000);
+							if(click(driver, setup.getNewTaskdropdown(10),"New Task drop down",action.BOOLEAN)) {
+								log(LogStatus.INFO, " able to click on New Task drop down", YesNo.No);
+								
+								if(click(driver, setup.getNewTaskEditbutton(10),"New Task Edit button",action.BOOLEAN)) {
+									log(LogStatus.INFO, " able to click on New Task Edit button", YesNo.No);
+									ThreadSleep(3000);
+									switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+									if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,10)) {
+										//flag1 = true;
+										log(LogStatus.PASS, "able to Create Overriding the Task Event standard buttons" , YesNo.Yes);
+									}else {
+										log(LogStatus.FAIL, "Not able to Create Overriding the Task Event standard buttons", YesNo.Yes);
+										sa.assertTrue(false, "Not able to Create Overriding the Task Event standard buttons");
+									}
+								}else {
+									log(LogStatus.FAIL, "Not able to click on New Task Edit button", YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on New Task Edit button");
+								}
+							}else {
+								log(LogStatus.FAIL, "Not able to click on New Task drop down", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on New Task drop down");
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to search Text box Fields And Relationships", YesNo.Yes);
+							sa.assertTrue(false, "Not able to search Text box Fields And Relationships");
+						}
+					}else {
+						log(LogStatus.FAIL, "Not able to clicked on page layout of object feature of "
+								+object.Task.toString() + "Task", YesNo.Yes);
+						sa.assertTrue(false, "Not able to clicked on page layout of object feature of "+object.Task.toString() + "Task");
+					}
+				}else {
+					log(LogStatus.FAIL, object.Task + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false, object.Task + " object has been opened in setup page");
+				}
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+				if (setup.searchStandardOrCustomObject(projectName, mode, object.Task)) {
+					log(LogStatus.PASS, object.Task + " object has been opened in setup page", YesNo.Yes);
+					CommonLib.ThreadSleep(3000);
+					if (setup.clickOnObjectFeature(projectName, mode, object.Task,
+							ObjectFeatureName.ButtonLinksAndActions)) {
+						log(LogStatus.PASS, "clicked on page layout of object feature of "
+								+ object.Task.toString() + "Task", YesNo.Yes);
+						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
+								excelLabel.View.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+							log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
+							ThreadSleep(3000);
+							if(click(driver, setup.getViewdropdown(10),"View drop down",action.BOOLEAN)) {
+								log(LogStatus.INFO, " able to click on View drop down", YesNo.No);
+								
+								if(click(driver, setup.getNewTaskEditbutton(10),"View Edit button",action.BOOLEAN)) {
+									log(LogStatus.INFO, " able to click on View Edit button", YesNo.No);
+									ThreadSleep(3000);
+									switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+									if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,10)) {
+										//flag1 = true;
+										log(LogStatus.PASS, "able to Create Overriding the Task Event standard buttons" , YesNo.Yes);
+									}else {
+										log(LogStatus.FAIL, "Not able to Create Overriding the Task Event standard buttons", YesNo.Yes);
+										sa.assertTrue(false, "Not able to Create Overriding the Task Event standard buttons");
+									}
+								}else {
+									log(LogStatus.FAIL, "Not able to click on New Task Edit button", YesNo.Yes);
+									sa.assertTrue(false, "Not able to click on New Task Edit button");
+								}
+							}else {
+								log(LogStatus.FAIL, "Not able to click on New Task drop down", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on New Task drop down");
+							}
+						}else {
+							log(LogStatus.FAIL, "Not able to search Text box Fields And Relationships", YesNo.Yes);
+							sa.assertTrue(false, "Not able to search Text box Fields And Relationships");
+						}
+					}else {
+						log(LogStatus.FAIL, "Not able to clicked on page layout of object feature of "
+								+object.Task.toString() + "Task", YesNo.Yes);
+						sa.assertTrue(false, "Not able to clicked on page layout of object feature of "+object.Task.toString() + "Task");
+					}
+				}else {
+					log(LogStatus.FAIL, object.Task + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false, object.Task + " object has been opened in setup page");
+				}
+					} catch (Exception e) {
+						if (parentWindow != null) {
+
+							driver.close();
+							driver.switchTo().window(parentWindow);
+						}
+					}
+
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+					}
+					
+					CommonLib.refresh(driver);
+					CommonLib.ThreadSleep(3000);
+					try {
+						CommonLib.ThreadSleep(3000);
+						if (home.clickOnSetUpLink()) {
+
+							parentWindow = switchOnWindow(driver);
+							if (parentWindow == null) {
+								sa.assertTrue(false,
+										"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+								log(LogStatus.FAIL,
+										"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+										YesNo.Yes);
+								exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							}
+						}
+							if (setup.searchStandardOrCustomObject(projectName, mode, object.Event)) {
+								log(LogStatus.PASS, object.Event + " object has been opened in setup page", YesNo.Yes);
+								CommonLib.ThreadSleep(3000);
+								if (setup.clickOnObjectFeature(projectName, mode, object.Event,
+										ObjectFeatureName.ButtonLinksAndActions)) {
+									log(LogStatus.PASS, "clicked on page layout of object feature of "
+											+ object.Event.toString() + "Event", YesNo.Yes);
+									if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
+											excelLabel.New_Event.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+										log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
+										ThreadSleep(3000);
+										if(click(driver, setup.getNewEventdropdown(10),"New Event drop down",action.BOOLEAN)) {
+											log(LogStatus.INFO, " able to click on New Task drop down", YesNo.No);
+											
+											if(click(driver, setup.getNewTaskEditbutton(10),"New Event Edit button",action.BOOLEAN)) {
+												log(LogStatus.INFO, " able to click on New Event Edit button", YesNo.No);
+												ThreadSleep(3000);
+												switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+												if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,10)) {
+													//flag1 = true;
+													log(LogStatus.PASS, "able to Create Overriding the Event Event standard buttons" , YesNo.Yes);
+												}else {
+													log(LogStatus.FAIL, "Not able to Create Overriding the Event Event standard buttons", YesNo.Yes);
+													sa.assertTrue(false, "Not able to Create Overriding the Event Event standard buttons");
+												}
+											}else {
+												log(LogStatus.FAIL, "Not able to click on New Event Edit button", YesNo.Yes);
+												sa.assertTrue(false, "Not able to click on New Event Edit button");
+											}
+										}else {
+											log(LogStatus.FAIL, "Not able to click on New Event drop down", YesNo.Yes);
+											sa.assertTrue(false, "Not able to click on New Event drop down");
+										}
+									}else {
+										log(LogStatus.FAIL, "Not able to search Text box Fields And Relationships", YesNo.Yes);
+										sa.assertTrue(false, "Not able to search Text box Fields And Relationships");
+									}
+								}else {
+									log(LogStatus.FAIL, "Not able to clicked on page layout of object feature of "
+											+object.Task.toString() + "Task", YesNo.Yes);
+									sa.assertTrue(false, "Not able to clicked on page layout of object feature of "+object.Task.toString() + "Task");
+								}
+							}else {
+								log(LogStatus.FAIL, object.Task + " object has been opened in setup page", YesNo.Yes);
+								sa.assertTrue(false, object.Task + " object has been opened in setup page");
+							}
+					} catch (Exception e) {
+						if (parentWindow != null) {
+
+							driver.close();
+							driver.switchTo().window(parentWindow);
+						}
+						sa.assertAll();
+					}
+
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+					}
+					sa.assertAll();
+				}
+
+					
+					
+	@Test(priority = 3,enabled =false)
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
 		String projectName = "";
@@ -473,7 +1198,8 @@ public class AcuityTabAddition extends BaseLib {
 				 domainurl = ele.getText();
 				domainurl="https://"+domainurl+"/c/NavatarHelpandSupport.app";
 			}else {
-			
+				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
 			
 			}
 			
@@ -544,7 +1270,8 @@ public class AcuityTabAddition extends BaseLib {
 }
 	
 
-	@Test(priority =6 ,enabled=false)
+	@Test(priority =5 ,enabled=false
+			)
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -711,7 +1438,7 @@ public class AcuityTabAddition extends BaseLib {
 	}
 
 
-	@Test(priority =7 ,enabled=false)
+	@Test(priority =6 ,enabled=false)
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 		String projectName = "";
 		String[] appName = {"PE", "FOF"}; 
@@ -857,7 +1584,7 @@ public class AcuityTabAddition extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1032,7 +1759,7 @@ public class AcuityTabAddition extends BaseLib {
 	
 	///// Pre-check ///
 	
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1181,6 +1908,66 @@ public class AcuityTabAddition extends BaseLib {
 
 	}
 	
+ @Test(priority = 3,enabled =false)
+ public void VerifyScheduleUsageMetrics () {
+
+ String projectName = "";
+ HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+ SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+ BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+ String parentWindow = null;
+ String domainurl = "";	
+ CommonLib.refresh(driver);
+	CommonLib.ThreadSleep(3000);
+	try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+		if (setup.searchStandardOrCustomObject(projectName, mode,  object.Scheduled_Jobs)) {
+			log(LogStatus.PASS,  object.Scheduled_Jobs + " object has been opened in setup page", YesNo.Yes);
+			CommonLib.ThreadSleep(3000);
+			
+		if (setup.CreateHelpMenu(projectName, mode,"Navatar Help","View Our User Guide",domainurl, 10)) {
+			//flag1 = true;
+			log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
+		}else {
+			log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
+			sa.assertTrue(false, "Not able to setup ulr in help menu");
+		}
+
+	} else {
+		log(LogStatus.FAIL, "Not able to open " + object.Help_Menu + " object", YesNo.Yes);
+		sa.assertTrue(false, "Not able to open " + object.Help_Menu + " object");
+	}
+}
+
+catch (Exception e) {
+	if (parentWindow != null) {
+
+		driver.close();
+		driver.switchTo().window(parentWindow);
+	}
+
+}
+
+if (parentWindow != null) {
+
+	driver.close();
+	driver.switchTo().window(parentWindow);
+}
+sa.assertAll();
+
+}
 }
 
 
