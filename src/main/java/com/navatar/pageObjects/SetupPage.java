@@ -96,7 +96,67 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editPageLayoutFrame_Lighting, "Visibility", timeOut,
 				"edit page layout frame in lighting");
 	}
+	
+	@FindBy(xpath = "//input[@name='sectionName']")
+	private WebElement sectionNameInput;
 
+	public WebElement getSectionNameInput(int timeOut) {
+		return isDisplayed(driver, sectionNameInput, "Visibility", timeOut,
+				"Section Name Input");
+	}
+
+	@FindBy(xpath = "//input[@name='section_show_detail']")
+	private WebElement detailPageCheckbox;
+
+	public WebElement getDetailPageCheckbox(int timeOut) {
+		return isDisplayed(driver, detailPageCheckbox, "Visibility", timeOut,
+				"Detail Page Checkbox");
+	}
+	
+	@FindBy(xpath = "//input[@name='section_show_edit']")
+	private WebElement editPageCheckbox;
+
+	public WebElement getEditPageCheckbox(int timeOut) {
+		return isDisplayed(driver, editPageCheckbox, "Visibility", timeOut,
+				"Edit Page Checkbox");
+	}
+	
+	@FindBy(xpath = "//Label[text()='2-Column']/../..//input")
+	private WebElement twoColumnRadioBtn;
+
+	public WebElement getTwoColumnRadioBtn(int timeOut) {
+		return isDisplayed(driver, twoColumnRadioBtn, "Visibility", timeOut,
+				"Two Column Radio Button");
+	}
+	
+	@FindBy(xpath = "//label[text()='Left-Right']/../..//input")
+	private WebElement leftRightRadioBtn;
+
+	public WebElement getLeftRightRadioBtn(int timeOut) {
+		return isDisplayed(driver, leftRightRadioBtn, "Visibility", timeOut,
+				"Left Right Radio Button");
+	}
+	
+	@FindBy(xpath = "//button[text()='OK']")
+	private WebElement okBtn;
+
+	public WebElement getOkBtn(int timeOut) {
+		return isDisplayed(driver, okBtn, "Visibility", timeOut,
+				"OK Button");
+	}
+	
+	@FindBy(xpath = "//iframe[contains(@title,'Edit Page Layout: Institution ~ Salesforce - Enterprise Edition')]")
+	private WebElement editPageLayoutFrame;
+
+	/**
+	 * @return the editPageLayoutFrame_Lighting
+	 */
+	public WebElement getEditPageLayoutFrame(int timeOut) {
+		return isDisplayed(driver, editPageLayoutFrame, "Visibility", timeOut,
+				"edit page layout frame in lighting");
+	}
+	
+	
 	@FindBy(xpath = "//em[@class='x-btn-split']//button[@type='button'][contains(text(),'Save')]")
 	private WebElement pageLayoutSaveBtn;
 

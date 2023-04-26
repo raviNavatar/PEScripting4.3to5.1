@@ -996,10 +996,10 @@ public static enum PermissionType{
 					return "Gatekeeper";
 				}
 			},Role_Influencer{
-				@Override
-				public String toString() {
-					return "Influencer";
-				}
+			@Override
+			public String toString() {
+				return "Influencer";
+			}
 			},Role_Other{
 				@Override
 				public String toString() {
@@ -1277,7 +1277,12 @@ public static enum PermissionType{
 			public String toString() {
 				return "Meeting Type";
 			}
-		}  ,Priority,Under_Evaluation,RenameWatchlist{
+		}  ,Total_Commitments{
+			@Override
+			public String toString() {
+				return "Total Commitments";
+			}
+		},Priority,Under_Evaluation,RenameWatchlist{
 			@Override
 			public String toString() {
 			return "Rename-Watchlist";
@@ -1310,7 +1315,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name, Clip_Name
+			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name, Clip_Name, Section, Custom_Links, Entity_Type, Introduction_Date, Institution, Industry_Focus, Contact_Type, Last_Touchpoint, Touchpoint_Overdue, Tier, Sector_Expertise, Next_Touchpoint_Date, Ownership, Exit_Date, Notes, Last_Stage_Change_Date, Closing_Date, Multiple, LOI_Due_Date, Reason_for_Decline, Platform_Company, Sales, Management_Meeting_Date, Reason_to_Park,
 		};
 	
 	public static enum Links{

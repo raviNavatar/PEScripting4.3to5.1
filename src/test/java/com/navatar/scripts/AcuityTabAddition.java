@@ -59,13 +59,18 @@ import com.navatar.generic.CommonLib;
 import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
+import com.navatar.generic.EnumConstants.HTMLTAG;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.PageLabel;
+import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
+import com.navatar.generic.EnumConstants.fundraisingContactActions;
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.pageObjects.BasePageBusinessLayer;
+import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
@@ -437,7 +442,7 @@ public class AcuityTabAddition extends BaseLib {
 
 	}
 	
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 5,enabled =false)
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
 		String projectName = "";
@@ -748,7 +753,176 @@ public class AcuityTabAddition extends BaseLib {
 		sa.assertAll();
 	}
 	
+	@Test(priority =8 ,enabled=true)
+	public void verifyAddUtilityOnExsitingAppForPEFOF() {
+		
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		String parentWindow = null;
+		HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
 
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+
+			object[] objects = { object.Institution,object.Contact, object.Affiliation, object.Financing, object.Fundraising, object.Pipeline };
+			for (object obj : objects) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				try {
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+						CommonLib.ThreadSleep(3000);
+						if (setup.clickOnObjectFeature(projectName, mode, obj,
+								ObjectFeatureName.pageLayouts)) {
+							log(LogStatus.PASS, "clicked on page layout of object feature of "
+									+ obj.toString() + " object", YesNo.Yes);
+							List<WebElement> allElements = setup.getAllPageLayoutList();
+							int no = allElements.size();
+							 for(int i=0;i<no;i++) {
+							String name = null;
+							try {
+								allElements = setup.getAllPageLayoutList();
+								WebElement labelElement = allElements.get(i);
+								name = labelElement.getText();
+								if((name.equals("Institution")) || (name.equals("Company")) || (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+								if(name.equals("Institution") || name.equals("Individual Investor")) {
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
+									sourceANDDestination.put(PageLabel.Total_Commitments.toString(),"");
+								} else if(name.equals("Company")) {
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
+									sourceANDDestination.put(PageLabel.Total_Commitments.toString(),"");
+									sourceANDDestination.put(PageLabel.Investment_Type.toString(),"");
+									sourceANDDestination.put(PageLabel.Introduction_Date.toString(),"");
+								} else if(name.equals("Affiliation Layout")){
+									
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Start_Date.toString(),"");
+									sourceANDDestination.put(PageLabel.End_Date.toString(),"");
+								} else if(name.equals("Contact Layout")){
+									
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Average_Deal_Quality_Score.toString(),"");
+									sourceANDDestination.put(PageLabel.Industry_Focus.toString(),"");
+									sourceANDDestination.put(PageLabel.Contact_Type.toString(),"");
+									sourceANDDestination.put(PageLabel.Last_Touchpoint.toString(),"");
+									sourceANDDestination.put(PageLabel.Touchpoint_Overdue.toString(),"");
+									sourceANDDestination.put(PageLabel.Total_Deals_Shown.toString(),"");
+									sourceANDDestination.put(PageLabel.Tier.toString(),"");
+									sourceANDDestination.put(PageLabel.Sector_Expertise.toString(),"");
+									sourceANDDestination.put(PageLabel.Next_Touchpoint_Date.toString(),"");
+								} else if(name.equals("Financing Layout")){
+									
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Lender_Status.toString(),"");
+									sourceANDDestination.put(PageLabel.Date.toString(),"");
+									sourceANDDestination.put(PageLabel.Ownership.toString(),"");
+									sourceANDDestination.put(PageLabel.Deal.toString(),"");
+									sourceANDDestination.put(PageLabel.Exit_Date.toString(),"");
+									sourceANDDestination.put(PageLabel.Notes.toString(),"");
+								} else if(name.equals("Fundraising Layout")){
+									
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Last_Stage_Change_Date.toString(),"");
+									sourceANDDestination.put(PageLabel.Closing_Date.toString(),"");
+								} else if(name.equals("Pipeline Layout")){
+									
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Deal_Quality_Score.toString(),"");
+									sourceANDDestination.put(PageLabel.Multiple.toString(),"");
+									sourceANDDestination.put(PageLabel.LOI_Due_Date.toString(),"");
+									sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
+									sourceANDDestination.put(PageLabel.Platform_Company.toString(),"");
+									sourceANDDestination.put(PageLabel.Sales.toString(),"");
+									sourceANDDestination.put(PageLabel.Management_Meeting_Date.toString(),"");
+									sourceANDDestination.put(PageLabel.Reason_to_Park.toString(),"");
+								} else {
+									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
+								}
+								if (click(driver, labelElement, "lightning record  page label :" + name,
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+											YesNo.No);
+									CommonLib.ThreadSleep(3000);
+
+									if (dataload.addFieldToLayoutPage1("", mode, name, obj, sourceANDDestination)) {
+										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+obj,
+												YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+obj, YesNo.Yes);
+										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+obj);
+
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to clicked on the page layout of  page label:" + name,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to clicked on the page layout of  page label:" + name);
+
+								}
+								}
+							} catch (Exception e) {
+								driver.navigate().back();
+								ThreadSleep(2000);
+								
+							}
+							 }
+						} else {
+							log(LogStatus.FAIL,
+									"Not able to click on Record type of object feature of " + obj + " object",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to click on Record type of object feature of " + obj + " object");
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					continue;
+				}
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+	
+	}
+	
+
+	
 	/// Pre-check ///
 	@Test(priority = 1,enabled =false)
 	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
@@ -857,7 +1031,7 @@ public class AcuityTabAddition extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1032,7 +1206,7 @@ public class AcuityTabAddition extends BaseLib {
 	
 	///// Pre-check ///
 	
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
