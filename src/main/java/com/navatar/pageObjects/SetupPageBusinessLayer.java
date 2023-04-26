@@ -74,7 +74,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
 				|| objectName == object.Users || objectName == object.Sharing_Settings
 				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types|| objectName == object.Data_Export 
-				|| objectName == object.My_Domain || objectName == object.Help_Menu) {
+				|| objectName == object.My_Domain || objectName == object.Help_Menu|| objectName == object.Manage_Connected_Apps) {
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";
 			}
@@ -499,6 +499,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			List<String> layoutName, ArrayList<String> sourceANDDestination) {
 		WebElement ele = null;
 		List<String> result = new ArrayList<String>();
+		List<WebElement> allAction = new ArrayList<WebElement>();
 		boolean flag = false;
 		System.err.println("");
 		if (searchStandardOrCustomObject(environment, mode, obj)) {
@@ -527,16 +528,19 @@ public class SetupPageBusinessLayer extends SetupPage {
 						}
 					}
 					if (ele != null) {
-						if (click(driver, ele, layoutName.get(i) + " layout name edit icon", action.BOOLEAN)) {
+						if (click(driver, ele, layoutName.get(i) + "layout name edit icon", action.BOOLEAN)) {
 							appLog.info("click on pagelayout " + layoutName.get(i) + " Edit Icon");
 							ThreadSleep(20000);
 							if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
 							}
+							ThreadSleep(5000);
+							
 							WebElement quicFind= FindElement(driver,
-									"//div[@id='troughCategory__QuickAction']", "", action.BOOLEAN,
+									"troughCategory__PlatformAction", "", action.BOOLEAN,
 									10);
 							click(driver, quicFind, "", action.BOOLEAN);
+							ThreadSleep(2000);
 							//Set<String> Sources = sourceANDDestination.keySet();
 							Iterator<String> itr = sourceANDDestination.iterator();
 							while (itr.hasNext()) {
@@ -580,10 +584,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 								else {
 									
-									sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
-									targetElement = FindElement(driver,
-											"//div[@id='__QUICK_ACTION']//div[@class='btn customButton'][text()='" + src + "']", "", action.BOOLEAN,
-											10);
+									//sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
+//									targetElement = FindElement(driver,
+//											"//div[@id='__QUICK_ACTION']//div[@class='btn customButton'][text()='" + src + "']", "", action.BOOLEAN,
+//											10);
+									allAction = FindElements(driver,"//div[contains(@id,'item_QuickAction')]");
 								}
 //								ele = isDisplayed(driver,
 //										FindElement(driver, "//div[@class='item used']//span[text()='" + src + "']", "", action.BOOLEAN, 20),
@@ -597,9 +602,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 //									ele = isDisplayed(driver, FindElement(driver,
 //											"(//table[@class='troughItems ']//div/div)[3]", "", action.BOOLEAN, 20),
 //											"visibility", 20, src + " field");
-
+								for(WebElement actionDrop: allAction) {
 								if (targetElement != null) {
-									WebElement ele1 = isDisplayed(driver, targetElement, "visibility", 10,
+									WebElement ele1 = isDisplayed(driver, actionDrop, "visibility", 10,
 											src + " field");
 
 									ThreadSleep(3000);
@@ -642,7 +647,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								} else {
 									appLog.error(src + " is not visible in quick action so already remove from layout " + src);
 								}
-
+							}
 							}
 
 							if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
@@ -681,6 +686,124 @@ public class SetupPageBusinessLayer extends SetupPage {
 			
 		} else {
 			appLog.error("Not able to search Object: " + obj + " so cannot dragNdrop source.");
+			result.add("Not able to search Object: " + obj + " so cannot dragNdrop source.");
+		}
+
+		return result;
+	}
+	
+
+	/**
+	 * @author Azhar Alam
+	 * @param environment
+	 * @param mode
+	 * @param object
+	 * @param objectFeatureName
+	 * @param layoutName
+	 * @param sourceANDDestination
+	 * @return List<String>
+	 * @description this method is used to drag and drop fields on page layout page
+	 */
+	public List<String> removeQuickActionSection(String environment, String mode, object obj, ObjectFeatureName objectFeatureName,
+			List<String> layoutName) {
+		WebElement ele = null;
+		List<String> result = new ArrayList<String>();
+		boolean flag = false;
+		System.err.println("");
+		if (searchStandardOrCustomObject(environment, mode, obj)) {
+				for (int i = 0; i < layoutName.size(); i++) {
+					if (obj == object.Global_Actions||obj == object.PublisherLayout) {
+						switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
+						ele = isDisplayed(driver,
+								FindElement(driver,
+										"//*[text()='" + layoutName.get(i)
+												+ "']/..//a[contains(@title,'Layout') and text()='Edit']",
+										"", action.BOOLEAN, 20),
+								"visibility", 20, obj + " page layout link");
+					} else {
+						if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+							ele = isDisplayed(driver,
+									FindElement(driver,
+											"//div[@id='LayoutList_body']//tr/th[text()='" + layoutName.get(i)
+													+ "']/../td/a[contains(@title,'Edit')]",
+											"", action.BOOLEAN, 20),
+									"visibility", 20, layoutName.get(i) + " page layout link");
+						} else {
+							ele = isDisplayed(driver,
+									FindElement(driver, "//span[contains(text(),'" + layoutName.get(i) + "')]", "",
+											action.BOOLEAN, 20),
+									"visibility", 20, layoutName.get(i) + " page layout link");
+						}
+					}
+					if (ele != null) {
+						if (click(driver, ele, layoutName.get(i) + "layout name edit icon", action.BOOLEAN)) {
+							log(LogStatus.PASS,"click on pagelayout " + layoutName.get(i) + " Edit Icon",YesNo.No);
+							ThreadSleep(20000);
+							if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
+							}
+							ThreadSleep(5000);
+							
+							WebElement section= FindElement(driver,"//div[@id='__PLATFORM_ACTION']//fieldset", "", action.BOOLEAN,10);
+							 mouseOverClickOperation(driver, section);
+							 ThreadSleep(1000);
+							
+							WebElement revertButton= FindElement(driver,
+									"//div[@id='__PLATFORM_ACTION']//div[@class='revertPlatformActionIcon']", "", action.BOOLEAN,
+									10);
+							
+							if (click(driver, revertButton, "", action.BOOLEAN)) {
+								log(LogStatus.PASS,"clicked on revert action button",YesNo.No);
+
+								ThreadSleep(2000);
+								click(driver,FindElement(driver,"//button[text()='OK']", "", action.BOOLEAN,10), "", action.BOOLEAN);
+								ThreadSleep(2000);	
+								if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.PASS,"clicked on save button",YesNo.No);
+
+									if (flag && obj != object.Global_Actions) {
+										ThreadSleep(5000);
+										click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
+												action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+										log(LogStatus.PASS,"clicked on yes button",YesNo.No);
+									}
+								} else {
+									log(LogStatus.FAIL,"Not able to click on Save button cannot save pagelayout dragged object or section",YesNo.Yes);
+
+									result.add(
+											"Not able to click on Save button cannot save pagelayout dragged object or section");
+								}
+								
+							} else {
+								log(LogStatus.FAIL,"Not able to clicked on revert action button",YesNo.Yes);
+								result.add(
+										"Not able to clicked on revert action button");
+							}
+							
+						} else {
+							
+							log(LogStatus.FAIL,"Not able to click on " + layoutName.get(i)
+							+ "layout edit icon so cannot dargNdrop.",YesNo.Yes);
+
+							result.add("Not able to click on " + layoutName.get(i)
+									+ "layout edit icon so cannot dargNdrop.");
+						}
+
+					} else {
+						log(LogStatus.FAIL,layoutName.get(i) + " Layout name is not visible so cannot click on edit icon",YesNo.Yes);
+
+						result.add(layoutName.get(i) + " Layout name is not visible so cannot click on edit icon");
+					}
+				}
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					ThreadSleep(5000);
+					switchToDefaultContent(driver);
+
+				}
+			
+		} else {
+			log(LogStatus.FAIL,"Not able to search Object: " + obj + " so cannot dragNdrop source.",YesNo.Yes);
 			result.add("Not able to search Object: " + obj + " so cannot dragNdrop source.");
 		}
 
@@ -7640,6 +7763,106 @@ public class SetupPageBusinessLayer extends SetupPage {
 		} else {
 			log(LogStatus.ERROR, "Not Able to click on related list optin link", YesNo.Yes);
 		}
+
+		return flag;
+	}
+	
+	public boolean modifyingActivitytimelineAttribute(boolean isAndroid) {
+		boolean flag = false;
+		String xPath = "";
+		String xPath2 = "";
+		WebElement ele = null;
+		WebElement ele2 = null;
+		WebElement ele3 = null;
+		int count =0;
+
+		
+		ThreadSleep(3000);
+		switchToFrame(driver, 20, getSetUpPageIframe(20));
+		ThreadSleep(5000);
+		xPath="//a[text()='Salesforce for Android']";
+		xPath2="//a[text()='Salesforce for iOS']";
+		
+		ele = isDisplayed(driver, FindElement(driver, xPath, "Salesforce for android Attribute", action.BOOLEAN, 20), "Visibility", 20, "");
+		
+		ele2 = isDisplayed(driver, FindElement(driver, xPath2, "Salesforce for iOS Attribute", action.BOOLEAN, 20), "Visibility", 20, "");
+		
+		if(ele!=null && ele2!=null) {
+			
+			if(isAndroid) {
+				ele3=ele;
+			}else {
+				ele3=ele2;
+			}
+			
+			
+			if(click(driver, ele3, "Salesforce for Attribute", action.SCROLLANDBOOLEAN)) {
+				
+				log(LogStatus.PASS, "clicked on Salesforce for Attribute", YesNo.No);
+				String[] valueData= {"DISABLE_ACTIVITY_TIMELINE","HIDE_MOBILE_ONLY_APP"};
+				
+				for(String value:valueData) {
+					ThreadSleep(3000);
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+					ThreadSleep(5000);
+				if(click(driver,getcustomAttributeNewButton(20), "New button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					log(LogStatus.PASS, "clicked on New  button", YesNo.No);
+
+					ThreadSleep(3000);
+					switchToFrame(driver, 20, getSetUpPageIframe(20));
+					ThreadSleep(5000);
+//					
+					if(sendKeys(driver, getAttributeKeyInput(10), value, "Attribute key", action.BOOLEAN)) {
+						log(LogStatus.PASS, "passed attribute key:"+value, YesNo.No);
+
+						if(sendKeys(driver, getAttributeValueInput(10), "\"true\"", "Attribute value", action.BOOLEAN)) {
+							log(LogStatus.PASS, "passed attribute value:true", YesNo.No);
+
+							if (click(driver, getCreateUserSaveBtn_Lighting( 30), "page layouts save button",action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "clicked on save button", YesNo.No);
+								flag=true;
+								ThreadSleep(5000);
+								switchToDefaultContent(driver);
+							} else {
+								log(LogStatus.FAIL, "Not able to click on Save button cannot save pagelayout dragged object or section", YesNo.Yes);
+								flag =false;
+
+							}
+						}else {
+							log(LogStatus.ERROR, "Not Able to enter the  attribute value:true ", YesNo.Yes);
+							flag =false;
+
+						}
+					}else {
+						log(LogStatus.ERROR, "Not Able to enter the  attribute key:"+value, YesNo.Yes);
+						flag =false;
+
+					}
+				}else {
+					log(LogStatus.ERROR, "Not Able to click on new button", YesNo.Yes);
+					flag =false;
+
+				}
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Not Able to click on remove link of open activities related list", YesNo.Yes);
+				flag =false;
+			}
+			switchToDefaultContent(driver);
+			ThreadSleep(2000);
+			
+		}else {
+			log(LogStatus.PASS, "Custom attribute not present for android and IOS", YesNo.Yes);
+
+			flag =true;
+		}
+				
+			
+			
+			
+		
 
 		return flag;
 	}
