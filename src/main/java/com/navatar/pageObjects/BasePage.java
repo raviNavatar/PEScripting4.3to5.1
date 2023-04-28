@@ -656,7 +656,15 @@ public abstract class BasePage extends BaseLib {
 				"fund Raising pup up Save Button");
 
 	}
+	@FindBy(xpath = "//label[text()='Preferred Start Time']/../following-sibling::td//select")
+	private WebElement PreferredStartTime;
 
+	/**
+	 * @return the userUserLicenseDropDownList
+	 */
+	public WebElement getPreferredStartTime(int timeOut) {
+		return isDisplayed(driver, PreferredStartTime, "Visibility", timeOut, "Preferred Start Time");
+	}
 	@FindBy(xpath = "//button[text()='Compact Layout Assignment']")
 	private WebElement compactLayoutAssignmentLight;
 
