@@ -986,6 +986,24 @@ public class DataLoaderWizardPageBusinessLayer extends DataLoaderWizardPage {
 	}
 	
 	
+public boolean addFieldToLayoutPage1(String projectName, String mode, String pageLayoutsName, object obj, HashMap<String,String> sourceANDDestination, int timeOut) {
+
+		
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		List<String> abc = setup.DragNDrop1("", mode, obj, ObjectFeatureName.pageLayouts,PageLabel.Section.toString(), pageLayoutsName,
+				sourceANDDestination);
+		ThreadSleep(5000);
+
+		if (!abc.isEmpty()) {
+			log(LogStatus.FAIL, "field not added/already present 1", YesNo.Yes);
+		} else {
+			log(LogStatus.INFO, "field added in the layout", YesNo.No);
+			return true;
+		}
+		return false;
+
+	}
+	
 	public boolean addFieldToLayoutPage1(String projectName, String mode, String pageLayoutsName, object obj, HashMap<String,String> sourceANDDestination ) {
 
 		

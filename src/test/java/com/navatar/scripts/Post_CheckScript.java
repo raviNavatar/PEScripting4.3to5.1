@@ -2040,7 +2040,306 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
+	@Test(priority = 13,enabled =false)
+
+	public void VerifyScheduleUsageMetrics() {
+		
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		String domainurl = "";
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
+				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
+				if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
+					//flag1 = true;
+					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
+				}else {
+					log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
+					sa.assertTrue(false, "Not able to setup ulr in help menu");
+				}
+			}else {
+				log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+			
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+				CommonLib.ThreadSleep(3000);
+				if (home.clickOnSetUpLink()) {
+
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.FAIL,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					}
+				}
+			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
+				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
+				if(CommonLib.isDisplayed(driver,FindElement(driver,
+						"//th[text()='NavatarUsageMetrics']",
+						"", action.BOOLEAN, 20),
+				"visibility", 20,"" + " Navatar Usage Metrics") != null) {
+		           log(LogStatus.INFO, "element found Navatar Usage Metrics:" + "",
+				    YesNo.No);
+				}else {
+					log(LogStatus.FAIL,"element not found Navatar Usage Metrics:", YesNo.Yes);
+					sa.assertTrue(false,"element not found Navatar Usage Metrics:");
+				
+				}
+				}else {
+					log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+				
+				}
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+				}
+				sa.assertAll();
+			}
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+	}
 	
+	@Test(priority =14 ,enabled=false)
+	public void verifyAddVFPageOnPageLayout() {
+		
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		String parentWindow = null;
+		HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+
+object[] objects = { object.Institution,object.Contact, object.Fund, object.Affiliation, object.Fundraising_Contact, object.Financing, object.Fundraising, object.Partnership, object.Commitment, object.Correspondence_List, object.Fund_Drawdown, object.Capital_Call, object.Fund_Distribution, object.Investor_Distribution, object.Advisor,object.Advisor_Involvement, object.Affiliation, object.Agreement, object.Financing, object.Fund_Investment, object.Fund_of_Fund_Transactions, object.Quarterly_Financial_Performance, object.Talent_Placement, object.Transfer, object.Task,object.Event,object.Marketing_Event, object.Pipeline,};
+			for (object obj : objects) {
+				if(obj.equals(object.Institution)) {
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Account_Status.toString(),"");
+				} else if(obj.equals(object.Contact)) {
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Contact_Status.toString(),"");
+				} else if(obj.equals(object.Fund)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Fund_Status.toString(),"");
+				} else if(obj.equals(object.Fundraising)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Fundraising_Status.toString(),"");
+				} else if(obj.equals(object.Fundraising_Contact)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.FC_Status.toString(),"");
+				} else if(obj.equals(object.Partnership)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Partnership_Status.toString(),"");
+				} else if(obj.equals(object.Commitment)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Commitment_Status.toString(),"");
+				} else if(obj.equals(object.Correspondence_List)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Corres_List_Status.toString(),"");
+				} else if(obj.equals(object.Fund_Drawdown)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.FD_Status.toString(),"");
+				} else if(obj.equals(object.Capital_Call)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Capital_Call_Status.toString(),"");
+				} else if(obj.equals(object.Fund_Distribution)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Fund_Dist_Status.toString(),"");
+				} else if(obj.equals(object.Investor_Distribution)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Inv_Dist_Status.toString(),"");
+				} else if(obj.equals(object.Advisor)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Advisor_Status.toString(),"");
+				} else if(obj.equals(object.Advisor_Involvement)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.AI_Status.toString(),"");
+				} else if(obj.equals(object.Affiliation)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Affiliation_Status.toString(),"");
+				} else if(obj.equals(object.Agreement)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Agr_Amend_Status.toString(),"");
+				} else if(obj.equals(object.Financing)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Financing_Status.toString(),"");
+				} else if(obj.equals(object.Fund_Investment)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Fund_Inv_Status.toString(),"");
+				} else if(obj.equals(object.Fund_of_Fund_Transactions)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.FOF_Transaction_Status.toString(),"");
+				} else if(obj.equals(object.Pipeline)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Pipeline_Status.toString(),"");
+				} else if(obj.equals(object.Quarterly_Financial_Performance)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.QFP_Status.toString(),"");
+				} else if(obj.equals(object.Talent_Placement)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.TP_Status.toString(),"");
+				} else if(obj.equals(object.Transfer)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Transfer_Status.toString(),"");
+				} else if(obj.equals(object.Task)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Task_Status.toString(),"");
+				} else if(obj.equals(object.Event)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Event_Status.toString(),"");
+				} else if(obj.equals(object.Marketing_Event)){
+					sourceANDDestination = new HashMap<String, String>();
+					sourceANDDestination.put(PageLabel.Marketing_Event_Status.toString(),"");
+				} else {
+					log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
+				}
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				try {
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+						CommonLib.ThreadSleep(3000);
+						if (setup.clickOnObjectFeature(projectName, mode, obj,
+								ObjectFeatureName.pageLayouts)) {
+							log(LogStatus.PASS, "clicked on page layout of object feature of "
+									+ obj.toString() + " object", YesNo.Yes);
+							List<WebElement> allElements = setup.getAllPageLayoutList();
+							int no = allElements.size();
+							 for(int i=0;i<no;i++) {
+							String name = null;
+							try {
+								allElements = setup.getAllPageLayoutList();
+								WebElement labelElement = allElements.get(i);
+								name = labelElement.getText();
+								if (click(driver, labelElement, "lightning record  page label :" + name,
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+											YesNo.No);
+									CommonLib.ThreadSleep(3000);
+
+									if (dataload.addFieldToLayoutPage1("", mode, name, obj, sourceANDDestination, 5)) {
+										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+obj,
+												YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+obj, YesNo.Yes);
+										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+obj);
+
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to clicked on the page layout of  page label:" + name,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to clicked on the page layout of  page label:" + name);
+
+								}
+							} catch (Exception e) {
+								driver.navigate().back();
+								ThreadSleep(2000);
+								
+							}
+							 }
+						} else {
+							log(LogStatus.FAIL,
+									"Not able to click on Record type of object feature of " + obj + " object",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to click on Record type of object feature of " + obj + " object");
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					continue;
+				}
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+	}
 }
 
 

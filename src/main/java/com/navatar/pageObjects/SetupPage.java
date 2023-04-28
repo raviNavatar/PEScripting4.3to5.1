@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.navatar.generic.EnumConstants.AddProspectsTab;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
@@ -1600,6 +1601,19 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath="//label[text()='End']/../..//input")
+	private WebElement EndDate;
+
+	/**
+	 * @return the SectionTitleLabel
+	 */
+	public WebElement getEndDate(String projectName,int timeOut) {
+
+		return isDisplayed(driver, EndDate, "Visibility", timeOut, "End Date");
+
+
+	}
+	
 	@FindBy(xpath="//span[text()='New Task']/ancestor::tr//a[@class='rowActionsPlaceHolder slds-button slds-button--icon-border-filled']")
 	private WebElement NewTaskdropdown;
 
@@ -1789,6 +1803,38 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, relatedListOptionLink, "Visibility", timeOut,
 				"relatedListOptionLink");
 	}
+	@FindBy(xpath = "//input[@value='Schedule Apex']")
+	private WebElement ScheduleApex;
+
+	public WebElement getScheduleApex(int timeOut) {
+		return isDisplayed(driver, ScheduleApex, "Visibility", timeOut,
+				"Schedule Apex");
+	}
+	@FindBy(xpath = "//input[@id='job_name']")
+	private WebElement JobName;
+
+	public WebElement getJobName(int timeOut) {
+		return isDisplayed(driver, JobName, "Visibility", timeOut,
+				"Job Name");
+	}
+	@FindBy(xpath = "//input[@id='ac']")
+	private WebElement ApexClass;
+
+	public WebElement getApexClass(int timeOut) {
+		return isDisplayed(driver, ApexClass, "Visibility", timeOut,
+				"Apex Class");
+	}
+	@FindBy(xpath="//div[contains(@class,'scroll-bidirectional native')]")
+	private WebElement selectProspectsGridScrollBox;
 	
+	/**
+	 * @return the selectProspectsGridScrollBox
+	 */
+	public WebElement getSelectProspectsGridScrollBox(int timeOut) {
+		
+
+			return isDisplayed(driver, selectProspectsGridScrollBox, "Visibility", timeOut, "select prospects scroll box grid");
+			
+	}
 	
 }
