@@ -756,6 +756,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 									"//div[@id='__PLATFORM_ACTION']//div[@class='revertPlatformActionIcon']", "", action.BOOLEAN,
 									10);
 							
+							WebElement predefined= FindElement(driver,
+									"//div[@id='__PLATFORM_ACTION']//fieldset//a[contains(text(),'override the predefined actions')]", "", action.BOOLEAN,
+									10);
+							
+							if(predefined==null) {
 							if (click(driver, revertButton, "", action.BOOLEAN)) {
 								log(LogStatus.PASS,"clicked on revert action button",YesNo.No);
 
@@ -784,7 +789,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 								result.add(
 										"Not able to clicked on revert action button");
 							}
-							
+							}else {
+								log(LogStatus.PASS,"global action already removed from page layout",YesNo.Yes);
+							}
 						} else {
 							
 							log(LogStatus.FAIL,"Not able to click on " + layoutName.get(i)
@@ -8672,5 +8679,70 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return result;
 	}
 
+	public boolean CreateNewCustomMetaData(String label, String description,int timeOut) {
+		boolean flag = false;
+		
+	
+		
+		if (searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
+			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
+			ThreadSleep(2000);
+			switchToFrame(driver, 60, getSetUpPageIframe(120));
+			
+			
+		
+			if (clickUsingJavaScript(driver, NewRecordsButton(10), "New Records",
+					action.BOOLEAN)) {
+				log(LogStatus.INFO, "able to click on New Custom metadata Records link", YesNo.No);
+				ThreadSleep(5000);
+				switchToFrame(driver, 60, getSetUpPageIframe(60));
+				ThreadSleep(5000);
+				
+				
+					if (sendKeys(driver, LabelNameInputCustomMetaData( 20), label, "label Value Text Box",
+							action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.PASS, "enter the value in label : " + label, YesNo.No);
+						ThreadSleep(2000);
+						if (sendKeys(driver, pluralLabelNameInputCustomMetaData(30), label+"s", "Plural label Value Text Box",
+								action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.PASS, "enter the value in PLUral label : " + label+"s", YesNo.No);
+							
+							if (sendKeys(driver, descriptionInputCustomMetaData(30), description, "description Text Box",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "enter the value in description : " + description, YesNo.No);
+								
+								if(clickUsingJavaScript(driver, getCreateUserSaveBtn_Lighting(20), "save button",
+										action.BOOLEAN)) {
+									log(LogStatus.INFO, "able to click on save", YesNo.No);
+									flag=true;
+									driver.switchTo().defaultContent();
 
+								}else {
+									log(LogStatus.INFO, "not able to click on save", YesNo.No);
+									sa.assertTrue(false, "not able to click on save");
+								}
+							} else {
+								log(LogStatus.PASS, "not able to enter the value in description : " + description, YesNo.No);
+								sa.assertTrue(false, "not able to enter the value in description : " + description);
+							}
+						} else {
+							log(LogStatus.PASS, "not able to enter the value in PLUral label : " + label, YesNo.No);
+							sa.assertTrue(false, "not able to enter the value in PLUral label : " + label);
+						}
+					} else {
+						log(LogStatus.PASS, "not able to enter the value in description : " + label, YesNo.No);
+						sa.assertTrue(false, "not able to enter the value in description : " + label);
+					}
+				
+			} else {
+				log(LogStatus.INFO, "not able to click on new custom metadata Records link", YesNo.No);
+				sa.assertTrue(false, "not able to click on new custom metadata Records link");
+			}
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Custom_Metadata_Types, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Custom_Metadata_Types);
+		}
+		return flag;
+	}
 }

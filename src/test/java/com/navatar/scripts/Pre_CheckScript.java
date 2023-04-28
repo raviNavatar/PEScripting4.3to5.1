@@ -24,6 +24,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
+import com.navatar.generic.CommonVariables;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -79,7 +80,7 @@ public class Pre_CheckScript extends BaseLib {
 	}
 	
 	/// Pre-check ///
-	@Test(priority = 1,enabled =true)
+	@Test(priority = 1,enabled =false)
 	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -323,6 +324,92 @@ public class Pre_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+		}
+		sa.assertAll();
+
+	}
+	
+	
+	@Test(priority =2 ,enabled=false)
+	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
+		
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		
+		String fieldName="";
+		String list ="";
+		for(int i=0;i<3;i++) {
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			
+			if(i==0) {
+				
+				fieldName ="IndustryPicklist";
+				list =CommonVariables.industryAddedFields.toString()+"<break>"+CommonVariables.industryAactivatedFields.toString(); 
+				
+			}else if(i==1) {
+				fieldName ="TypePicklist";
+				list =CommonVariables.typeAddedFields.toString()+"<break>"+CommonVariables.typeAactivatedFields.toString(); 
+
+			}else {
+				fieldName ="AccountSourcePicklist";
+				list =CommonVariables.accountSourceAddedFields.toString()+"<break>"+CommonVariables.accountSourceAactivatedFields.toString(); 
+
+			}
+			if(setup.CreateNewCustomMetaData(fieldName, list, 30)) {
+				log(LogStatus.PASS,
+						fieldName+" :Custom metadata added",
+						YesNo.No);
+				
+			}else {
+				
+				log(LogStatus.FAIL,
+						fieldName+" :Custom metadata not added",
+						YesNo.Yes);
+				sa.assertTrue(false,
+						fieldName+" :Custom metadata not added");
+				
+			}
+			
+			
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			continue;
+			
+		}
+		
+		}
+		
+
+		if (parentWindow != null) {
+
+			driver.close();
+			
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 

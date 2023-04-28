@@ -1331,6 +1331,21 @@ public class SetupPage extends BasePageBusinessLayer {
 					"Visibility", timeOut, "SettingTypeInCustomMetaData");
 		}
 	}
+	
+	public WebElement NewRecordsButton( int timeOut) {
+		String xpath = "//input[@name='new'][contains(@title,'Custom Metadata')]";
+
+		try {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "NewRecordsButton", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "NewRecordsButton");
+
+		} catch (StaleElementReferenceException e) {
+			return isDisplayed(driver,
+					FindElement(driver, xpath, "NewRecordsButton", action.SCROLLANDBOOLEAN, timeOut),
+					"Visibility", timeOut, "NewRecordsButton");
+		}
+	}
 
 	public String GetDataFromValueFieldInCustomMetaData(int timeOut) {
 		String xpath = "//td[contains(@class,'dataCol last')]//*";
@@ -1398,6 +1413,33 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver,
 				FindElement(driver, xpath, "Label Name In Custom Meta Data", action.SCROLLANDBOOLEAN, timeOut),
 				"label Name", 10, "Label Name In Custom Meta Data");
+
+	}
+
+	public WebElement LabelNameInputCustomMetaData(int timeOut) {
+		String xpath = "//input[@name='MasterLabel']";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "Label Name Input Custom Meta Data", action.BOOLEAN, timeOut),
+				"label Name", 10, "Label Name Input Custom Meta Data");
+
+	}
+	
+	public WebElement pluralLabelNameInputCustomMetaData( int timeOut) {
+		String xpath = "//input[@name='PluralLabel']";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "plural Label Name Input Custom Meta Data", action.BOOLEAN, timeOut),
+				"label Name", 10, "plural Label Name Input Custom Meta Data");
+
+	}
+	
+	public WebElement descriptionInputCustomMetaData(int timeOut) {
+		String xpath = "//textarea[@name='Description']";
+
+		return isDisplayed(driver,
+				FindElement(driver, xpath, "description Input Custom Meta Data", action.BOOLEAN, timeOut),
+				"label Name", 10, "description Input Custom Meta Data");
 
 	}
 

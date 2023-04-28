@@ -22879,9 +22879,10 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	        f.setVisible(true);
 
     }
-	 
+	
 	 public  void FailedPopupWithReport() {
-		 String a="file:///"+System.getProperty("user.dir")+"/Reports/ExtentReports/ExtentLog"+reportNameWithTime+".html";
+		 String a="file:///"+System.getProperty("user.dir") +"/Reports/ExtentLog"+reportNameWithTime+".html";
+		//String a ="www.google.com";
 		 try {
 		 URI uri= new URI(a).resolve(a);
 			class OpenUrlAction implements ActionListener {
@@ -22900,8 +22901,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		    container.setLayout(new GridBagLayout());
 
 		    JButton button = new JButton();
-		    button.setText("<HTML><font=inherit color=#000000 size=+1> Automation Script Status:</font><font color=#FF0000 size=+1> FAILED <br> "
-		    		+ "<font color=#000000 size=-1  style=\"text-align:center;\" ><center>Click here for detailed report. <U> <font color=#0000FF size =+0>HyperLink</U></center></font> </HTML>");
+		    button.setText("<HTML><font=inherit color=#000000 size=+1> Automation Script Status:</font><font color=#FF0000 size=+1> FAILED <br><font color=#000000 size=-1  style=\"text-align:center;\" ><center>Click here for detailed report. <a font color=#0000FF size =+0 href=\"\" target=\".html\">HyperLink</a></center></font> </HTML>");
 
 		    button.setHorizontalAlignment(SwingConstants.LEFT);
 		    button.setBorderPainted(false);

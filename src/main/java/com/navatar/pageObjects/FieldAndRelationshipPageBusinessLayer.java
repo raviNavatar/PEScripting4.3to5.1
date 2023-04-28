@@ -174,9 +174,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 		WebElement ele;
 		
 		boolean flag=false;
-		CommonLib.ThreadSleep(5000);
-				CommonLib.switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
-				CommonLib.ThreadSleep(5000);
+		
 				String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td";
 				ele =FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
 				if(ele!=null) {
@@ -324,19 +322,9 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 		String xPath="";
 		WebElement ele;
 		boolean flag=false;
-		if(CommonLib.sendKeysAndPressEnter(driver, getQucikSearchInFieldAndRelationshipPage(50),fieldName , "Field", action.SCROLLANDBOOLEAN))
-		{
-			log(LogStatus.INFO,"Field value has been passed in "+fieldName,YesNo.No);
-			CommonLib.ThreadSleep(6000);
-			xPath="//span[text()='"+fieldName+"']";
-			ele = FindElement(driver, xPath, fieldName + " xpath", action.SCROLLANDBOOLEAN, 30);
-			if (CommonLib.click(driver, ele,fieldName+" field" , action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.INFO, "clicked on Field" + fieldName, YesNo.No);
-				CommonLib.ThreadSleep(7000);
-				CommonLib.switchToFrame(driver, 40, getfieldsAndRelationshipsIframe(30));
 				try
 				{
-					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+apiName+"']/preceding-sibling::td//a[contains(@title,'Del')]")));
+					ele=new WebDriverWait(driver, 30).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='"+fieldName+"']/preceding-sibling::td//a[contains(@title,'Del')]")));
 				}
 				catch(Exception ex)
 				{
@@ -402,7 +390,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 
 					CommonLib.switchToDefaultContent(driver);
 					CommonLib.switchToFrame(driver, 40, getfindAndReplaceIframe(30));			
-					CommonLib.ThreadSleep(15000);
+					CommonLib.ThreadSleep(7000);
 
 					if(!CommonLib.isElementPresent(ele))
 					{
@@ -422,18 +410,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 					flag=false;
 				}
 
-			}
-			else
-			{
-				log(LogStatus.ERROR,"Could not click on the "+fieldName,YesNo.Yes);
-				flag=false;
-			}
-		}
-		else
-		{
-			log(LogStatus.ERROR,"Could not pass the Field value "+fieldName,YesNo.Yes);
-			flag=false;
-		}
+		
 		return flag;
 
 	}
