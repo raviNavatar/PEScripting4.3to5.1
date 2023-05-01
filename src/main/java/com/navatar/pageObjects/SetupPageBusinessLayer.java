@@ -9404,12 +9404,13 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 									clickUsingJavaScript(driver, FindElement(driver, "//div[text()='Visualforce Pages']",
 											"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN);
 									sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
-									String xpath = "//h3[text()='Highlights Panel']";
-									WebElement ele1 = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
-									scrollDownThroughWebelement(driver, ele1, "");
-									switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
-									targetElement = FindElement(driver, "//span[contains(text(),'Please do not remove this section')]/ancestor::div/following-sibling::div//td[contains(@class,'entryCell')]", "",
+									String xpath = "//span[contains(text(),'Please do not remove this section')]/ancestor::div/following-sibling::div//td[contains(@class,'entryCell')]";
+									targetElement = FindElement(driver, xpath, "",
 											action.BOOLEAN, 10);
+									scrollDownThroughWebelement(driver, targetElement, "");
+									switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
+//									targetElement = FindElement(driver, "//span[contains(text(),'Please do not remove this section')]/ancestor::div/following-sibling::div//td[contains(@class,'entryCell')]", "",
+//											action.BOOLEAN, 10);
 									//table[contains(@id,'ext-gen')]//td
 								}
 								ele = isDisplayed(driver,
@@ -9436,21 +9437,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 											ThreadSleep(2000);
 
 											appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
-											if (src.equalsIgnoreCase(PageLabel.Convert_to_Portfolio.toString())) {
-												if (FindElement(driver,
-														"//div[contains(@id,'QuickAction')][text()='" + src + "']", "",
-														action.BOOLEAN, 20) != null) {
-													appLog.info("successfully verified drag and drop of " + src);
-												} else {
-
-													log(LogStatus.ERROR,"Not able to dragNDrop " + src + " at " + trgt
-															+ " location",YesNo.No);
-													sa.assertTrue(false,"Not able to dragNDrop " + src + " at " + trgt
-
-															+ " location");
-												}
-
-											} else {
+//											switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
 												if (FindElement(driver,
 														"//span[@class='labelText'][text()='" + src + "']", "",
 														action.BOOLEAN, 10) != null) {
@@ -9467,7 +9454,6 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 
 															+ " location");
 												}
-											}
 											appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
 										} else {
 
@@ -9486,11 +9472,13 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 								}
 
 							WebElement touchPoint;
-							ThreadSleep(2000);
-							String xpath = "//span[contains(text(),'Please do not remove this section.')]";
+							ThreadSleep(5000);
+							switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
+							String xpath = "//span[contains(text(),'Please do not remove this section')]";
 							ele = FindElement(driver, xpath, "Record dropdown", action.SCROLLANDBOOLEAN, 5);
 							scrollDownThroughWebelementInCenter(driver, ele, "Record dropdown");
 							ThreadSleep(1000);
+							switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
 							if (isDisplayed(driver,FindElement(driver, "//td[contains(@class,'entryCell')]//span[text()='"+ src +"']/../..", "", action.BOOLEAN, 10),
 									"visibility", 10,"Status") != null) {
 								ThreadSleep(2000);
@@ -9514,12 +9502,10 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 								CommonLib.sendKeys(driver, FindElement(driver, "//label[text()='Height (in pixels)']/following-sibling::div/input", "Height (in pixels)",
 										action.BOOLEAN, 10),"0","Height (in pixels)",action.BOOLEAN);
 								ThreadSleep(2000);
-								click(driver, FindElement(driver, "//button[text()='OK']",
+								click(driver, FindElement(driver, "//div[contains(@class,'scontrolProps')]//button[text()='OK']",
 										"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN);
-							
-							ThreadSleep(2000);
 							}
-
+							ThreadSleep(2000);
 							if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
