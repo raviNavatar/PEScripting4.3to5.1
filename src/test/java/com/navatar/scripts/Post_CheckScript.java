@@ -41,8 +41,6 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang3.ClassLoaderUtils;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.log4j.chainsaw.Main;
@@ -636,8 +634,8 @@ public class Post_CheckScript extends BaseLib {
 										CommonLib.ThreadSleep(3000);
 
 										if (edit.verifyAndAddAcuityTabInPages("Navatar Acuity", "Acuity", "Acuity",
-												new String[] { "Z  (Do not use) Navatar Clip Edit Utility",
-														"Z (Do not use) Navatar Add  Subscribe" },true)) {
+												new String[] { "Z (Do not use) Navatar Clip Edit Utility",
+														"Z (Do not use) Navatar Add Subscribe" },true)) {
 											log(LogStatus.INFO, "able to add tab", YesNo.No);
 											CommonLib.ThreadSleep(2000);
 											
