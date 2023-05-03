@@ -157,6 +157,17 @@ public class SetupPage extends BasePageBusinessLayer {
 				"edit page layout frame in lighting");
 	}
 	
+	@FindBy(xpath = "//table[@id='saveBtn']")
+	private WebElement SaveBtn;
+
+	/**
+	 * @return the editPageLayoutFrame_Lighting
+	 */
+	public WebElement getSaveBtn(int timeOut) {
+		return isDisplayed(driver, SaveBtn, "Visibility", timeOut,
+				"Save Btn");
+	}
+	
 	
 	@FindBy(xpath = "//em[@class='x-btn-split']//button[@type='button'][contains(text(),'Save')]")
 	private WebElement pageLayoutSaveBtn;

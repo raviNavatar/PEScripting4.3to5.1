@@ -180,6 +180,16 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getSettingLink_Lighting(int timeOut) {
 		return isDisplayed(driver, settingIcon_Lighting, "Visibility", timeOut, "setting tab in lighting");
 	}
+	
+	@FindBy(xpath = "//button[contains(@class,'slds-global-actions__help')]")
+	private WebElement SalesforceHelp;
+
+	/**
+	 * @return the settingTab_Lighting
+	 */
+	public WebElement getSalesforceHelp(int timeOut) {
+		return isDisplayed(driver, SalesforceHelp, "Visibility", timeOut, "Salesforce Help");
+	}
 
 	@FindBy(xpath = "//div[@class='slds-nav-vertical__section']//a[text()='Notifications']")
 	private WebElement settingNotificationButton;

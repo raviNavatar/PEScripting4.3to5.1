@@ -235,7 +235,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 //					} else {
 //						appLog.error("Not able to search object in lighting : " + tabCustomObj);
 //					}
-					XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='Account']/ancestor::tr//a";
+					XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='"+apiname+"']/ancestor::tr//a";
 					int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
 							.executeScript("return arguments[0].scrollHeight", getSelectProspectsGridScrollBox(10))));
 					((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", getSelectProspectsGridScrollBox(10));
@@ -286,11 +286,11 @@ public class SetupPageBusinessLayer extends SetupPage {
 //				} else {
 //					appLog.error("Not able to search object in lighting : " + objectName.toString());
 //				}
-			} else {
+//			} else {
 //				appLog.error(
 //						"Not able to click on object manager tab so cannot search object: " +;
-			}
-//		}
+//			}
+		}
 		return false;
 	}
 
@@ -397,6 +397,36 @@ public class SetupPageBusinessLayer extends SetupPage {
 				}
 			}
 		}
+		return false;
+
+	}
+	
+	public boolean clickOnObjectFeatureUsingAPIName(String environment, String mode, String apiname,
+			ObjectFeatureName objectFeatureName) {
+		WebElement ele = null;
+//				if (click(driver, ele, apiname + " object link", action.SCROLLANDBOOLEAN)) {
+//					log(LogStatus.INFO, "click on object link : " + apiname, YesNo.No);
+					ele = isDisplayed(driver, FindElement(driver, "//a[contains(text(),'" + objectFeatureName + "')]",
+							"", action.BOOLEAN, 20), "visibility", 20, objectFeatureName + " feature link");
+					if (ele != null) {
+						if (click(driver, ele, objectFeatureName + " object feature link", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on " + apiname + " object feature : " + objectFeatureName, YesNo.No);
+							return true;
+						} else {
+							log(LogStatus.ERROR, "Not able to click on object " + apiname + " feature " + objectFeatureName, YesNo.Yes);
+
+						}
+					} else {
+						
+						log(LogStatus.ERROR, apiname + " object " + objectFeatureName + " feature is not visible so cannot click on it", YesNo.Yes);
+
+					}
+//				} else {
+//					
+//					log(LogStatus.ERROR, "Not able to click on object link : " + apiname + " so cannot click on it's feature: "
+//							+ objectFeatureName, YesNo.Yes);
+//
+//				}
 		return false;
 
 	}
@@ -957,7 +987,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		return result;
 	}
-public List<String> removeDragNDropFromPagelayoutContact(String environment, String mode,object obj, ObjectFeatureName objectFeatureName,
+public List<String> removeDragNDropFromPagelayoutContact(String environment, String mode, ObjectFeatureName objectFeatureName,
 		List<String> layoutName, ArrayList<String> sourceANDDestination) {
 	WebElement ele = null;
 	List<String> result = new ArrayList<String>();
@@ -1078,16 +1108,16 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 							}
   
 							
-							if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
+							if (click(driver, getSaveBtn(30), "page layouts save button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
 
-								if (flag && obj != object.Global_Actions) {
-									ThreadSleep(5000);
-									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
-											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
-
-								}
+//								if (flag && obj != object.Global_Actions) {
+//									ThreadSleep(5000);
+//									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
+//											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+//
+//								}
 							} else {
 								appLog.error(
 										"Not able to click on Save button cannot save pagelayout dragged object or section");

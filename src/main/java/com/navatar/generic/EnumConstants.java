@@ -323,10 +323,10 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 				//				if(ExcelUtils.readDataFromPropertyFile("Mode").equalsIgnoreCase(Mode.Lighting.toString())) {
 				//					return "Institution";
 				//				} else {
-				return "Accounts";
+				return "Account";
 				//	}
 			}
-		},Contact,Attendee,Time_Log{
+		},Contact,Attendee,Time_Log,navpeII__Fund__c,navpeII__Fundraising__c,navpeII__Pipeline__c{
 			@Override
 			public String toString() {
 				return "Time Log";
