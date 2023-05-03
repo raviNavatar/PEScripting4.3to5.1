@@ -872,7 +872,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 	 * @return List<String>
 	 * @description this method is used to drag and drop fields on page layout page
 	 */
-
 	public List<String> removeQuickActionSection(String environment, String mode, object obj, ObjectFeatureName objectFeatureName,
 			List<String> layoutName) {
 
@@ -914,7 +913,12 @@ public class SetupPageBusinessLayer extends SetupPage {
 								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
 							}
 							ThreadSleep(5000);
-							
+							if(isDisplayed(driver,
+									FindElement(driver, "//div[@id='__PLATFORM_ACTION']//fieldset//div[contains(@class,'btn')]", "",
+											action.BOOLEAN, 20),
+									"visibility", 20, layoutName.get(i) + " page layout link") == null) {
+								log(LogStatus.INFO,"No Element is present to revert",YesNo.No);
+							} else {
 							WebElement section= FindElement(driver,"//div[@id='__PLATFORM_ACTION']//fieldset", "", action.BOOLEAN,10);
 							 mouseOverClickOperation(driver, section);
 							 ThreadSleep(1000);
@@ -959,6 +963,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							}else {
 								log(LogStatus.PASS,"global action already removed from page layout",YesNo.Yes);
 							}
+							}
 						} else {
 							
 							log(LogStatus.FAIL,"Not able to click on " + layoutName.get(i)
@@ -987,6 +992,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 
 		return result;
 	}
+
 public List<String> removeDragNDropFromPagelayoutContact(String environment, String mode, ObjectFeatureName objectFeatureName,
 		List<String> layoutName, ArrayList<String> sourceANDDestination) {
 	WebElement ele = null;
