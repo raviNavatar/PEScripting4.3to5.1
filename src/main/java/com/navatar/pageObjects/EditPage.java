@@ -602,6 +602,14 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
+	@FindBy(xpath = "//a[text()='Lightning Record Pages']")
+	private WebElement LightingRecordPage;
+
+	public WebElement getLightingRecordPage(int timeOut) {
+		return isDisplayed(driver, LightingRecordPage, "Visibility", timeOut,
+				"Lighting Record Page");
+	}
+	
 	@FindBy(xpath = "//input[@name='query1']")
 	private WebElement query1;
 
@@ -845,6 +853,14 @@ public class EditPage extends BasePageBusinessLayer {
 
 	public WebElement tabLabelSelectElement(int timeOut) {
 		return isDisplayed(driver, tabLabelSelectElement, "Visibility", timeOut, "tabLabelSelectElement");
+
+	}
+	
+	@FindBy(xpath = "//select")
+	private WebElement DefaultTab;
+
+	public WebElement getDefaultTab(int timeOut) {
+		return isDisplayed(driver, DefaultTab, "Visibility", timeOut, "Default Tab");
 
 	}
 

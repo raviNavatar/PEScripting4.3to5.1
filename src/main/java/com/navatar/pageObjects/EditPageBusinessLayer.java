@@ -2079,6 +2079,9 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				System.out.println(tabName+": Tab Already present in first position of Lightning Record Page");
 				switchToDefaultContent(driver);
 				CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+//				 if (CommonLib.click(driver, getLightingRecordPage(10), "Lighting Record Page", action.SCROLLANDBOOLEAN)) {
+//						log(LogStatus.INFO, "clicked on the Lighting Record Page", YesNo.No);
+//						CommonLib.ThreadSleep(10000);
 				return true;
 
 			}else {
@@ -2146,6 +2149,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 				
 			}
+//			}
 		}else {
 			
 			switchToDefaultContent(driver);
@@ -2172,7 +2176,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								if (CommonLib.click(driver, doneButtonInTabLabel(50), "Done Button",
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "Clicked on Done Button", YesNo.No);
-
+									if (CommonLib.selectVisibleTextFromDropDown(driver, getDefaultTab(30),
+											"Acuity", "Acuity")) {
 									CommonLib.ThreadSleep(4000);
 									
 									if (CommonLib.dragNDropField(driver, tabNameElementInEditPage(tabName, 30),
@@ -2183,6 +2188,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 										if (CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50))) {
 											log(LogStatus.INFO, "Successfully Switched to the Frame", YesNo.No);
+										
 											if (CommonLib.clickUsingJavaScript(driver, tabNameElementInEditPageComponent(tabName, 50),
 													"Tab: " + tabName, action.SCROLLANDBOOLEAN)) {
 												log(LogStatus.INFO, "Clicked on Tab: " + tabName + " Inside Page",
@@ -2237,9 +2243,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 									}
 
-								}
+									} else {
+										log(LogStatus.ERROR,
+												"Not Able to Entered the Value: Acuity from default tab",
+												YesNo.Yes);
+										sa.assertTrue(false, "Not Able to Entered the Value: Acuity from default tab");
 
-								else {
+									}
+
+									}else {
 									log(LogStatus.ERROR, "Not Able to Click on Done Button", YesNo.Yes);
 									sa.assertTrue(false, "Not Able to Click on Done Button");
 

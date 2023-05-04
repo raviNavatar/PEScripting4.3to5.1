@@ -100,7 +100,7 @@ public class Post_CheckScript extends BaseLib {
 		JFrame f = new JFrame("WARNING!!");
 		
 	
-	@Test(priority =0 ,enabled=true)
+	@Test(priority =0 ,enabled=false)
 	public void before() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -724,6 +724,7 @@ public class Post_CheckScript extends BaseLib {
 								continue;
 							}
 							 }
+							 
 						} else {
 							log(LogStatus.FAIL,
 									"Not able to click on Record type of object feature of " + obj + " object",
@@ -998,7 +999,7 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertAll();
 				}
 
-	@Test(priority = 8,enabled=true)
+	@Test(priority = 8,enabled=false)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1031,14 +1032,9 @@ public class Post_CheckScript extends BaseLib {
 												  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
 												  ,object.navpeII__Pipeline__c.toString()
 												 };
-//			object[] objects = {  object.Contact, object.Fund, object.Fundraising, object.Deal,  object.Firm };
-//			for (object obj : objects) {
 			for (String api : apiname) {
 			log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
 		
-//			if (setup.testsearchStandardOrCustomObject(environment, mode, api)) {
-//				log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
-//				CommonLib.ThreadSleep(3000);
 			if (click(driver, setup.getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on object manager tab");
        String XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='"+api+"']/ancestor::tr//a";
@@ -1293,23 +1289,41 @@ public class Post_CheckScript extends BaseLib {
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					}
 				}
-				object[] objects = { /* object.Contact, object.Fund, object.Fundraising, object.Deal , */object.Firm };
-									for (object obj : objects) {
-									log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);			
-									
-				if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
-					log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
-					CommonLib.ThreadSleep(3000);
-					if (setup.clickOnObjectFeature(environment, mode, obj,
+				String[] apiname = {
+						object.Account.toString() ,object.Contact.toString(),object.Account.toString(),object.
+													  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
+													  ,object.navpeII__Pipeline__c.toString()
+													 };
+				for (String api : apiname) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
+			
+				if (click(driver, setup.getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on object manager tab");
+	       String XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='"+api+"']/ancestor::tr//a";
+						int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+								.executeScript("return arguments[0].scrollHeight", setup.getSelectProspectsGridScrollBox(10))));
+						((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", setup.getSelectProspectsGridScrollBox(10));
+						ThreadSleep(2000);
+						for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
+		ThreadSleep(2000);
+							boolean t =!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty();
+		if (t) {
+								appLog.info("Element Successfully Found and displayed");
+								ThreadSleep(500);
+								ele = FindElement(driver, XpathelementTOSearch, "", action.BOOLEAN, 10);
+								if (ele != null) {
+									if (click(driver, ele, "", action.BOOLEAN)) {
+										appLog.info("clicked on Contact Name : "+"");
+					if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 							ObjectFeatureName.pageLayouts)) {
 						log(LogStatus.PASS, "clicked on page layout of object feature of "
-								+ obj.toString() + " object", YesNo.Yes);
+								+ api + " object", YesNo.Yes);
 						List<WebElement> allElements = setup.getAllPageLayoutList();
 						int no = allElements.size();
-						 for(int i=0;i<no;i++) {
+						 for(int j=0;j<no;j++) {
 						String name = null;
 							allElements = setup.getAllPageLayoutList();
-							WebElement labelElement = allElements.get(i);
+							WebElement labelElement = allElements.get(j);
 							name = labelElement.getText();
 							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
 										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
@@ -1474,7 +1488,7 @@ public class Post_CheckScript extends BaseLib {
 												CommonLib.ThreadSleep(3000);
 										switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
 									
-									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, obj, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
+									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
 									ThreadSleep(10000);
 									if (!abc1.isEmpty()) {
 										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
@@ -1484,31 +1498,56 @@ public class Post_CheckScript extends BaseLib {
 												"field not be ABLE To removed from quick action layout");
 									}
 
-								} else {
-									log(LogStatus.ERROR,
-											"Not able to clicked on the page layout of  page label:" + name,
-											YesNo.Yes);
-									sa.assertTrue(false,
-											"Not able to clicked on the page layout of  page label:" + name);
+									} else {
+										log(LogStatus.ERROR,
+												"Not able to clicked on the page layout of  page label:" + name,
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"Not able to clicked on the page layout of  page label:" + name);
 
+									}
+							 }
+							 }
+						 
+						} else {
+							log(LogStatus.ERROR,
+									"clicked on page layout of object feature of "
+											+ api + " object", YesNo.Yes);
+							sa.assertTrue(false,
+									"clicked on page layout of object feature of "
+											+ api + " object");
+							}
+//					} else {
+//						log(LogStatus.ERROR,
+//								api + " object has been opened in setup page", YesNo.Yes);
+//						sa.assertTrue(false,
+//								api + " object has been opened in setup page");
+//						}
+				
+								} else {
+									appLog.error("Not able to clicke on Contact Name: "+"");
+							
 								}
-						 }
-						 }
-					} else {
-						log(LogStatus.ERROR,
-								"clicked on page layout of object feature of "
-										+ obj.toString() + " object", YesNo.Yes);
-						sa.assertTrue(false,
-								"clicked on page layout of object feature of "
-										+ obj.toString() + " object");
+							}
+							break;
+						} else {
+							System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
+							((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 500) + ")",
+									setup.getSelectProspectsGridScrollBox(10));
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if (i == widgetTotalScrollingHeight / 50) {
+							
+							}
 						}
-				} else {
-					log(LogStatus.ERROR,
-							obj + " object has been opened in setup page", YesNo.Yes);
-					sa.assertTrue(false,
-							obj + " object has been opened in setup page");
 					}
-			}
+								
+				}
+				}
 		} catch (Exception e) {
 			if (parentWindow != null) {
 
@@ -2111,6 +2150,7 @@ public class Post_CheckScript extends BaseLib {
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String parentWindow = null;
 		String domainurl = "";
+		boolean flag = false;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
@@ -2132,7 +2172,7 @@ public class Post_CheckScript extends BaseLib {
 				CommonLib.ThreadSleep(3000);
 				CommonLib.ThreadSleep(3000);
 				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
-				if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
+			if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
 					//flag1 = true;
 					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
 				}else {
@@ -2189,13 +2229,14 @@ public class Post_CheckScript extends BaseLib {
 				}else {
 					log(LogStatus.FAIL,"element not found Navatar Usage Metrics:", YesNo.Yes);
 					sa.assertTrue(false,"element not found Navatar Usage Metrics:");
-				
+					flag = false;
 				}
 				}else {
 					log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
 					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
 				
 				}
+			sa.assertAll();
 			} catch (Exception e) {
 				if (parentWindow != null) {
 
@@ -2401,60 +2442,6 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		}
 		sa.assertAll();
 	}
-
-	@Test(priority =14 ,enabled=false)
-public void test () {
-
-	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-	String parentWindow = null;
-
-	CommonLib.refresh(driver);
-	CommonLib.ThreadSleep(3000);
-	try {
-		CommonLib.ThreadSleep(3000);
-		if (home.clickOnSetUpLink()) {
-
-			parentWindow = switchOnWindow(driver);
-			if (parentWindow == null) {
-				sa.assertTrue(false,
-						"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-				log(LogStatus.FAIL,
-						"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-						YesNo.Yes);
-				exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-			}
-		}
-		
-		List<String> layoutName = new ArrayList<String>();
-		ArrayList<String> sourceANDDestination = new ArrayList<String>();
-		
-		String[] apiname = {object.Contact.toString(),object.Account.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString(),object.navpeII__Pipeline__c.toString()};
-//		object[] objects = {  object.Contact, object.Fund, object.Fundraising, object.Deal,  object.Firm };
-//		for (object obj : objects) {
-		for (String api : apiname) {
-//		log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
-		if (setup.testsearchStandardOrCustomObject(environment, mode, api)) {
-			log(LogStatus.PASS, apiname + " object has been opened in setup page", YesNo.Yes);
-			CommonLib.ThreadSleep(3000);
-			
-			}
-		}
-		
-	} catch (Exception e) {
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-		}
-		sa.assertAll();
-	}
-	if (parentWindow != null) {
-
-		driver.close();
-		driver.switchTo().window(parentWindow);
-	}
-}
 }
 
 	

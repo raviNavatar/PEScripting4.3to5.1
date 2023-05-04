@@ -1171,7 +1171,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 	 * @return List<String>
 	 * @description this method is used to drag and drop fields on page layout page
 	 */
-	public List<String> AddDragNDropFromPagelayoutContact(String environment, String mode, object obj, ObjectFeatureName objectFeatureName,
+	public List<String> AddDragNDropFromPagelayoutContact(String environment, String mode, ObjectFeatureName objectFeatureName,
 			List<String> layoutName, ArrayList<String> sourceANDDestination) {
 		WebElement ele = null;
 		List<String> result = new ArrayList<String>();
@@ -1371,16 +1371,16 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 //					}
   
 							
-							if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
+							if (click(driver, getSaveBtn( 30), "page layouts save button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
 
-								if (flag && obj != object.Global_Actions) {
-									ThreadSleep(5000);
-									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
-											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
-
-								}
+//								if (flag && obj != object.Global_Actions) {
+//									ThreadSleep(5000);
+//									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
+//											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+//
+//								}
 							} else {
 								appLog.error(
 										"Not able to click on Save button cannot save pagelayout dragged object or section");
@@ -8433,16 +8433,17 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
               }
         
 		   }else {
-			   refresh(driver);
-			   if (CreateScheduleUsageMatrix(environment, mode,"NavatarUsageMetrics","scheduledClientData", 10)) {
-					//flag1 = true;
-					log(LogStatus.PASS, "able to Create schedule usage matrix" , YesNo.Yes);
-				}else {
-					log(LogStatus.FAIL, "Not able to Create schedule usage matrix", YesNo.Yes);
-					sa.assertTrue(false, "Not able to Create schedule usage matrix");
-				}
+//			   refresh(driver);
+//			   if (CreateScheduleUsageMatrix(environment, mode,"NavatarUsageMetrics","scheduledClientData", 10)) {
+//					//flag1 = true;
+//					log(LogStatus.PASS, "able to Create schedule usage matrix" , YesNo.Yes);
+//				}else {
+//					log(LogStatus.FAIL, "Not able to Create schedule usage matrix", YesNo.Yes);
+//					sa.assertTrue(false, "Not able to Create schedule usage matrix");
+//				}
 			log(LogStatus.INFO, "not able to find Navatar Usage Metrics:" + "",
 					YesNo.No);
+			sa.assertTrue(false, "Not able to Create schedule usage matrix");
 			  }
 		return flag;
     }
