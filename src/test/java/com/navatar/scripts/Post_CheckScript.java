@@ -100,7 +100,7 @@ public class Post_CheckScript extends BaseLib {
 		JFrame f = new JFrame("WARNING!!");
 		
 	
-	@Test(priority =0 ,enabled=true)
+	@Test(priority =0 ,enabled=false)
 	public void before() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -366,12 +366,30 @@ public class Post_CheckScript extends BaseLib {
 				}
 			}
 
-			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline };
+//			String[] apiname = {
+//					object.Account.toString() ,object.Contact.toString(),object.navpeII__Advisor__c.toString(),object.navpeII__Fund__c.toString(),
+//					object.navpeII__Fundraising__c.toString(),object.navpeII__Pipeline__c.toString(), object.navpeII__Affiliation__c.toString(),
+//					object.navpeII__Agreement_Amendment__c.toString(),object.navpeII__Capital_Call__c.toString(),object.navpeII__Commitment__c.toString(),
+//					object.navpeII__Correspondence_List__c.toString(),object.navpeII__Quarterly_Financial_Performance__c.toString(),
+//					object.navpeII__Financing__c.toString(),object.navpeII__Fund_Distribution__c.toString(),object.navpeII__Fund_Drawdown__c.toString(),
+//					object.navpeII__Fund_Investment__c.toString(),object.navpeII__Fund_of_Funds_Transaction__c.toString(),object.navpeII__Fundraising_Contact__c.toString(),
+//					object.navpeII__Investor_Distribution__c.toString(),object.navpeII__Marketing_Prospect__c.toString(),object.navpeII__Office_Location_Info__c.toString(),
+//					object.navpeII__Partnership__c.toString(),object.navpeII__Talent_Placement__c.toString(),object.navpeII__Transfer__c.toString(),object.navpeII__Marketing_Event__c.toString(),
+//					object.navpeII__Advisor_Involvement__c.toString(),object.navpeII__Attendee__c.toString(),object.navpeII__Deal_Expert__c.toString(),object.navpeII__Deal_Team__c.toString(),	
+//					object.navpeII__Request_Tracker__c.toString(),object.navpeII__Review__c.toString(),object.navpeII__Log_Time__c.toString(),
+//					object.navpeII__Valuation__c.toString()
+//					};
+			object[] objects = {object.Advisor_Involvement, object.Deal_Expert,object.Agreement, object.Contact, object.Fund, object.Fundraising, object.Pipeline,  object.Institution, object.Advisor, object.Affiliation,object.Attendee,
+								object.Capital_Call,object.Commitment,object.Correspondence_List,object.Deal_Team,object.Financial_Performance,object.Financing,
+								object.Fund_Drawdown,object.Fund_Distribution,object.Fund_Investment,object.Fund_of_Fund_Transactions,object.Fundraising_Contact,object.Marketing_Event,
+								object.Marketing_Prospect,object.Office_Location,object.Partnership,object.Request_Tracker,object.Review,object.Talent_Placement,object.Time_Log,object.Transfer,
+								object.Valuation};
 			for (object obj : objects) {
+//			for (String api : apiname) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+					if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+						log(LogStatus.PASS, obj.toString() + " object has been opened in setup page", YesNo.Yes);
 						CommonLib.ThreadSleep(3000);
 						if (setup.clickOnObjectFeature(projectName, mode, obj,
 								ObjectFeatureName.pageLayouts)) {
@@ -588,7 +606,11 @@ public class Post_CheckScript extends BaseLib {
 
 		
 
-			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline };
+			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline, object.Advisor, object.Affiliation, object.Agreement,
+								object.Attendee, object.Capital_Call, object.Commitment, object.Correspondence_List, object.Deal_Expert, object.Deal_Team, object.Financial_Performance,
+								object.Financing,object.Fund_Distribution, object.Fund_Drawdown, object.Fund_Investment, object.Fund_of_Fund_Transactions, object.Fundraising_Contact,
+								object.Investor_Distribution, object.Marketing_Event, object.Marketing_Prospect, object.Office_Location, object.Partnership, object.Request_Tracker,
+								object.Review, object.Talent_Placement, object.Time_Log, object.Transfer, object.Valuation};
 			for (object obj : objects) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
@@ -759,7 +781,6 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	
 	@Test(priority = 7,enabled=false)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
@@ -998,7 +1019,7 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertAll();
 				}
 
-	@Test(priority = 8,enabled=true)
+	@Test(priority = 8,enabled=false)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1277,252 +1298,252 @@ public class Post_CheckScript extends BaseLib {
 			driver.close();
 			driver.switchTo().window(parentWindow);
 		}
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-				CommonLib.ThreadSleep(3000);
-				if (home.clickOnSetUpLink()) {
-
-					parentWindow = switchOnWindow(driver);
-					if (parentWindow == null) {
-						sa.assertTrue(false,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-						log(LogStatus.FAIL,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-								YesNo.Yes);
-						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					}
-				}
-				object[] objects = { /* object.Contact, object.Fund, object.Fundraising, object.Deal , */object.Firm };
-									for (object obj : objects) {
-									log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);			
-									
-				if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
-					log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
-					CommonLib.ThreadSleep(3000);
-					if (setup.clickOnObjectFeature(environment, mode, obj,
-							ObjectFeatureName.pageLayouts)) {
-						log(LogStatus.PASS, "clicked on page layout of object feature of "
-								+ obj.toString() + " object", YesNo.Yes);
-						List<WebElement> allElements = setup.getAllPageLayoutList();
-						int no = allElements.size();
-						 for(int i=0;i<no;i++) {
-						String name = null;
-							allElements = setup.getAllPageLayoutList();
-							WebElement labelElement = allElements.get(i);
-							name = labelElement.getText();
-							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
-										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
-//							for(int j=0;j<allElements.size();j++) {
-//								String value = allElements.get(j).getText().trim();
-//								if(value.equalsIgnoreCase("Fund Manager") ||value.equalsIgnoreCase("Fund Manager’s Fund")) {
-//									allElements.remove(j);
+//		CommonLib.refresh(driver);
+//		CommonLib.ThreadSleep(3000);
+//		try {
+//				CommonLib.ThreadSleep(3000);
+//				if (home.clickOnSetUpLink()) {
+//
+//					parentWindow = switchOnWindow(driver);
+//					if (parentWindow == null) {
+//						sa.assertTrue(false,
+//								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+//						log(LogStatus.FAIL,
+//								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+//								YesNo.Yes);
+//						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+//					}
+//				}
+//				object[] objects = { /* object.Contact, object.Fund, object.Fundraising, object.Deal , */object.Firm };
+//									for (object obj : objects) {
+//									log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);			
+//									
+//				if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+//					log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//					CommonLib.ThreadSleep(3000);
+//					if (setup.clickOnObjectFeature(environment, mode, obj,
+//							ObjectFeatureName.pageLayouts)) {
+//						log(LogStatus.PASS, "clicked on page layout of object feature of "
+//								+ obj.toString() + " object", YesNo.Yes);
+//						List<WebElement> allElements = setup.getAllPageLayoutList();
+//						int no = allElements.size();
+//						 for(int i=0;i<no;i++) {
+//						String name = null;
+//							allElements = setup.getAllPageLayoutList();
+//							WebElement labelElement = allElements.get(i);
+//							name = labelElement.getText();
+//							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
+//										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+////							for(int j=0;j<allElements.size();j++) {
+////								String value = allElements.get(j).getText().trim();
+////								if(value.equalsIgnoreCase("Fund Manager") ||value.equalsIgnoreCase("Fund Manager’s Fund")) {
+////									allElements.remove(j);
+////								}
+////							}
+//						 	
+//							
+//								
+//					
+//									List<String> layoutName1 = new ArrayList<String>();
+//									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
+//									if(name.equals("Advisor")) {
+//
+//										layoutName1 = new ArrayList<String>();
+//										layoutName1.add("Advisor");
+//										sourceANDDestination1 = new ArrayList<String>();
+//										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Client.toString());
+//										
+//									} else if(name.equals("Company")) {
+//										layoutName1 = new ArrayList<String>();
+//										layoutName1.add("");
+//										sourceANDDestination1 = new ArrayList<String>();
+//										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Export.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
+//
+//									} else if((name.equals("Individual Investor"))|| (name.equals("Institution"))) {
+//
+//										layoutName1 = new ArrayList<String>();
+//										layoutName1.add("Advisor");
+//										 sourceANDDestination1 = new ArrayList<String>();
+//										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Advisor.toString());
+//
+//									} else if(name.equals("Intermediary")){
+//										
+//									layoutName1 = new ArrayList<String>();
+//									layoutName1.add("Advisor");
+//									 sourceANDDestination1 = new ArrayList<String>();
+//									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Edit.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Export.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+//									
+//									} else if(name.equals("Lender")){
+//
+//										layoutName1 = new ArrayList<String>();
+//										layoutName1.add("Advisor");
+//										sourceANDDestination1 = new ArrayList<String>();
+//										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Financing.toString());
+//
+//									} else if(name.equals("Limited Partner")){
+//
+//									layoutName1 = new ArrayList<String>();
+//									layoutName1.add("Advisor");
+//									sourceANDDestination1 = new ArrayList<String>();
+//									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Fundraising.toString());
+//									
+//									} else if(name.equals("Portfolio Company")){
+//
+//										layoutName1 = new ArrayList<String>();
+//										layoutName1.add("Advisor");
+//										sourceANDDestination1 = new ArrayList<String>();
+//										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
+//										
+//									} else if(name.equals("Private Equity")){
+//
+//										layoutName1 = new ArrayList<String>();
+//										layoutName1.add("Advisor");
+//										sourceANDDestination1 = new ArrayList<String>();
+//										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+//										
+//									} else if(name.equals("Contact Layout")){
+//								   layoutName1 = new ArrayList<String>();
+//									layoutName1.add("Advisor");
+//									 sourceANDDestination1 = new ArrayList<String>();
+//									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Export.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Referral.toString());
+//									
+//									} else if(name.equals("Fund Layout")){
+//										   layoutName1 = new ArrayList<String>();
+//											layoutName1.add("Advisor");
+//											 sourceANDDestination1 = new ArrayList<String>();
+//											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Bulk_Fundraising.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Partnership.toString());
+//											
+//									} else if(name.equals("Fundraising Layout")){
+//										   layoutName1 = new ArrayList<String>();
+//											layoutName1.add("Advisor");
+//											 sourceANDDestination1 = new ArrayList<String>();
+//											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Create_Commitments.toString());
+//											
+//									} else if(name.equals("Pipeline Layout")){
+//										   layoutName1 = new ArrayList<String>();
+//											layoutName1.add("Advisor");
+//											 sourceANDDestination1 = new ArrayList<String>();
+//											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Team_Member.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Review.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Convert_to_Portfolio.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Lender.toString());
+//
+//									} else {
+//
+//									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
+//
+//									}
+//									if (click(driver, labelElement, "lightning record  page label :" + name,
+//											action.SCROLLANDBOOLEAN)) {
+//										log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+//												YesNo.No);
+//												CommonLib.ThreadSleep(3000);
+//										switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
+//									
+//									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, obj, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
+//									ThreadSleep(10000);
+//									if (!abc1.isEmpty()) {
+//										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
+//									}else{
+//										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
+//										sa.assertTrue(false,
+//												"field not be ABLE To removed from quick action layout");
+//									}
+//
+//								} else {
+//									log(LogStatus.ERROR,
+//											"Not able to clicked on the page layout of  page label:" + name,
+//											YesNo.Yes);
+//									sa.assertTrue(false,
+//											"Not able to clicked on the page layout of  page label:" + name);
+//
 //								}
-//							}
-						 	
-							
-								
-					
-									List<String> layoutName1 = new ArrayList<String>();
-									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
-									if(name.equals("Advisor")) {
-
-										layoutName1 = new ArrayList<String>();
-										layoutName1.add("Advisor");
-										sourceANDDestination1 = new ArrayList<String>();
-										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Client.toString());
-										
-									} else if(name.equals("Company")) {
-										layoutName1 = new ArrayList<String>();
-										layoutName1.add("");
-										sourceANDDestination1 = new ArrayList<String>();
-										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
-										sourceANDDestination1.add(GlobalActionItem.Export.toString());
-										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
-
-									} else if((name.equals("Individual Investor"))|| (name.equals("Institution"))) {
-
-										layoutName1 = new ArrayList<String>();
-										layoutName1.add("Advisor");
-										 sourceANDDestination1 = new ArrayList<String>();
-										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Advisor.toString());
-
-									} else if(name.equals("Intermediary")){
-										
-									layoutName1 = new ArrayList<String>();
-									layoutName1.add("Advisor");
-									 sourceANDDestination1 = new ArrayList<String>();
-									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-									sourceANDDestination1.add(GlobalActionItem.Edit.toString());
-									sourceANDDestination1.add(GlobalActionItem.Export.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
-									
-									} else if(name.equals("Lender")){
-
-										layoutName1 = new ArrayList<String>();
-										layoutName1.add("Advisor");
-										sourceANDDestination1 = new ArrayList<String>();
-										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Financing.toString());
-
-									} else if(name.equals("Limited Partner")){
-
-									layoutName1 = new ArrayList<String>();
-									layoutName1.add("Advisor");
-									sourceANDDestination1 = new ArrayList<String>();
-									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Fundraising.toString());
-									
-									} else if(name.equals("Portfolio Company")){
-
-										layoutName1 = new ArrayList<String>();
-										layoutName1.add("Advisor");
-										sourceANDDestination1 = new ArrayList<String>();
-										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
-										
-									} else if(name.equals("Private Equity")){
-
-										layoutName1 = new ArrayList<String>();
-										layoutName1.add("Advisor");
-										sourceANDDestination1 = new ArrayList<String>();
-										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
-										
-									} else if(name.equals("Contact Layout")){
-								   layoutName1 = new ArrayList<String>();
-									layoutName1.add("Advisor");
-									 sourceANDDestination1 = new ArrayList<String>();
-									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
-									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
-									sourceANDDestination1.add(GlobalActionItem.Export.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Referral.toString());
-									
-									} else if(name.equals("Fund Layout")){
-										   layoutName1 = new ArrayList<String>();
-											layoutName1.add("Advisor");
-											 sourceANDDestination1 = new ArrayList<String>();
-											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											sourceANDDestination1.add(GlobalActionItem.Bulk_Fundraising.toString());
-											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Partnership.toString());
-											
-									} else if(name.equals("Fundraising Layout")){
-										   layoutName1 = new ArrayList<String>();
-											layoutName1.add("Advisor");
-											 sourceANDDestination1 = new ArrayList<String>();
-											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());
-											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-											sourceANDDestination1.add(GlobalActionItem.Create_Commitments.toString());
-											
-									} else if(name.equals("Pipeline Layout")){
-										   layoutName1 = new ArrayList<String>();
-											layoutName1.add("Advisor");
-											 sourceANDDestination1 = new ArrayList<String>();
-											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Team_Member.toString());
-											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Review.toString());
-											sourceANDDestination1.add(GlobalActionItem.Convert_to_Portfolio.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Lender.toString());
-
-									} else {
-
-									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
-
-									}
-									if (click(driver, labelElement, "lightning record  page label :" + name,
-											action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
-												YesNo.No);
-												CommonLib.ThreadSleep(3000);
-										switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
-									
-									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, obj, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
-									ThreadSleep(10000);
-									if (!abc1.isEmpty()) {
-										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
-									}else{
-										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
-										sa.assertTrue(false,
-												"field not be ABLE To removed from quick action layout");
-									}
-
-								} else {
-									log(LogStatus.ERROR,
-											"Not able to clicked on the page layout of  page label:" + name,
-											YesNo.Yes);
-									sa.assertTrue(false,
-											"Not able to clicked on the page layout of  page label:" + name);
-
-								}
-						 }
-						 }
-					} else {
-						log(LogStatus.ERROR,
-								"clicked on page layout of object feature of "
-										+ obj.toString() + " object", YesNo.Yes);
-						sa.assertTrue(false,
-								"clicked on page layout of object feature of "
-										+ obj.toString() + " object");
-						}
-				} else {
-					log(LogStatus.ERROR,
-							obj + " object has been opened in setup page", YesNo.Yes);
-					sa.assertTrue(false,
-							obj + " object has been opened in setup page");
-					}
-			}
-		} catch (Exception e) {
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-			}
-			sa.assertAll();
-		}
-
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-		}
+//						 }
+//						 }
+//					} else {
+//						log(LogStatus.ERROR,
+//								"clicked on page layout of object feature of "
+//										+ obj.toString() + " object", YesNo.Yes);
+//						sa.assertTrue(false,
+//								"clicked on page layout of object feature of "
+//										+ obj.toString() + " object");
+//						}
+//				} else {
+//					log(LogStatus.ERROR,
+//							obj + " object has been opened in setup page", YesNo.Yes);
+//					sa.assertTrue(false,
+//							obj + " object has been opened in setup page");
+//					}
+//			}
+//		} catch (Exception e) {
+//			if (parentWindow != null) {
+//
+//				driver.close();
+//				driver.switchTo().window(parentWindow);
+//			}
+//			sa.assertAll();
+//		}
+//
+//		if (parentWindow != null) {
+//
+//			driver.close();
+//			driver.switchTo().window(parentWindow);
+//		}
 		sa.assertAll();
 
 	}
@@ -2403,7 +2424,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 	}
 
 	@Test(priority =14 ,enabled=false)
-public void test () {
+	public void test () {
 
 	HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 	SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -2429,7 +2450,7 @@ public void test () {
 		List<String> layoutName = new ArrayList<String>();
 		ArrayList<String> sourceANDDestination = new ArrayList<String>();
 		
-		String[] apiname = {object.Contact.toString(),object.Account.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString(),object.navpeII__Pipeline__c.toString()};
+		String[] apiname = {object.Contact.toString()};
 //		object[] objects = {  object.Contact, object.Fund, object.Fundraising, object.Deal,  object.Firm };
 //		for (object obj : objects) {
 		for (String api : apiname) {

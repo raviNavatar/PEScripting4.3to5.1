@@ -2070,7 +2070,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			addedTabName.add(ele.getText().trim());
 		}
 		
-		List<String>	result =compareMultipleList(driver, tabName, allTabs);
+		List<String> result =compareMultipleList(driver, tabName, allTabs);
 		if(result.isEmpty()) {
 			log(LogStatus.INFO, tabName+": Tab is present in Lightning Record Page", YesNo.No);
 			System.out.println(tabName+": Tab is present in Lightning Record Page");
@@ -2304,7 +2304,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									action.SCROLLANDBOOLEAN)) {
 								
 								log(LogStatus.INFO, "Add section after button has been clicked", YesNo.No);
-								
+								JavascriptExecutor js = (JavascriptExecutor) driver;
+								CommonLib.clickUsingJavaScript(driver, getFirstComponent(20),"");
+								CommonLib.ThreadSleep(2000);
+								WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
+										js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
+										CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
+										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+									"Add Link");
+								CommonLib.switchToDefaultContent(driver);
 								if (CommonLib.click(driver, getAddButtonAfterSection(10), "Navatar Acuity component Add Button",
 										action.SCROLLANDBOOLEAN)) {
 									
@@ -2488,6 +2497,30 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 												if (CommonLib.click(driver, getSaveButton(20), " Save Button",
 														action.SCROLLANDBOOLEAN)) {
 													log(LogStatus.INFO, " save button has been clicked", YesNo.No);
+													if(CommonLib.isDisplayed(driver,FindElement(driver,
+															"//div[contains(@class,'modal-container')]//button[text()='Activate']",
+															"", action.BOOLEAN, 20),
+													"visibility", 10,"" + " Navatar Activate") != null) {
+														CommonLib.click(driver, getActivateButton(10), "Activate Button",
+																action.SCROLLANDBOOLEAN);
+														ThreadSleep(5000);
+														if(CommonLib.isDisplayed(driver,FindElement(driver,
+																"//div[contains(@class,'modal-container')]//button[text()='Assign as Org Default']",
+																"", action.BOOLEAN, 20),
+														"visibility", 10,"" + "Close Button") != null) {
+															CommonLib.click(driver, getAssignAsDefaultButton(10), "Assign As Default Button",
+																	action.SCROLLANDBOOLEAN);
+															ThreadSleep(2000);
+															CommonLib.click(driver, getSaveButtonOnPopup(10), "Save Button On Popup",
+																	action.SCROLLANDBOOLEAN);
+														} else {
+															log(LogStatus.INFO, "Assign As Default button is not visible", YesNo.Yes);
+														}
+														CommonLib.click(driver, getSaveButton(20), " Save Button",
+																action.SCROLLANDBOOLEAN);
+													} else {
+														log(LogStatus.INFO, "Activate button is not visible", YesNo.Yes);
+													}
 													status++;
 												}
 												else {

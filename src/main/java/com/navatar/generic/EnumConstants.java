@@ -371,6 +371,11 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 			public String toString() {
 				return "Installed Packages";
 			}
+		},Agreement{
+			@Override
+			public String toString() {
+				return "Agreement/Amendment";
+			}
 		},Task,Global_Actions{
 			@Override
 			public String toString() {
@@ -434,7 +439,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 		public String toString() {
 			return "Data Export";
 		}
-	}, Manage_Connected_Apps, Partnership, Correspondence_List, Fund_Drawdown, Capital_Call, Fund_Distribution, Investor_Distribution, Advisor_Involvement, Fund_Investment, Fund_of_Fund_Transactions, Quarterly_Financial_Performance, Talent_Placement, Transfer, Agreement
+	}, Manage_Connected_Apps, Partnership, Correspondence_List, Fund_Drawdown, Capital_Call, Fund_Distribution, Investor_Distribution, Advisor_Involvement, Fund_Investment, Fund_of_Fund_Transactions, Quarterly_Financial_Performance, Talent_Placement, Transfer, navpeII__Advisor__c, navpeII__Affiliation__c, navpeII__Agreement_Amendment__c, navpeII__Capital_Call__c, navpeII__Commitment__c, navpeII__Correspondence_List__c, navpeII__Quarterly_Financial_Performance__c, navpeII__Fund_Drawdown__c, navpeII__Fund_Distribution__c, navpeII__Financing__c, navpeII__Fund_Investment__c, navpeII__Fund_of_Funds_Transaction__c, navpeII__Fundraising_Contact__c, navpeII__Marketing_Prospect__c, navpeII__Investor_Distribution__c, navpeII__Talent_Placement__c, navpeII__Partnership__c, navpeII__Office_Location_Info__c, navpeII__Transfer__c, navpeII__Advisor_Involvement__c, navpeII__Attendee__c, navpeII__Deal_Expert__c, navpeII__Deal_Team__c, navpeII__Marketing_Event__c, navpeII__Request_Tracker__c, navpeII__Review__c, navpeII__Log_Time__c, navpeII__Valuation__c, Financial_Performance, Office_Location, Marketing_Prospect
 	};
 
 	
