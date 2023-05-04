@@ -2305,7 +2305,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								
 								log(LogStatus.INFO, "Add section after button has been clicked", YesNo.No);
 								JavascriptExecutor js = (JavascriptExecutor) driver;
-								CommonLib.clickUsingJavaScript(driver, getFirstComponent(20),"");
+								CommonLib.clickUsingJavaScript(driver, getFirstComponent1(20),"");
 								CommonLib.ThreadSleep(2000);
 								WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
 										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));

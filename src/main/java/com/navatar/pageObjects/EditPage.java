@@ -948,6 +948,13 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, firstComponent, "Visibility", timeOut, "FirstComponent");
 	}
 	
+	@FindBy(xpath = "//div[@class='top']//div[contains(@data-instance-type,'COMPONENT')]")
+	private WebElement firstComponent1;
+
+	public WebElement getFirstComponent1(int timeOut) {
+		return isDisplayed(driver, firstComponent1, "Visibility", timeOut, "FirstComponent");
+	}
+	
 	public List<WebElement> getLastComponent(int timeOut) {
 		String xpath = "//div[contains(@data-instance-type,'COMPONENT')]";
 		List<WebElement> list = new ArrayList<WebElement>();
