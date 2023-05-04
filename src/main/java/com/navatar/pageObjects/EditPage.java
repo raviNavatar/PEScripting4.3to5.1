@@ -444,6 +444,30 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
+	@FindBy(xpath = "//div[contains(@class,'modal-container')]//button[text()='Activate']")
+	private WebElement ActivateButton;
+
+	public WebElement getActivateButton(int timeOut) {
+		return isDisplayed(driver, ActivateButton, "Visibility", timeOut, "Activate Button");
+
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'modal-container')]//button[text()='Assign as Org Default']")
+	private WebElement AssignAsDefaultButton;
+
+	public WebElement getAssignAsDefaultButton(int timeOut) {
+		return isDisplayed(driver, AssignAsDefaultButton, "Visibility", timeOut, "Assign As Default Button");
+
+	}
+	
+	@FindBy(xpath = "//div[contains(@class,'modal-container')]//button[text()='Save']")
+	private WebElement SaveButtonOnPopup;
+
+	public WebElement getSaveButtonOnPopup(int timeOut) {
+		return isDisplayed(driver, SaveButtonOnPopup, "Visibility", timeOut, "Save Button On Popup");
+
+	}
+	
 	@FindBy(xpath = "//label[text()='Data Provider']/parent::lightning-grouped-combobox//lightning-base-combobox-formatted-text")
 	private List<WebElement> DataProviderDropDownList;
 
@@ -933,11 +957,18 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@class='top']//div[contains(@data-instance-type,'COMPONENT')]")
+	@FindBy(xpath = "//div[@class='colSide']//div[contains(@data-instance-type,'COMPONENT')]")
 	private WebElement firstComponent;
 
 	public WebElement getFirstComponent(int timeOut) {
 		return isDisplayed(driver, firstComponent, "Visibility", timeOut, "FirstComponent");
+	}
+	
+	@FindBy(xpath = "//div[@class='top']//div[contains(@data-instance-type,'COMPONENT')]")
+	private WebElement firstComponent1;
+
+	public WebElement getFirstComponent1(int timeOut) {
+		return isDisplayed(driver, firstComponent1, "Visibility", timeOut, "FirstComponent");
 	}
 	
 	public List<WebElement> getLastComponent(int timeOut) {

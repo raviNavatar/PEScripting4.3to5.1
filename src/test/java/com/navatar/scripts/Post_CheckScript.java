@@ -366,12 +366,30 @@ public class Post_CheckScript extends BaseLib {
 				}
 			}
 
-			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline };
+//			String[] apiname = {
+//					object.Account.toString() ,object.Contact.toString(),object.navpeII__Advisor__c.toString(),object.navpeII__Fund__c.toString(),
+//					object.navpeII__Fundraising__c.toString(),object.navpeII__Pipeline__c.toString(), object.navpeII__Affiliation__c.toString(),
+//					object.navpeII__Agreement_Amendment__c.toString(),object.navpeII__Capital_Call__c.toString(),object.navpeII__Commitment__c.toString(),
+//					object.navpeII__Correspondence_List__c.toString(),object.navpeII__Quarterly_Financial_Performance__c.toString(),
+//					object.navpeII__Financing__c.toString(),object.navpeII__Fund_Distribution__c.toString(),object.navpeII__Fund_Drawdown__c.toString(),
+//					object.navpeII__Fund_Investment__c.toString(),object.navpeII__Fund_of_Funds_Transaction__c.toString(),object.navpeII__Fundraising_Contact__c.toString(),
+//					object.navpeII__Investor_Distribution__c.toString(),object.navpeII__Marketing_Prospect__c.toString(),object.navpeII__Office_Location_Info__c.toString(),
+//					object.navpeII__Partnership__c.toString(),object.navpeII__Talent_Placement__c.toString(),object.navpeII__Transfer__c.toString(),object.navpeII__Marketing_Event__c.toString(),
+//					object.navpeII__Advisor_Involvement__c.toString(),object.navpeII__Attendee__c.toString(),object.navpeII__Deal_Expert__c.toString(),object.navpeII__Deal_Team__c.toString(),	
+//					object.navpeII__Request_Tracker__c.toString(),object.navpeII__Review__c.toString(),object.navpeII__Log_Time__c.toString(),
+//					object.navpeII__Valuation__c.toString()
+//					};
+			object[] objects = {object.Advisor_Involvement, object.Deal_Expert,object.Agreement, object.Contact, object.Fund, object.Fundraising, object.Pipeline,  object.Institution, object.Advisor, object.Affiliation,object.Attendee,
+								object.Capital_Call,object.Commitment,object.Correspondence_List,object.Deal_Team,object.Financial_Performance,object.Financing,
+								object.Fund_Drawdown,object.Fund_Distribution,object.Fund_Investment,object.Fund_of_Fund_Transactions,object.Fundraising_Contact,object.Marketing_Event,
+								object.Marketing_Prospect,object.Office_Location,object.Partnership,object.Request_Tracker,object.Review,object.Talent_Placement,object.Time_Log,object.Transfer,
+								object.Valuation};
 			for (object obj : objects) {
+//			for (String api : apiname) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+					if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+						log(LogStatus.PASS, obj.toString() + " object has been opened in setup page", YesNo.Yes);
 						CommonLib.ThreadSleep(3000);
 						if (setup.clickOnObjectFeature(projectName, mode, obj,
 								ObjectFeatureName.pageLayouts)) {
@@ -588,7 +606,11 @@ public class Post_CheckScript extends BaseLib {
 
 		
 
-			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline };
+			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline, object.Advisor, object.Affiliation, object.Agreement,
+								object.Attendee, object.Capital_Call, object.Commitment, object.Correspondence_List, object.Deal_Expert, object.Deal_Team, object.Financial_Performance,
+								object.Financing,object.Fund_Distribution, object.Fund_Drawdown, object.Fund_Investment, object.Fund_of_Fund_Transactions, object.Fundraising_Contact,
+								object.Investor_Distribution, object.Marketing_Event, object.Marketing_Prospect, object.Office_Location, object.Partnership, object.Request_Tracker,
+								object.Review, object.Talent_Placement, object.Time_Log, object.Transfer, object.Valuation};
 			for (object obj : objects) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
@@ -760,7 +782,6 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	
 	@Test(priority = 7,enabled=false)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
@@ -1273,6 +1294,7 @@ public class Post_CheckScript extends BaseLib {
 			driver.close();
 			driver.switchTo().window(parentWindow);
 		}
+
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
@@ -1562,6 +1584,7 @@ public class Post_CheckScript extends BaseLib {
 			driver.close();
 			driver.switchTo().window(parentWindow);
 		}
+
 		sa.assertAll();
 
 	}
