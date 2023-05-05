@@ -100,7 +100,7 @@ public class Post_CheckScript extends BaseLib {
 		JFrame f = new JFrame("WARNING!!");
 		
 	
-	@Test(priority =0 ,enabled=false)
+	@Test(priority =0 ,enabled=true)
 	public void before() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
@@ -593,7 +593,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=false)
+	@Test(priority =6 ,enabled=true)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -606,11 +606,21 @@ public class Post_CheckScript extends BaseLib {
 
 		
 
-			object[] objects = { object.Institution,object.Contact, object.Fund, object.Fundraising, object.Pipeline, object.Advisor, object.Affiliation, object.Agreement,
-								object.Attendee, object.Capital_Call, object.Commitment, object.Correspondence_List, object.Deal_Expert, object.Deal_Team, object.Financial_Performance,
-								object.Financing,object.Fund_Distribution, object.Fund_Drawdown, object.Fund_Investment, object.Fund_of_Fund_Transactions, object.Fundraising_Contact,
-								object.Investor_Distribution, object.Marketing_Event, object.Marketing_Prospect, object.Office_Location, object.Partnership, object.Request_Tracker,
-								object.Review, object.Talent_Placement, object.Time_Log, object.Transfer, object.Valuation};
+		object[] objects = {
+				 object.Institution,  object.Contact, 
+				 object.Fundraising,   object.Pipeline,object.Fund
+				
+				  , object.Advisor, object.Affiliation, object.Agreement, object.Attendee,
+				  object.Capital_Call, object.Commitment, object.Correspondence_List,
+				  object.Deal_Expert, object.Deal_Team, object.Financial_Performance,
+				  object.Financing,object.Fund_Distribution, object.Fund_Drawdown,
+				  object.Fund_Investment, object.Fund_of_Fund_Transactions,
+				  object.Fundraising_Contact, object.Investor_Distribution,
+				  object.Marketing_Event, object.Marketing_Prospect, object.Office_Location,
+				  object.Partnership, object.Request_Tracker, object.Review,
+				  object.Talent_Placement, object.Time_Log, object.Transfer, object.Valuation
+				 
+																		 };
 			for (object obj : objects) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
@@ -642,14 +652,15 @@ public class Post_CheckScript extends BaseLib {
 									+ obj.toString() + " object", YesNo.Yes);
 							List<WebElement> allElements = setup.getOtherAssignmentColumnLabelValue();
 							int no = allElements.size();
+							if(no>0) {
 							 for(int i=0;i<no;i++) {
 							String name = null;
 							try {
 								allElements = setup.getOtherAssignmentColumnLabelValue();
 								WebElement labelElement = allElements.get(i);
 								name = labelElement.getText();
-								if (click(driver, labelElement, "lightning record  page label :" + name,
-										action.SCROLLANDBOOLEAN)) {
+								if(click(driver, labelElement, "lightning record  page label :" + name,
+											action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
 											YesNo.No);
 									CommonLib.ThreadSleep(3000);
@@ -746,6 +757,13 @@ public class Post_CheckScript extends BaseLib {
 								continue;
 							}
 							 }
+							}else {
+								log(LogStatus.FAIL,
+										"No lighting page found for " + obj + " object",
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"No lighting page found for " + obj + " object");
+							}
 							 
 						} else {
 							log(LogStatus.FAIL,
@@ -1063,7 +1081,7 @@ public class Post_CheckScript extends BaseLib {
 							.executeScript("return arguments[0].scrollHeight", setup.getSelectProspectsGridScrollBox(10))));
 					((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", setup.getSelectProspectsGridScrollBox(10));
 					ThreadSleep(2000);
-					for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
+					for (int i = 0; i <= widgetTotalScrollingHeight / 5; i++) {
 	ThreadSleep(2000);
 						boolean t =!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty();
 	if (t) {
@@ -1263,7 +1281,7 @@ public class Post_CheckScript extends BaseLib {
 						break;
 					} else {
 						System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
-						((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 500) + ")",
+						((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 3000) + ")",
 								setup.getSelectProspectsGridScrollBox(10));
 						try {
 							Thread.sleep(1000);
