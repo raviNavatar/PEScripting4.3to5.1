@@ -136,7 +136,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 1,enabled =true)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -223,7 +223,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 2,enabled =false)
+	@Test(priority = 2,enabled =true)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -271,6 +271,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -279,12 +280,13 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 		
 	}
 	
-	@Test(priority = 3,enabled =false)
+	@Test(priority = 3,enabled =true)
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -328,6 +330,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -336,13 +339,14 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		
 		sa.assertAll();
 		
 	}
 	
-	@Test(priority = 4,enabled=false)
+	@Test(priority = 4,enabled=true)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -457,6 +461,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -465,12 +470,13 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
 	}
 					
-	@Test(priority = 5,enabled =false)
+	@Test(priority = 5,enabled =true)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
@@ -517,6 +523,7 @@ public class Post_CheckScript extends BaseLib {
 
 					driver.close();
 					driver.switchTo().window(parentWindow);
+					parentWindow = null;
 				}
 				sa.assertAll();
 			}
@@ -525,6 +532,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			CommonLib.refresh(driver);
 			CommonLib.ThreadSleep(3000);
@@ -574,6 +582,7 @@ public class Post_CheckScript extends BaseLib {
 
 					driver.close();
 					driver.switchTo().window(parentWindow);
+					parentWindow = null;
 				}
 
 			}
@@ -587,6 +596,12 @@ public class Post_CheckScript extends BaseLib {
 				sa.assertTrue(false, "not able to Sussessfully Clicked on setting icon");
 			}
 		
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
 
 		
 		sa.assertAll();
@@ -684,8 +699,8 @@ public class Post_CheckScript extends BaseLib {
 										CommonLib.ThreadSleep(3000);
 
 										if (edit.verifyAndAddAcuityTabInPages("Navatar Acuity", "Acuity", "Acuity",
-												new String[] { "Z  (Do not use) Navatar Clip Edit Utility",
-														"Z (Do not use) Navatar Add  Subscribe" },true)) {
+												new String[] { "Z (Do not use) Navatar Clip Edit Utility",
+														"Z (Do not use) Navatar Add Subscribe" },true)) {
 											log(LogStatus.INFO, "able to add tab", YesNo.No);
 											CommonLib.ThreadSleep(2000);
 											
@@ -794,6 +809,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -842,7 +858,7 @@ public class Post_CheckScript extends BaseLib {
 									log(LogStatus.INFO, " able to click on New Task Edit button", YesNo.No);
 									ThreadSleep(3000);
 									switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-									if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,10)) {
+									if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,"navpeII:navatarTaskOverride","navpeII:navatarTaskMobileOverride",10)) {
 										//flag1 = true;
 										log(LogStatus.PASS, "able to Create Overriding the Task Event standard buttons" , YesNo.Yes);
 									}else {
@@ -875,6 +891,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow=null;
 			}
 		}
 
@@ -882,6 +899,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow=null;
 		}
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
@@ -917,7 +935,7 @@ public class Post_CheckScript extends BaseLib {
 									log(LogStatus.INFO, " able to click on View Edit button", YesNo.No);
 									ThreadSleep(3000);
 									switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-									if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,10)) {
+									if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,10)) {
 										//flag1 = true;
 										log(LogStatus.PASS, "able to Create Overriding the Task Event standard buttons" , YesNo.Yes);
 									}else {
@@ -950,6 +968,7 @@ public class Post_CheckScript extends BaseLib {
 
 							driver.close();
 							driver.switchTo().window(parentWindow);
+							parentWindow=null;
 						}
 					}
 
@@ -957,6 +976,7 @@ public class Post_CheckScript extends BaseLib {
 
 						driver.close();
 						driver.switchTo().window(parentWindow);
+						parentWindow=null;
 					}
 					
 					CommonLib.refresh(driver);
@@ -993,7 +1013,7 @@ public class Post_CheckScript extends BaseLib {
 												log(LogStatus.INFO, " able to click on New Event Edit button", YesNo.No);
 												ThreadSleep(3000);
 												switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-												if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,10)) {
+												if (setup.CreateOverridingtheTaskEventstandardbuttons(projectName, mode,"navpeII:navatarEventOverride","navpeII:navatarTaskMobileOverride",10)) {
 													//flag1 = true;
 													log(LogStatus.PASS, "able to Create Overriding the Event Event standard buttons" , YesNo.Yes);
 												}else {
@@ -1026,14 +1046,93 @@ public class Post_CheckScript extends BaseLib {
 
 							driver.close();
 							driver.switchTo().window(parentWindow);
+							parentWindow=null;
 						}
-						sa.assertAll();
 					}
 
 					if (parentWindow != null) {
 
 						driver.close();
 						driver.switchTo().window(parentWindow);
+						parentWindow=null;
+					}
+
+					CommonLib.refresh(driver);
+					CommonLib.ThreadSleep(3000);
+					try {
+						CommonLib.ThreadSleep(3000);
+						if (home.clickOnSetUpLink()) {
+
+							parentWindow = switchOnWindow(driver);
+							if (parentWindow == null) {
+								sa.assertTrue(false,
+										"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+								log(LogStatus.FAIL,
+										"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+										YesNo.Yes);
+								exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							}
+						}
+							if (setup.searchStandardOrCustomObject(projectName, mode, object.Event)) {
+								log(LogStatus.PASS, object.Event + " object has been opened in setup page", YesNo.Yes);
+								CommonLib.ThreadSleep(3000);
+								if (setup.clickOnObjectFeature(projectName, mode, object.Event,
+										ObjectFeatureName.ButtonLinksAndActions)) {
+									log(LogStatus.PASS, "clicked on page layout of object feature of "
+											+ object.Event.toString() + "Event", YesNo.Yes);
+									if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
+											excelLabel.View.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+										log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
+										ThreadSleep(3000);
+										if(click(driver, setup.getNewEventdropdown(10),"New Event drop down",action.BOOLEAN)) {
+											log(LogStatus.INFO, " able to click on New Task drop down", YesNo.No);
+											
+											if(click(driver, setup.getNewTaskEditbutton(10),"New Event Edit button",action.BOOLEAN)) {
+												log(LogStatus.INFO, " able to click on New Event Edit button", YesNo.No);
+												ThreadSleep(3000);
+												switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+												if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,10)) {
+													//flag1 = true;
+													log(LogStatus.PASS, "able to Create Overriding the Event Event standard buttons" , YesNo.Yes);
+												}else {
+													log(LogStatus.FAIL, "Not able to Create Overriding the Event Event standard buttons", YesNo.Yes);
+													sa.assertTrue(false, "Not able to Create Overriding the Event Event standard buttons");
+												}
+											}else {
+												log(LogStatus.FAIL, "Not able to click on New Event Edit button", YesNo.Yes);
+												sa.assertTrue(false, "Not able to click on New Event Edit button");
+											}
+										}else {
+											log(LogStatus.FAIL, "Not able to click on New Event drop down", YesNo.Yes);
+											sa.assertTrue(false, "Not able to click on New Event drop down");
+										}
+									}else {
+										log(LogStatus.FAIL, "Not able to search Text box Fields And Relationships", YesNo.Yes);
+										sa.assertTrue(false, "Not able to search Text box Fields And Relationships");
+									}
+								}else {
+									log(LogStatus.FAIL, "Not able to clicked on page layout of object feature of "
+											+object.Task.toString() + "Task", YesNo.Yes);
+									sa.assertTrue(false, "Not able to clicked on page layout of object feature of "+object.Task.toString() + "Task");
+								}
+							}else {
+								log(LogStatus.FAIL, object.Task + " object has been opened in setup page", YesNo.Yes);
+								sa.assertTrue(false, object.Task + " object has been opened in setup page");
+							}
+					} catch (Exception e) {
+						if (parentWindow != null) {
+
+							driver.close();
+							driver.switchTo().window(parentWindow);
+							parentWindow=null;
+						}
+						sa.assertAll();
+					}
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+						parentWindow=null;
 					}
 					sa.assertAll();
 				}
@@ -1303,6 +1402,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1311,6 +1411,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 
 		CommonLib.refresh(driver);
@@ -1593,6 +1694,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1601,6 +1703,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 
 		sa.assertAll();
@@ -1799,6 +1902,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1807,6 +1911,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 	}
@@ -1875,6 +1980,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1883,6 +1989,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -1943,6 +2050,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1951,6 +2059,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -2165,6 +2274,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			
 		}
@@ -2231,6 +2341,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -2239,6 +2350,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
@@ -2283,6 +2395,7 @@ public class Post_CheckScript extends BaseLib {
 
 					driver.close();
 					driver.switchTo().window(parentWindow);
+					parentWindow = null;
 				}
 				sa.assertAll();
 			}
@@ -2290,6 +2403,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 	}
 	
@@ -2472,6 +2586,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -2480,6 +2595,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 	}
