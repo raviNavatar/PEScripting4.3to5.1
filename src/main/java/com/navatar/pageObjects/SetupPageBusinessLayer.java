@@ -114,8 +114,8 @@ public class SetupPageBusinessLayer extends SetupPage {
 		} else {
 			ThreadSleep(10000);
 			if (objectName == object.Create) {
-				String xpath = "//a[@title='Create Menu']/span[text()='" + o + "']";
-				if (click(driver, FindElement(driver, xpath, objectName.toString().replace("_", " "), action.BOOLEAN, 10),
+				String xpath = "//a[@title='Create Menu']/span[text()='" + objectName.toString() + "']";
+				if (click(driver, FindElement(driver, xpath, objectName.toString(), action.BOOLEAN, 10),
 						"create Custom Object", action.BOOLEAN)) {
 					appLog.info("clicked on " + objectName);
 					ThreadSleep(2000);
@@ -142,7 +142,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 						appLog.error("Not able to search object in lighting : " + tabCustomObj);
 					}
 				}
-				if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString().replace("_", " "),
+				if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString(),
 						"quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
 					appLog.info("passed value in quick search text box: " + objectName.toString());
 					return true;
@@ -163,9 +163,78 @@ public class SetupPageBusinessLayer extends SetupPage {
 		String XpathelementTOSearch="";
 		WebElement ele = null;
 		int j = 0;
+//		if (objectName == object.Global_Actions || objectName == object.PublisherLayout|| objectName == object.Activity_Setting
+//				|| objectName == object.App_Manager || objectName == object.Lightning_App_Builder
+//				|| objectName == object.Profiles || objectName == object.Override || objectName == object.Tabs
+//				|| objectName == object.Users || objectName == object.Sharing_Settings
+//				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types|| objectName == object.Data_Export 
+//
+//				|| objectName == object.My_Domain || objectName == object.Help_Menu|| objectName == object.Manage_Connected_Apps|| objectName == object.Scheduled_Jobs || objectName == object.Apex_Classes) {
+//
+//			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
+//				index = "[2]";
+//			}
+//			ThreadSleep(3000);
+//			clickUsingJavaScript(driver, FindElement(driver, "//a[text()='Home' or @title='Home']",
+//					"home tsb link in setup", action.BOOLEAN, 10), "", action.BOOLEAN);
+//			if (sendKeys(driver, getQucikSearchInSetupPage(10), o, o, action.BOOLEAN)) {
+//				log(LogStatus.INFO, "Search object in  quick find " + objectName, YesNo.No);
+//
+//				ThreadSleep(2000);
+//				if (clickUsingJavaScript(driver,
+//						FindElement(driver, "(//mark[text()='" + o + "'])" + index + "/parent::a",
+//								objectName.toString(), action.BOOLEAN, 10),
+//						objectName.toString(), action.BOOLEAN)) {
+//					log(LogStatus.INFO, " clicked  on " + objectName, YesNo.No);
+//
+//					return true;
+//				} else {
+//					log(LogStatus.ERROR, "could not click on " + objectName, YesNo.Yes);
+//
+//				}
+//			} else {
+//				log(LogStatus.ERROR, "quick search textbox not visible", YesNo.Yes);
+//			}
+//			return false;
+//		}
+		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
+//			if (sendKeys(driver, getQucikSearchInSetupPage(30), objectName.toString(),
+//					"quick search text box in setup page", action.SCROLLANDBOOLEAN)) {
+//				appLog.info("passed value in serach text box: " + objectName);
+//				return true;
+//			} else {
+//				appLog.error("Not able to search object in classic : " + objectName);
+//			}
+		} else {
+//			ThreadSleep(10000);
+//			if (objectName == object.Create) {
+//				String xpath = "//a[@title='Create Menu']/span[text()='" + objectName.toString() + "']";
+//				if (click(driver, FindElement(driver, xpath, objectName.toString(), action.BOOLEAN, 10),
+//						"create Custom Object", action.BOOLEAN)) {
+//					appLog.info("clicked on " + objectName);
+//					ThreadSleep(2000);
+//					xpath = "//a[@title='Custom Object']//span[text()='Custom Object']";
+//					if (click(driver, FindElement(driver, xpath, "create Custom Object", action.BOOLEAN, 10),
+//							"create Custom Object", action.BOOLEAN)) {
+//						appLog.info("clicked on custom object");
+//						return true;
+//					} else {
+//						appLog.error("Not able to click on custom object link");
+//					}
+//
+//				} else {
+//					appLog.error("Not able to click on create icon");
+				}
 			if (click(driver, getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
 				appLog.info("clicked on object manager tab");
 				
+//					if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), tabCustomObj,
+//							"quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
+//						appLog.info("passed value in quick search text box: " + tabCustomObj);
+//						return true;
+//					} else {
+//						appLog.error("Not able to search object in lighting : " + tabCustomObj);
+//					}
 					XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='"+apiname+"']/ancestor::tr//a";
 					int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
 							.executeScript("return arguments[0].scrollHeight", getSelectProspectsGridScrollBox(10))));
@@ -173,8 +242,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 					ThreadSleep(2000);
 					for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
 						
+//						if(sendKeysAndPressEnter(driver, getSearchForAContactTextBoxOnReportTab(10), "", "", action.BOOLEAN)) {
+//							appLog.info("enter value in search box:"+"");
+//							
+//						}
 						ThreadSleep(2000);
 						boolean t =!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty();
+//						boolean q= driver.findElement(By.xpath(XpathelementTOSearch)).isDisplayed();
 						if (t) {
 							appLog.info("Element Successfully Found and displayed");
 							ThreadSleep(500);
@@ -182,6 +256,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if (ele != null) {
 								if (click(driver, ele, "", action.BOOLEAN)) {
 									appLog.info("clicked on Contact Name : "+"");
+//									sendKeysAndPressEnter(driver, getSearchForAContactTextBoxOnReportTab(10), "", "", action.BOOLEAN);
 								} else {
 									appLog.error("Not able to clicke on Contact Name: "+"");
 									return false;
@@ -204,6 +279,17 @@ public class SetupPageBusinessLayer extends SetupPage {
 						}
 					}
 				
+//				if (sendKeys(driver, getQuickSearchInObjectManager_Lighting(30), objectName.toString(),
+//						"quick search text box in lighting", action.SCROLLANDBOOLEAN)) {
+//					appLog.info("passed value in quick search text box: " + objectName.toString());
+//					return true;
+//				} else {
+//					appLog.error("Not able to search object in lighting : " + objectName.toString());
+//				}
+//			} else {
+//				appLog.error(
+//						"Not able to click on object manager tab so cannot search object: " +;
+//			}
 		}
 		return false;
 	}
@@ -238,14 +324,13 @@ public class SetupPageBusinessLayer extends SetupPage {
 	public boolean clickOnObjectFeature(String environment, String mode, object object,
 			ObjectFeatureName objectFeatureName) {
 		WebElement ele = null;
-		String obj = object.toString().replaceAll("_", " ");
 		if (object == object.Global_Actions ||object == object.PublisherLayout) {
 			return true;
 		}
 
 		if (mode.equalsIgnoreCase(Mode.Classic.toString())) {
 			ele = isDisplayed(driver,
-					FindElement(driver, "//a[text()='" + obj + "']/../div/div/a[text()='" + objectFeatureName + "']",
+					FindElement(driver, "//a[text()='" + object + "']/../div/div/a[text()='" + objectFeatureName + "']",
 							"", action.BOOLEAN, 20),
 					"visibility", 20, "page layout link");
 			if (ele != null) {
@@ -264,7 +349,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 			ele = isDisplayed(driver,
 					FindElement(driver,
 							"//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//a[text()='"
-									+ obj + "']",
+									+ object + "']",
 							"", action.BOOLEAN, 20),
 					"visibility", 20, "page layout link");
 			if (ele != null) {
@@ -831,7 +916,9 @@ public class SetupPageBusinessLayer extends SetupPage {
 							if(isDisplayed(driver,
 									FindElement(driver, "//div[@id='__PLATFORM_ACTION']//fieldset//div[contains(@class,'btn')]", "",
 											action.BOOLEAN, 20),
-									"visibility", 20, layoutName.get(i) + " page layout link") != null) {
+									"visibility", 20, layoutName.get(i) + " page layout link") == null) {
+								log(LogStatus.INFO,"No Element is present to revert",YesNo.No);
+							} else {
 							WebElement section= FindElement(driver,"//div[@id='__PLATFORM_ACTION']//fieldset", "", action.BOOLEAN,10);
 							 mouseOverClickOperation(driver, section);
 							 ThreadSleep(1000);
@@ -876,8 +963,6 @@ public class SetupPageBusinessLayer extends SetupPage {
 							}else {
 								log(LogStatus.PASS,"global action already removed from page layout",YesNo.Yes);
 							}
-							} else {
-								log(LogStatus.INFO,"No Element is present to revert",YesNo.No);
 							}
 						} else {
 							
@@ -8172,7 +8257,6 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		WebElement ele = null;
 		WebElement ele2 = null;
 		WebElement ele3 = null;
-		List<WebElement> allRL;
 		int count =0;
 
 		ThreadSleep(5000);
@@ -8220,11 +8304,14 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 
 				}else {
 					log(LogStatus.ERROR, "Not Able to click on remove link of Activity history related list", YesNo.Yes);
+
 				}
 				
 			}else {
 				log(LogStatus.PASS, "Activity history related list not present/already removed in page layout", YesNo.Yes);
+
 			}
+			
 			
 			ele3 = filesRelatedListOptionLink(10);
 			if(ele3==null) {
@@ -8233,13 +8320,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 					WebElement filesEle = isDisplayed(driver,
 							FindElement(driver, " //span[text()='Files']", "", action.BOOLEAN, 20),
 							"visibility", 20,  "Files field");
-					if(isDisplayed(driver,
-							FindElement(driver, "//div[contains(@class,'pbTitle relatedList')]/following-sibling::div", "", action.BOOLEAN, 20),
-							"visibility", 20,  "Files field") != null) {
-						allRL=  FindElements(driver, "//div[contains(@class,'pbTitle relatedList')]/following-sibling::div");
-					} else {
-						allRL=  FindElements(driver, "//div[contains(@class,'pbTitle relatedList')]/following-sibling::fieldset");
-					}
+					List<WebElement> allRL=  FindElements(driver, "//div[@class=' pbTitle relatedList']/following-sibling::div");
 					if (dragNDropField(driver, filesEle, allRL.get(allRL.size()-1))) {
 						ThreadSleep(3000);
 						log(LogStatus.PASS, "Successfully dragNDrop Files at last location", YesNo.No);
@@ -8256,13 +8337,18 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 						
 					} else {
 						log(LogStatus.ERROR, "Not able to dragNDrop Files at last location", YesNo.Yes);
+
 					}
+
 				}else {
 					log(LogStatus.ERROR, "Not Able to search files related list optin linkin quick find search", YesNo.Yes);
+
 				}
+				
 			}
 			
-			if (click(driver, getPageLayoutSaveBtn(obj,10), "page layouts save button",
+			
+			if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.PASS, "clicked on save button", YesNo.No);
 				flag=true;
@@ -8347,14 +8433,14 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
               }
         
 		   }else {
-//			   refresh(driver);
-//			   if (CreateScheduleUsageMatrix(environment, mode,"NavatarUsageMetrics","scheduledClientData", 10)) {
-//					//flag1 = true;
-//					log(LogStatus.PASS, "able to Create schedule usage matrix" , YesNo.Yes);
-//				}else {
-//					log(LogStatus.FAIL, "Not able to Create schedule usage matrix", YesNo.Yes);
-//					sa.assertTrue(false, "Not able to Create schedule usage matrix");
-//				}
+			   refresh(driver);
+			   if (CreateScheduleUsageMatrix(environment, mode,"NavatarUsageMetrics","scheduledClientData", 10)) {
+					//flag1 = true;
+					log(LogStatus.PASS, "able to Create schedule usage matrix" , YesNo.Yes);
+				}else {
+					log(LogStatus.FAIL, "Not able to Create schedule usage matrix", YesNo.Yes);
+					sa.assertTrue(false, "Not able to Create schedule usage matrix");
+				}
 			log(LogStatus.INFO, "not able to find Navatar Usage Metrics:" + "",
 					YesNo.No);
 			sa.assertTrue(false, "Not able to Create schedule usage matrix");
@@ -8529,7 +8615,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return flag;
 	}
 
-	public boolean CreateOverridingtheTaskEventstandardbuttons(String projectName, String mode
+	public boolean CreateOverridingtheTaskEventstandardbuttons(String projectName, String mode ,Object value1,Object value2
 			,int timeOut) {
 		boolean flag = false;
 		ThreadSleep(3000);
@@ -8539,7 +8625,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			ThreadSleep(1000);
 			if (selectVisibleTextFromDropDown(driver,
 					getLightningcomponent1(projectName, 10), "getLightning component1",
-					"c:NavatarEditClipAura")) {
+					value1)) {
 				log(LogStatus.INFO,
 						"Select custom field text in setup component dropdown in PipelineCustomPage setup page",
 						YesNo.No);
@@ -8550,7 +8636,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 					ThreadSleep(1000);
 					if (selectVisibleTextFromDropDown(driver,
 							getLightningcomponent2(projectName, 10), "getLightning component1",
-							"c:MultipleAssociationEventPopup2")) {
+							value2)) {
 						log(LogStatus.INFO,
 								"Select custom field text in setup component dropdown in PipelineCustomPage setup page",
 								YesNo.No);
@@ -8576,8 +8662,39 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		}
 		return flag;
 			}
+	
+	public boolean CreateOverridingtheTaskEventstandardbuttonsView(String projectName, String mode
+			,int timeOut) {
+		boolean flag = false;
+		ThreadSleep(3000);
+		if (click(driver, getLightningcomponent(mode, timeOut), "Lightning component",
+				action.SCROLLANDBOOLEAN)) {
+			appLog.info("click on Lightning component");
+			ThreadSleep(1000);
+			if (selectVisibleTextFromDropDown(driver,
+					getLightningcomponent1(projectName, 10), "getLightning component1",
+					"navpeII:navatarAllInteractionsViewOverride")) {
+				log(LogStatus.INFO,
+						"Select custom field text in setup component dropdown in PipelineCustomPage setup page",
+						YesNo.No);
+				ThreadSleep(5000);
+						if (click(driver, getSaveButton(30), "Save button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on the Save button", YesNo.No);
+							ThreadSleep(5000);
+							flag= true;
+						} else {
+							log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+						}
+			} else {
+				log(LogStatus.ERROR, "Not able elect custom field text in setup component dropdown in PipelineCustomPage setup page", YesNo.No);
+			}
+		} else {
+			log(LogStatus.ERROR, "Not able click on Lightning component", YesNo.No);
+		}
+		return flag;
+			}
 
-	public List<String> DragNDropIfNoDestination(String environment, String mode, object obj,
+	public List<String> DragNDropIfNoDestination(String environment, String mode,
 			ObjectFeatureName objectFeatureName, String section,String layoutName,
 			HashMap<String, String> sourceANDDestination) {
 		WebElement ele = null, src1 = null, targetElement1 = null;
@@ -8817,7 +8934,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 							ThreadSleep(2000);
 
 
-							if (click(driver, getPageLayoutSaveBtn(obj, 30), "page layouts save button",
+							if (click(driver, getSaveBtn( 30), "page layouts save button",
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
 
