@@ -1008,7 +1008,7 @@ public boolean addFieldToLayoutPage1(String projectName, String mode, String pag
 
 		
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		List<String> abc = setup.DragNDropIfNoDestination("", mode, obj, ObjectFeatureName.pageLayouts,PageLabel.Section.toString(), pageLayoutsName,
+		List<String> abc = setup.DragNDropIfNoDestination("", mode,  ObjectFeatureName.pageLayouts,PageLabel.Section.toString(), pageLayoutsName,
 				sourceANDDestination);
 		ThreadSleep(5000);
 
