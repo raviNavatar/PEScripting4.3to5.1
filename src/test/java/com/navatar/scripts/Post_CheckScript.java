@@ -271,6 +271,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -279,6 +280,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 		
@@ -328,6 +330,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -336,6 +339,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		
 		sa.assertAll();
@@ -457,6 +461,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -465,6 +470,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -517,6 +523,7 @@ public class Post_CheckScript extends BaseLib {
 
 					driver.close();
 					driver.switchTo().window(parentWindow);
+					parentWindow = null;
 				}
 				sa.assertAll();
 			}
@@ -525,6 +532,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			CommonLib.refresh(driver);
 			CommonLib.ThreadSleep(3000);
@@ -574,6 +582,7 @@ public class Post_CheckScript extends BaseLib {
 
 					driver.close();
 					driver.switchTo().window(parentWindow);
+					parentWindow = null;
 				}
 
 			}
@@ -587,6 +596,12 @@ public class Post_CheckScript extends BaseLib {
 				sa.assertTrue(false, "not able to Sussessfully Clicked on setting icon");
 			}
 		
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
 
 		
 		sa.assertAll();
@@ -684,8 +699,8 @@ public class Post_CheckScript extends BaseLib {
 										CommonLib.ThreadSleep(3000);
 
 										if (edit.verifyAndAddAcuityTabInPages("Navatar Acuity", "Acuity", "Acuity",
-												new String[] { "Z  (Do not use) Navatar Clip Edit Utility",
-														"Z (Do not use) Navatar Add  Subscribe" },true)) {
+												new String[] { "Z (Do not use) Navatar Clip Edit Utility",
+														"Z (Do not use) Navatar Add Subscribe" },true)) {
 											log(LogStatus.INFO, "able to add tab", YesNo.No);
 											CommonLib.ThreadSleep(2000);
 											
@@ -794,6 +809,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -875,6 +891,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 		}
 
@@ -882,6 +899,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
@@ -950,6 +968,7 @@ public class Post_CheckScript extends BaseLib {
 
 							driver.close();
 							driver.switchTo().window(parentWindow);
+							parentWindow = null;
 						}
 					}
 
@@ -957,6 +976,7 @@ public class Post_CheckScript extends BaseLib {
 
 						driver.close();
 						driver.switchTo().window(parentWindow);
+						parentWindow = null;
 					}
 					
 					CommonLib.refresh(driver);
@@ -1026,6 +1046,7 @@ public class Post_CheckScript extends BaseLib {
 
 							driver.close();
 							driver.switchTo().window(parentWindow);
+							parentWindow = null;
 						}
 						sa.assertAll();
 					}
@@ -1034,6 +1055,7 @@ public class Post_CheckScript extends BaseLib {
 
 						driver.close();
 						driver.switchTo().window(parentWindow);
+						parentWindow = null;
 					}
 					sa.assertAll();
 				}
@@ -1303,6 +1325,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1311,6 +1334,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 
 		CommonLib.refresh(driver);
@@ -1593,6 +1617,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1601,6 +1626,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 
 		sa.assertAll();
@@ -1799,6 +1825,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1807,6 +1834,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 	}
@@ -1875,6 +1903,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1883,6 +1912,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -1943,6 +1973,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -1951,6 +1982,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 
@@ -2165,6 +2197,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			
 		}
@@ -2231,6 +2264,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -2239,6 +2273,7 @@ public class Post_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
@@ -2283,6 +2318,7 @@ public class Post_CheckScript extends BaseLib {
 
 					driver.close();
 					driver.switchTo().window(parentWindow);
+					parentWindow = null;
 				}
 				sa.assertAll();
 			}
@@ -2290,6 +2326,7 @@ public class Post_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 	}
 	
@@ -2472,6 +2509,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow = null;
 			}
 			sa.assertAll();
 		}
@@ -2480,6 +2518,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
 		sa.assertAll();
 	}

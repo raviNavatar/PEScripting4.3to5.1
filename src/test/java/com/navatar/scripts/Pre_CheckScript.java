@@ -80,7 +80,7 @@ public class Pre_CheckScript extends BaseLib {
 	}
 	
 	/// Pre-check ///
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 1,enabled =true)
 	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -91,7 +91,6 @@ public class Pre_CheckScript extends BaseLib {
 		
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
-		Assert.assertTrue(false);
 		try {
 			CommonLib.ThreadSleep(3000);
 			if (home.clickOnSetUpLink()) {
@@ -188,7 +187,7 @@ public class Pre_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =2 ,enabled=false)
+	@Test(priority =2 ,enabled=true)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -278,6 +277,38 @@ public class Pre_CheckScript extends BaseLib {
 										}
 										
 									}
+									if(i==0) {
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+										
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.industryAddedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.industryAddedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+									}else if(i==1) {
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+										
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.typeAddedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.typeAddedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+									}else {
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+										
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString(), Condition.activate)) {
+											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString()+" :varibale Created", YesNo.No);
+
+										}
+									}
+									
 									
 									if (parentWindow != null) {
 
