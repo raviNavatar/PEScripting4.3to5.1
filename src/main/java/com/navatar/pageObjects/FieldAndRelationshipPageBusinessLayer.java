@@ -31,7 +31,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 
 
 	
-	public boolean activateOrAddPicklistValueOfField(String projectName, String fieldName,String value, Condition condition)
+	public boolean activateOrAddPicklistValueOfField(String projectName, String fieldName,String value, Condition condition,boolean isVariableUpdated)
 	{
 		WebElement ele;
 		
@@ -50,10 +50,11 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 						{
 							if (CommonLib.click(driver, ele,value+" activate button" , action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on the activate button of " +value, YesNo.No);
-								CommonLib.ThreadSleep(10000);
+								CommonLib.ThreadSleep(5000);
 								CommonLib.switchToDefaultContent(driver);
 								CommonLib.ThreadSleep(3000);
 								flag =true;
+								if(isVariableUpdated) {
 								if(fieldName.equalsIgnoreCase("Industry")) {
 									CommonVariables.industryAactivatedFields.add(value);
 								}else if(fieldName.equalsIgnoreCase("type")) {
@@ -63,7 +64,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 									CommonVariables.accountSourceAactivatedFields.add(value);
 
 								}
-								
+								}
 							}					
 						}
 						else
@@ -119,6 +120,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 								{
 									log(LogStatus.PASS, "Option has been created in the Piclist", YesNo.No);
 									flag=true;
+									if(isVariableUpdated) {
 									if(fieldName.equalsIgnoreCase("Industry")) {
 										CommonVariables.industryAddedFields.add(value);
 									}else if(fieldName.equalsIgnoreCase("type")) {
@@ -127,6 +129,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 									}else {
 										CommonVariables.accountSourceAddedFields.add(value);
 
+									}
 									}
 									CommonLib.switchToDefaultContent(driver);
 									CommonLib.ThreadSleep(3000);
@@ -194,7 +197,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 								}
 
 								CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
-								CommonLib.ThreadSleep(20000);
+								CommonLib.ThreadSleep(60000);
 								CommonLib.switchToDefaultContent(driver);
 								CommonLib.ThreadSleep(3000);
 								log(LogStatus.INFO, "clicked on the Activate button of " +value, YesNo.No);	
@@ -340,10 +343,12 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 						CommonLib.clickUsingJavaScript(driver, ele,apiName+" field" , action.SCROLLANDBOOLEAN);
 					}
 					CommonLib.switchToAlertAndAcceptOrDecline(driver, 20, action.ACCEPT);
+					CommonLib.ThreadSleep(3000);
 					CommonLib.switchToDefaultContent(driver);
+					CommonLib.ThreadSleep(2000);
 					log(LogStatus.INFO, "Clicked on OK button on the Alert Popup", YesNo.No);
 					CommonLib.switchToFrame(driver, 50, getfindAndReplaceIframe(50));
-
+					CommonLib.ThreadSleep(5000);
 					if(condition.toString().equals("replaceWithValue"))
 					{
 						if(CommonLib.selectVisibleTextFromDropDown(driver, getreplaceValueDropDown(50), "Replace Value Drop Down", ReplaceValue))
@@ -351,6 +356,7 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 							if(CommonLib.click(driver, geteditPicklistSaveButton(30), "Save Button" , action.SCROLLANDBOOLEAN))
 							{
 								log(LogStatus.INFO, "Clicked on the Save button" , YesNo.No);
+								flag=true;
 							}
 							else
 							{
@@ -369,10 +375,12 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 
 						if(CommonLib.click(driver, getreplaceValueWithNull(30), "Save Button" , action.SCROLLANDBOOLEAN))
 						{
+							CommonLib.click(driver, getreplaceValueWithNull(30), "Save Button" , action.SCROLLANDBOOLEAN);
 							log(LogStatus.INFO, "Clicked on the Replace value on records with blank value" , YesNo.No);
 							if(CommonLib.click(driver, geteditPicklistSaveButton(30), "Save Button" , action.SCROLLANDBOOLEAN))
 							{
 								log(LogStatus.INFO, "Clicked on the Save button" , YesNo.No);
+								flag=true;
 							}
 							else
 							{
@@ -387,22 +395,14 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 						}
 
 					}
-
+					
+				
+					CommonLib.ThreadSleep(2000);
 					CommonLib.switchToDefaultContent(driver);
-					CommonLib.switchToFrame(driver, 40, getfindAndReplaceIframe(30));			
-					CommonLib.ThreadSleep(7000);
+//					CommonLib.switchToFrame(driver, 40, getfindAndReplaceIframe(30));			
+//					CommonLib.ThreadSleep(5000);
 
-					if(!CommonLib.isElementPresent(ele))
-					{
-						log(LogStatus.INFO, apiName+" has been deleted" , YesNo.No);
-						flag=true;
-					}
-					else
-					{
-						log(LogStatus.ERROR,apiName+" is not deleted",YesNo.Yes);
-						flag=false;
-					}
-
+				
 				}
 				else
 				{

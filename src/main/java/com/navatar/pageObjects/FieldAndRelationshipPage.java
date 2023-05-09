@@ -69,7 +69,7 @@ public class FieldAndRelationshipPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, editPicklistSaveButton, "Visibility", timeOut, "Piclist Edit save button");
 	}
 	
-	@FindBy(xpath="//iframe[@title='Find and Replace Value: Industry ~ Salesforce - Enterprise Edition']")
+	@FindBy(xpath="//iframe[contains(@title,'Salesforce - Enterprise Edition')]")
 	private WebElement findAndReplaceIframe;
 
 	public WebElement getfindAndReplaceIframe(int timeOut) {

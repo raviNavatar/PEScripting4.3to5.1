@@ -286,7 +286,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 3,enabled =true)
+	@Test(priority = 3,enabled =false)
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -346,7 +346,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=true)
+	@Test(priority = 4,enabled=false)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -383,11 +383,7 @@ public class Post_CheckScript extends BaseLib {
 //					object.navpeII__Request_Tracker__c.toString(),object.navpeII__Review__c.toString(),object.navpeII__Log_Time__c.toString(),
 //					object.navpeII__Valuation__c.toString()
 //					};
-			object[] objects = {object.Advisor_Involvement, object.Deal_Expert,object.Agreement, object.Contact, object.Fund, object.Fundraising, object.Pipeline,  object.Institution, object.Advisor, object.Affiliation,object.Attendee,
-								object.Capital_Call,object.Commitment,object.Correspondence_List,object.Deal_Team,object.Financial_Performance,object.Financing,
-								object.Fund_Drawdown,object.Fund_Distribution,object.Fund_Investment,object.Fund_of_Fund_Transactions,object.Fundraising_Contact,object.Marketing_Event,
-								object.Marketing_Prospect,object.Office_Location,object.Partnership,object.Request_Tracker,object.Review,object.Talent_Placement,object.Time_Log,object.Transfer,
-								object.Valuation};
+			object[] objects = {object.Institution, object.Contact, object.Fund, object.Fundraising, object.Pipeline};
 			for (object obj : objects) {
 //			for (String api : apiname) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
@@ -476,7 +472,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 5,enabled =false)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
@@ -608,7 +604,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=true)
+	@Test(priority =6 ,enabled=false)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -623,19 +619,8 @@ public class Post_CheckScript extends BaseLib {
 
 		object[] objects = {
 				 object.Institution,  object.Contact, 
-				 object.Fundraising,   object.Pipeline,object.Fund
-				
-				  , object.Advisor, object.Affiliation, object.Agreement, object.Attendee,
-				  object.Capital_Call, object.Commitment, object.Correspondence_List,
-				  object.Deal_Expert, object.Deal_Team, object.Financial_Performance,
-				  object.Financing,object.Fund_Distribution, object.Fund_Drawdown,
-				  object.Fund_Investment, object.Fund_of_Fund_Transactions,
-				  object.Fundraising_Contact, object.Investor_Distribution,
-				  object.Marketing_Event, object.Marketing_Prospect, object.Office_Location,
-				  object.Partnership, object.Request_Tracker, object.Review,
-				  object.Talent_Placement, object.Time_Log, object.Transfer, object.Valuation
-				 
-																		 };
+				 object.Fundraising,   object.Pipeline,object.Fund};
+		
 			for (object obj : objects) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
@@ -1084,11 +1069,11 @@ public class Post_CheckScript extends BaseLib {
 											excelLabel.View.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
 										log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
 										ThreadSleep(3000);
-										if(click(driver, setup.getNewEventdropdown(10),"New Event drop down",action.BOOLEAN)) {
-											log(LogStatus.INFO, " able to click on New Task drop down", YesNo.No);
+										if(click(driver, setup.getViewdropdown(10),"View drop down",action.BOOLEAN)) {
+											log(LogStatus.INFO, " able to click on View drop down", YesNo.No);
 											
-											if(click(driver, setup.getNewTaskEditbutton(10),"New Event Edit button",action.BOOLEAN)) {
-												log(LogStatus.INFO, " able to click on New Event Edit button", YesNo.No);
+											if(click(driver, setup.getNewTaskEditbutton(10),"View Edit button",action.BOOLEAN)) {
+												log(LogStatus.INFO, " able to click on View Edit button", YesNo.No);
 												ThreadSleep(3000);
 												switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
 												if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,10)) {
@@ -1748,7 +1733,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	@Test(priority =10 ,enabled=false)
-	public void verifyAddUtilityOnExsitingAppForPEFOF() {
+	public void verifyAddingNewFieldToPageLayout() {
 		
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2077,6 +2062,7 @@ public class Post_CheckScript extends BaseLib {
 		CommonLib.ThreadSleep(3000);
 		String xpath =null;
 		WebElement ele = null;
+		boolean flag=false;
 		String[] deactivated = {};
 		String[] deleted = {};
 		String Industrydescription="";
@@ -2109,6 +2095,9 @@ public class Post_CheckScript extends BaseLib {
 			 Typedescription =FindElement(driver, "//a[text()='TypePicklist']/ancestor::tr//td[contains(text(),'<break>')]", "", action.SCROLLANDBOOLEAN, 20).getText();
 			 AccountSourcedescription =FindElement(driver, "//a[text()='AccountSourcePicklist']/ancestor::tr//td[contains(text(),'<break>')]", "", action.SCROLLANDBOOLEAN, 20).getText();
 
+			 if(Industrydescription!=null &&Typedescription!=null&&AccountSourcedescription!=null) {
+				 flag= true;
+			 }
 			 
 			
 		} else {
@@ -2137,6 +2126,7 @@ public class Post_CheckScript extends BaseLib {
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		
+		if(flag) {
 		for(int i=0;i<3;i++) {
 		try {
 			CommonLib.ThreadSleep(3000);
@@ -2183,7 +2173,7 @@ public class Post_CheckScript extends BaseLib {
 						// industry
 						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
 							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ obj.toString() + " object", YesNo.No);
-							
+							ThreadSleep(3000);
 							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
 								CommonLib.ThreadSleep(6000);
@@ -2224,7 +2214,6 @@ public class Post_CheckScript extends BaseLib {
 										String value = delete.toString().trim();
 										if(fr.deletePicklistOptionAndReplaceValue(projectName, value, null, null, Condition.replaceWithBlank)) {
 											log(LogStatus.PASS, value+" :value deleted and revert action successfully ", YesNo.No);
-											switchToDefaultContent(driver);
 											
 										}else {
 											log(LogStatus.FAIL,
@@ -2238,13 +2227,6 @@ public class Post_CheckScript extends BaseLib {
 											// TODO: handle exception
 											continue;
 										}
-									}
-
-									if (parentWindow != null) {
-
-										driver.close();
-										driver.switchTo().window(parentWindow);
-										parentWindow=null;
 									}
 
 								}else {
@@ -2269,6 +2251,12 @@ public class Post_CheckScript extends BaseLib {
 			
 			
 					}
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+						parentWindow = null;
+					}
 		} catch (Exception e) {
 			if (parentWindow != null) {
 
@@ -2280,7 +2268,10 @@ public class Post_CheckScript extends BaseLib {
 		}
 		
 		}
-		
+		}else {
+			log(LogStatus.FAIL, "Metadata is empty so cannot delete/deactivate picklist vlaue", YesNo.Yes);
+			sa.assertTrue(false, "Metadata is empty so cannot delete/deactivate picklist vlaue");
+		}
 
 		if (parentWindow != null) {
 
@@ -2598,6 +2589,335 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 			parentWindow = null;
 		}
 		sa.assertAll();
+	}
+
+	@Test(priority =15, enabled=false)
+	public void verifyRemovingActivityTimelineFromSecondaryObjects() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+		String parentWindow = null;
+		String xPath;
+
+		
+
+		object[] objects = {object.Advisor, object.Affiliation, object.Agreement, object.Attendee,
+				  object.Capital_Call, object.Commitment, object.Correspondence_List,
+				  object.Deal_Expert, object.Deal_Team, object.Financial_Performance,
+				  object.Financing,object.Fund_Distribution, object.Fund_Drawdown,
+				  object.Fund_Investment, object.Fund_of_Fund_Transactions,
+				  object.Fundraising_Contact, object.Investor_Distribution,
+				  object.Marketing_Event, object.Marketing_Prospect, object.Office_Location,
+				  object.Partnership, object.Request_Tracker, object.Review,
+				  object.Talent_Placement, object.Time_Log, object.Transfer, object.Valuation};
+		
+			for (object obj : objects) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				try {
+					
+					CommonLib.ThreadSleep(3000);
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+					}
+					if (home.clickOnSetUpLink()) {
+
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow == null) {
+							sa.assertTrue(false,
+									"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							log(LogStatus.FAIL,
+									"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+									YesNo.Yes);
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						}
+					}
+					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+						CommonLib.ThreadSleep(3000);
+						if (setup.clickOnObjectFeature(projectName, mode, obj,
+								ObjectFeatureName.lightningRecordPages)) {
+							log(LogStatus.PASS, "clicked on lightning Record Pages of object feature of "
+									+ obj.toString() + " object", YesNo.Yes);
+							List<WebElement> allElements = setup.getOtherAssignmentColumnLabelValue();
+							int no = allElements.size();
+							if(no>0) {
+							 for(int i=0;i<no;i++) {
+							String name = null;
+							try {
+								allElements = setup.getOtherAssignmentColumnLabelValue();
+								WebElement labelElement = allElements.get(i);
+								name = labelElement.getText();
+								if(click(driver, labelElement, "lightning record  page label :" + name,
+											action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+											YesNo.No);
+									CommonLib.ThreadSleep(3000);
+									switchToFrame(driver, 30, setup.getSetUpPageIframe(60));
+									CommonLib.ThreadSleep(5000);
+
+									if (click(driver, setup.editButton(10), "edit button", action.SCROLLANDBOOLEAN)) {
+										log(LogStatus.INFO, "clicked on the edit button", YesNo.No);
+										CommonLib.ThreadSleep(10000);
+										xPath = "//div[@role='dialog']//button[contains(@title,'Close')]";
+										List<WebElement> closeButtons = FindElements(driver, xPath);
+
+										for (WebElement elem : closeButtons) {
+
+											click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+											CommonLib.ThreadSleep(1000);
+
+										}
+										CommonLib.ThreadSleep(5000);
+										switchToFrame(driver, 20, edit.getEditPageFrame("", 20));
+										CommonLib.ThreadSleep(3000);
+
+										if (edit.removeTimeline(true)) {
+											log(LogStatus.INFO, "able to remove timeline", YesNo.No);
+											CommonLib.ThreadSleep(2000);
+											
+											
+											
+										} else {
+											log(LogStatus.ERROR, "Not able to able to remove timeline", YesNo.Yes);
+											sa.assertTrue(false, "Not able to able to remove timeline");
+
+										}
+										
+										if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+											log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+											CommonLib.ThreadSleep(3000);
+											if (setup.clickOnObjectFeature(projectName, mode, obj,
+													ObjectFeatureName.lightningRecordPages)) {
+												log(LogStatus.PASS,
+														"clicked on lightning Record Pages of object feature of "
+																+ obj + " object",
+														YesNo.Yes);
+											} else {
+												log(LogStatus.FAIL,
+														"Not able to click on Record type of object feature of "+obj+" object so cannot going to check anohter iteration",
+														YesNo.Yes);
+												
+											}
+										} else {
+											log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+											sa.assertTrue(false, "Not able to open " + obj + " object");
+										}
+										
+										
+
+									} else {
+										log(LogStatus.ERROR, "Not able to click on edit button of ", YesNo.Yes);
+										sa.assertTrue(false, "Not able to click on edit button of ");
+
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to clicked on the lightning record  page label:" + name,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to clicked on the lightning record  page label:" + name);
+
+								}
+							} catch (Exception e) {
+								if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+									log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+									CommonLib.ThreadSleep(3000);
+									if (setup.clickOnObjectFeature(projectName, mode, obj,
+											ObjectFeatureName.lightningRecordPages)) {
+										log(LogStatus.PASS,
+												"clicked on lightning Record Pages of object feature of "
+														+ obj + " object",
+												YesNo.Yes);
+									} else {
+										log(LogStatus.FAIL,
+												"Not able to click on Record type of object feature of "+obj+" object so cannot going to check anohter iteration",
+												YesNo.Yes);
+										
+									}
+								} else {
+									log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+									sa.assertTrue(false, "Not able to open " + obj + " object");
+								}
+								
+								continue;
+							}
+							 }
+							}else {
+								log(LogStatus.FAIL,
+										"No lighting page found for " + obj + " object",
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"No lighting page found for " + obj + " object");
+							}
+							 
+						} else {
+							log(LogStatus.FAIL,
+									"Not able to click on Record type of object feature of " + obj + " object",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to click on Record type of object feature of " + obj + " object");
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to remove activity timeline for the " + obj + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to remove activity timeline for the " + obj + " object");
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+						parentWindow=null;
+					}
+					continue;
+				}
+			}
+
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		sa.assertAll();
+
+	}
+
+	@Test(priority = 16,enabled=false)
+	public void verifyRemovingRelatedListFromSecondaryObjects() {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+
+//			String[] apiname = {
+//					object.Account.toString() ,object.Contact.toString(),object.navpeII__Advisor__c.toString(),object.navpeII__Fund__c.toString(),
+//					object.navpeII__Fundraising__c.toString(),object.navpeII__Pipeline__c.toString(), object.navpeII__Affiliation__c.toString(),
+//					object.navpeII__Agreement_Amendment__c.toString(),object.navpeII__Capital_Call__c.toString(),object.navpeII__Commitment__c.toString(),
+//					object.navpeII__Correspondence_List__c.toString(),object.navpeII__Quarterly_Financial_Performance__c.toString(),
+//					object.navpeII__Financing__c.toString(),object.navpeII__Fund_Distribution__c.toString(),object.navpeII__Fund_Drawdown__c.toString(),
+//					object.navpeII__Fund_Investment__c.toString(),object.navpeII__Fund_of_Funds_Transaction__c.toString(),object.navpeII__Fundraising_Contact__c.toString(),
+//					object.navpeII__Investor_Distribution__c.toString(),object.navpeII__Marketing_Prospect__c.toString(),object.navpeII__Office_Location_Info__c.toString(),
+//					object.navpeII__Partnership__c.toString(),object.navpeII__Talent_Placement__c.toString(),object.navpeII__Transfer__c.toString(),object.navpeII__Marketing_Event__c.toString(),
+//					object.navpeII__Advisor_Involvement__c.toString(),object.navpeII__Attendee__c.toString(),object.navpeII__Deal_Expert__c.toString(),object.navpeII__Deal_Team__c.toString(),	
+//					object.navpeII__Request_Tracker__c.toString(),object.navpeII__Review__c.toString(),object.navpeII__Log_Time__c.toString(),
+//					object.navpeII__Valuation__c.toString()
+//					};
+			object[] objects = {object.Advisor_Involvement, object.Deal_Expert,object.Agreement, object.Contact, object.Fund, object.Fundraising, object.Pipeline,  object.Institution, object.Advisor, object.Affiliation,object.Attendee,
+								object.Capital_Call,object.Commitment,object.Correspondence_List,object.Deal_Team,object.Financial_Performance,object.Financing,
+								object.Fund_Drawdown,object.Fund_Distribution,object.Fund_Investment,object.Fund_of_Fund_Transactions,object.Fundraising_Contact,object.Marketing_Event,
+								object.Marketing_Prospect,object.Office_Location,object.Partnership,object.Request_Tracker,object.Review,object.Talent_Placement,object.Time_Log,object.Transfer,
+								object.Valuation};
+			for (object obj : objects) {
+//			for (String api : apiname) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				try {
+					if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+						log(LogStatus.PASS, obj.toString() + " object has been opened in setup page", YesNo.Yes);
+						CommonLib.ThreadSleep(3000);
+						if (setup.clickOnObjectFeature(projectName, mode, obj,
+								ObjectFeatureName.pageLayouts)) {
+							log(LogStatus.PASS, "clicked on page layout of object feature of "
+									+ obj.toString() + " object", YesNo.Yes);
+							List<WebElement> allElements = setup.getAllPageLayoutList();
+							int no = allElements.size();
+							 for(int i=0;i<no;i++) {
+							String name = null;
+							try {
+								allElements = setup.getAllPageLayoutList();
+								WebElement labelElement = allElements.get(i);
+								name = labelElement.getText();
+								if (click(driver, labelElement, "lightning record  page label :" + name,
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
+											YesNo.No);
+									CommonLib.ThreadSleep(3000);
+									switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+									CommonLib.ThreadSleep(5000);
+
+									if (setup.removeRelatedList(obj)) {
+										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+obj,
+												YesNo.No);
+
+									} else {
+										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+obj, YesNo.Yes);
+										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+obj);
+
+									}
+
+								} else {
+									log(LogStatus.ERROR,
+											"Not able to clicked on the page layout of  page label:" + name,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to clicked on the page layout of  page label:" + name);
+
+								}
+							} catch (Exception e) {
+								driver.navigate().back();
+								
+							}
+							 }
+						} else {
+							log(LogStatus.FAIL,
+									"Not able to click on Record type of object feature of " + obj + " object",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to click on Record type of object feature of " + obj + " object");
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + obj + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					continue;
+				}
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		sa.assertAll();
+
 	}
 }
 

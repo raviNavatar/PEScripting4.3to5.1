@@ -94,7 +94,7 @@ public class Pre_CheckScript extends BaseLib {
 		try {
 			CommonLib.ThreadSleep(3000);
 			if (home.clickOnSetUpLink()) {
-
+				CommonLib.ThreadSleep(3000);
 				parentWindow = switchOnWindow(driver);
 				if (parentWindow == null) {
 					sa.assertTrue(false,
@@ -176,6 +176,7 @@ public class Pre_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow=null;
 			}
 			sa.assertAll();
 		}
@@ -183,6 +184,7 @@ public class Pre_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow=null;
 		}
 		sa.assertAll();
 	}
@@ -193,14 +195,14 @@ public class Pre_CheckScript extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
-		
 		String parentWindow = null;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		String xpath =null;
 		WebElement ele = null;
 		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech",
-				"Communications","Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
+				"Communications",
+				"Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
 				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
 				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
 				"Transportation","Utilities","Semi Conductor"};
@@ -209,6 +211,7 @@ public class Pre_CheckScript extends BaseLib {
 		
 		String[] AccountSource = {"Advertisement","Employee Referral","External Referral","Public Relations","Seminar - Internal","Seminar - Partner",
 				"Trade Show","Word of mouth","Partner","Web","Other"};
+		
 		
 		
 		for(int i=0;i<3;i++) {
@@ -261,10 +264,10 @@ public class Pre_CheckScript extends BaseLib {
 									
 									for(String value:fields) {
 										
-											CommonLib.ThreadSleep(5000);
-											CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-											CommonLib.ThreadSleep(5000);
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, value, Condition.activate)) {
+											CommonLib.ThreadSleep(3000);
+											CommonLib.switchToFrame(driver, 30,fr.getaddPicklistIFrame(60));
+											CommonLib.ThreadSleep(3000);
+										if(fr.activateOrAddPicklistValueOfField("", fieldName, value, Condition.activate,true)) {
 											log(LogStatus.PASS, value+" :value activated or created sucessfully ", YesNo.No);
 
 										}else {
@@ -277,37 +280,94 @@ public class Pre_CheckScript extends BaseLib {
 										}
 										
 									}
-									if(i==0) {
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-										
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.industryAddedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.industryAddedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-									}else if(i==1) {
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-										
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.typeAddedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.typeAddedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-									}else {
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-										
-										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString(), Condition.activate)) {
-											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString()+" :varibale Created", YesNo.No);
-
-										}
-									}
+									
+									// this code will be out of scope till we are using  metadata to write value in the org
+									
+//									if(i==0) {
+//										CommonLib.ThreadSleep(5000);
+//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+//										CommonLib.ThreadSleep(5000);
+//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString(), Condition.activate,false)) {
+//											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString()+" :varibale Created", YesNo.No);
+//
+//										}else {
+//											log(LogStatus.FAIL,
+//													fieldName+"Activated_"+" :value Not created sucessfully ",
+//													YesNo.Yes);
+//											sa.assertTrue(false,
+//													fieldName+"Activated_"+" :value Not created sucessfully ");
+//										}
+//										
+//										CommonLib.ThreadSleep(5000);
+//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+//										CommonLib.ThreadSleep(5000);
+//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.industryAddedFields.toString(), Condition.activate,false)) {
+//											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.industryAddedFields.toString()+" :varibale Created", YesNo.No);
+//
+//										}else {
+//											log(LogStatus.FAIL,
+//													fieldName+"Added_"+" :value Not created sucessfully ",
+//													YesNo.Yes);
+//											sa.assertTrue(false,
+//													fieldName+"Added_"+" :value Not created sucessfully ");
+//										}
+//									}else if(i==1) {
+//										CommonLib.ThreadSleep(5000);
+//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+//										CommonLib.ThreadSleep(5000);
+//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString(), Condition.activate,false)) {
+//											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString()+" :varibale Created", YesNo.No);
+//
+//										}else {
+//											log(LogStatus.FAIL,
+//													fieldName+"Activated_"+" :value Not created sucessfully ",
+//													YesNo.Yes);
+//											sa.assertTrue(false,
+//													fieldName+"Activated_"+" :value Not created sucessfully ");
+//										}
+//										
+//										CommonLib.ThreadSleep(5000);
+//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+//										CommonLib.ThreadSleep(5000);
+//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.typeAddedFields.toString(), Condition.activate,false)) {
+//											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.typeAddedFields.toString()+" :varibale Created", YesNo.No);
+//
+//										}else {
+//											log(LogStatus.FAIL,
+//													fieldName+"Added_"+" :value Not created sucessfully ",
+//													YesNo.Yes);
+//											sa.assertTrue(false,
+//													fieldName+"Added_"+" :value Not created sucessfully ");
+//										}
+//									}else {
+//										CommonLib.ThreadSleep(5000);
+//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+//										CommonLib.ThreadSleep(5000);
+//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString(), Condition.activate,false)) {
+//											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString()+" :varibale Created", YesNo.No);
+//
+//										}else {
+//											log(LogStatus.FAIL,
+//													fieldName+"Activated_"+" :value Not created sucessfully ",
+//													YesNo.Yes);
+//											sa.assertTrue(false,
+//													fieldName+"Activated_"+" :value Not created sucessfully ");
+//										}
+//										
+//										CommonLib.ThreadSleep(5000);
+//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
+//										CommonLib.ThreadSleep(5000);
+//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString(), Condition.activate,false)) {
+//											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString()+" :varibale Created", YesNo.No);
+//
+//										}else {
+//											log(LogStatus.FAIL,
+//													fieldName+"Added_"+" :value Not created sucessfully ",
+//													YesNo.Yes);
+//											sa.assertTrue(false,
+//													fieldName+"Added_"+" :value Not created sucessfully ");
+//										}
+//									}
 									
 									
 									if (parentWindow != null) {
@@ -344,6 +404,8 @@ public class Pre_CheckScript extends BaseLib {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
+				parentWindow=null;
+				
 			}
 			
 		}
@@ -355,13 +417,15 @@ public class Pre_CheckScript extends BaseLib {
 
 			driver.close();
 			driver.switchTo().window(parentWindow);
+			parentWindow=null;
 		}
 		sa.assertAll();
 
 	}
 	
 	
-	@Test(priority =2 ,enabled=false)
+	
+	@Test(priority =3 ,enabled=true)
 	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -389,7 +453,7 @@ public class Pre_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
-			
+			CommonLib.ThreadSleep(3000);
 			if(i==0) {
 				
 				fieldName ="IndustryPicklist";
@@ -418,7 +482,13 @@ public class Pre_CheckScript extends BaseLib {
 						fieldName+" :Custom metadata not added");
 				
 			}
-			
+			if (parentWindow != null) {
+
+				driver.close();
+				
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
 			
 		} catch (Exception e) {
 			if (parentWindow != null) {
