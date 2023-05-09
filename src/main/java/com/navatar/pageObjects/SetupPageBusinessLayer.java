@@ -1033,6 +1033,26 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 										result.add(src + " is not visible so cannot dragNdrop " + src);
 									}
 								}
+								
+								if(isDisplayed(driver,
+										FindElement(driver,
+												"//h3[text()='Quick Actions in the Salesforce Classic Publisher']/..//..//a",
+												"", action.BOOLEAN, 20),
+										"visibility", 20,"" + " override predefine actions") != null) {
+								log(LogStatus.INFO, "element found override predefine actions:" + "",
+										YesNo.No);
+								if (click(driver,FindElement(driver,
+										"//h3[text()='Salesforce Mobile and Lightning Experience Actions']/..//..//a",
+										"", action.BOOLEAN, 20), "override predefine actions :" + "",
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the override predefine actions:" + "",
+											YesNo.No);
+							}else {
+								log(LogStatus.INFO, "not clicked on the override predefine actions:" + "",
+										YesNo.No);
+								
+							}
+							}
 //									flag = true;
 //								} else if (src.split("<break>")[0].contains("Mobile")) {
 ////									if (click(driver, FindElement(driver, "//div[text()='Mobile & Lightning Actions']",
@@ -8383,7 +8403,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
            log(LogStatus.INFO, "element found Navatar Usage Metrics:" + "",
 		    YesNo.No);
         if (click(driver,FindElement(driver,
-		     "//td[@class='actionColumn']//a[contains(@title,'Manage - Record 1 - NavatarUsageMetrics')]",
+		     "(//td[@class='actionColumn']//a[contains(@title,'NavatarUsageMetrics')])[1]",
 		       "", action.BOOLEAN, 20), "Navatar Usage Metrics :" + "",
 		         action.BOOLEAN)) {
 	              log(LogStatus.INFO, "clicked on the Navatar Usage Metrics:" + "",
@@ -8400,13 +8420,13 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 	                   switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
 	                   CommonLib.ThreadSleep(3000);
 		          click(driver,FindElement(driver,
-		 		   "//td[@class='actionColumn']//a[contains(@title,'Delete - Record 1 - NavatarUsageMetrics')]",
+		 		   "(//td[@class='actionColumn']//a[contains(@title,'NavatarUsageMetrics')])[2]",
 				  "", action.BOOLEAN, 20), "Navatar Usage Metrics :" + "",
 				  action.BOOLEAN);
 		       log(LogStatus.INFO, "clicked on Delete the Navatar Usage Metrics:" + "",
 				 YesNo.No);
 		       clickUsingJavaScript(driver,FindElement(driver,
-			 		   "//td[@class='actionColumn']//a[contains(@title,'Delete - Record 1 - NavatarUsageMetrics')]",
+			 		   "(//td[@class='actionColumn']//a[contains(@title,'NavatarUsageMetrics')])[2]",
 					  "", action.BOOLEAN, 20), "Navatar Usage Metrics :" + "",
 					  action.BOOLEAN);
 			       log(LogStatus.INFO, "clicked on Delete the Navatar Usage Metrics:" + "",
@@ -8437,13 +8457,11 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			   if (CreateScheduleUsageMatrix(environment, mode,"NavatarUsageMetrics","scheduledClientData", 10)) {
 					//flag1 = true;
 					log(LogStatus.PASS, "able to Create schedule usage matrix" , YesNo.Yes);
+					flag = true;
 				}else {
 					log(LogStatus.FAIL, "Not able to Create schedule usage matrix", YesNo.Yes);
 					sa.assertTrue(false, "Not able to Create schedule usage matrix");
 				}
-			log(LogStatus.INFO, "not able to find Navatar Usage Metrics:" + "",
-					YesNo.No);
-			sa.assertTrue(false, "Not able to Create schedule usage matrix");
 			  }
 		return flag;
     }
@@ -8838,8 +8856,26 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 											action.BOOLEAN, 10);
 									//table[contains(@id,'ext-gen')]//td
 								}
+								String xpath = null;
+								if(src.equalsIgnoreCase(PageLabel.Total_Commitments.toString())) {
+									xpath ="//span[contains(text(),'" + src + "')]";
+									
+								}
+								else if(src.equalsIgnoreCase(PageLabel.Last_Stage_Change_Date.toString())) {
+									xpath ="//span[contains(text(),'Last Stage Change')]";
+								}
+								else if(src.equalsIgnoreCase(PageLabel.Management_Meeting_Date.toString())) {
+									xpath ="//span[contains(text(),'Management Meetin')]";
+								}
+								else if(src.equalsIgnoreCase(PageLabel.Average_Deal_Quality_Score.toString())) {
+									xpath ="//span[contains(text(),'Average Deal')]";
+								}
+								else {
+									xpath="//span[text()='" + src + "']";
+								}
+								
 								ele = isDisplayed(driver,
-										FindElement(driver, " //span[text()='" + src + "']", "", action.BOOLEAN, 10),
+										FindElement(driver, xpath, "", action.BOOLEAN, 10),
 										"visibility", 10, src + " field");
 								if (ele != null) {
 								}
@@ -9034,7 +9070,6 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		ThreadSleep(3000);
 		if (searchStandardOrCustomObject(projectName, mode,  object.Apex_Classes)) {
 			log(LogStatus.PASS,  object.Apex_Classes + " object has been opened in setup page", YesNo.Yes);
-			CommonLib.ThreadSleep(3000);
 			CommonLib.ThreadSleep(3000);
 			switchToFrame(driver,30, getenterpriseeditionFrame(30));
 			if (click(driver, getScheduleApex(timeOut), "Schedule Apex",

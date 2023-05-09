@@ -326,12 +326,9 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 				return "Account";
 				//	}
 			}
-		},Contact,Attendee,Time_Log,navpeII__Fund__c,navpeII__Fundraising__c,navpeII__Pipeline__c{
-			@Override
-			public String toString() {
-				return "Time Log";
-			}
-		},Valuation,Deal,Deal_Expert{
+		},Contact,Attendee,Time_Log,navpeII__Fund__c,navpeII__Fundraising__c,navpeII__Pipeline__c
+		
+		,Valuation,Deal,Deal_Expert{
 			@Override
 			public String toString() {
 				return "Deal Expert";
@@ -1320,7 +1317,19 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name, Clip_Name, Section, Custom_Links, Entity_Type, Introduction_Date, Institution, Industry_Focus, Contact_Type, Last_Touchpoint, Touchpoint_Overdue, Tier, Sector_Expertise, Next_Touchpoint_Date, Ownership, Exit_Date, Notes, Last_Stage_Change_Date, Closing_Date, Multiple, LOI_Due_Date, Reason_for_Decline, Platform_Company, Sales, Management_Meeting_Date, Reason_to_Park, Account_Status, Contact_Status, Fund_Status, Fundraising_Status, FC_Status, Partnership_Status, Commitment_Status, Corres_List_Status, FD_Status, Capital_Call_Status, Fund_Dist_Status, Inv_Dist_Status, Advisor_Status, AI_Status, Affiliation_Status, Agr_Amend_Status, Financing_Status, Fund_Inv_Status, FOF_Transaction_Status, Pipeline_Status, QFP_Status, TP_Status, Marketing_Event_Status, Event_Status, Task_Status, Transfer_Status,
+			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name, Clip_Name, Section, Custom_Links, Entity_Type, Introduction_Date, Institution, Industry_Focus, Contact_Type, Last_Touchpoint, Touchpoint_Overdue, Tier, Sector_Expertise, Next_Touchpoint_Date, 
+		Ownership{
+			@Override
+			public String toString() {
+				return "Ownership %";
+			}
+		}
+		, Exit_Date, Notes, Last_Stage_Change_Date, Closing_Date, Multiple, LOI_Due_Date, Reason_for_Decline, Platform_Company, Sales{
+		@Override
+		public String toString() {
+			return "EBITDA / Sales";
+		}
+	}, Management_Meeting_Date, Reason_to_Park, Account_Status, Contact_Status, Fund_Status, Fundraising_Status, FC_Status, Partnership_Status, Commitment_Status, Corres_List_Status, FD_Status, Capital_Call_Status, Fund_Dist_Status, Inv_Dist_Status, Advisor_Status, AI_Status, Affiliation_Status, Agr_Amend_Status, Financing_Status, Fund_Inv_Status, FOF_Transaction_Status, Pipeline_Status, QFP_Status, TP_Status, Marketing_Event_Status, Event_Status, Task_Status, Transfer_Status,
 		};
 	
 	public static enum Links{
