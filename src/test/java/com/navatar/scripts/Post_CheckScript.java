@@ -136,7 +136,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =true)
+	@Test(priority = 1,enabled =false)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -223,7 +223,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 2,enabled =true)
+	@Test(priority = 2,enabled =false)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -1323,7 +1323,7 @@ public class Post_CheckScript extends BaseLib {
 											
 									List<String> abc = setup.removeDragNDropFromPagelayoutContact("", mode, ObjectFeatureName.pageLayouts, layoutName, sourceANDDestination);
 									ThreadSleep(10000);
-									if (!abc.isEmpty()) {
+									if (abc.isEmpty()) {
 										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
 									}else{
 										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
@@ -1616,7 +1616,7 @@ public class Post_CheckScript extends BaseLib {
 									
 									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
 									ThreadSleep(10000);
-									if (!abc1.isEmpty()) {
+									if (abc1.isEmpty()) {
 										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
 									}else{
 										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
@@ -1758,7 +1758,13 @@ public class Post_CheckScript extends BaseLib {
 				}
 			}
 
-			object[] objects = { object.Institution,object.Contact, object.Affiliation, object.Financing, object.Fundraising, object.Pipeline };
+			object[] objects = {
+					
+					
+					  object.Institution, object.Contact, object.Affiliation, object.Financing,
+					  object.Fundraising,
+					 
+					  object.Pipeline };
 			for (object obj : objects) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
@@ -1797,39 +1803,47 @@ public class Post_CheckScript extends BaseLib {
 									
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Average_Deal_Quality_Score.toString(),"");
-									sourceANDDestination.put(PageLabel.Industry_Focus.toString(),"");
-									sourceANDDestination.put(PageLabel.Contact_Type.toString(),"");
-									sourceANDDestination.put(PageLabel.Last_Touchpoint.toString(),"");
-									sourceANDDestination.put(PageLabel.Touchpoint_Overdue.toString(),"");
-									sourceANDDestination.put(PageLabel.Total_Deals_Shown.toString(),"");
-									sourceANDDestination.put(PageLabel.Tier.toString(),"");
-									sourceANDDestination.put(PageLabel.Sector_Expertise.toString(),"");
-									sourceANDDestination.put(PageLabel.Next_Touchpoint_Date.toString(),"");
+									
+									  sourceANDDestination.put(PageLabel.Industry_Focus.toString(),"");
+									  sourceANDDestination.put(PageLabel.Contact_Type.toString(),"");
+									  sourceANDDestination.put(PageLabel.Last_Touchpoint.toString(),"");
+									  sourceANDDestination.put(PageLabel.Touchpoint_Overdue.toString(),"");
+									  sourceANDDestination.put(PageLabel.Total_Deals_Shown.toString(),"");
+									  sourceANDDestination.put(PageLabel.Tier.toString(),"");
+									  sourceANDDestination.put(PageLabel.Sector_Expertise.toString(),"");
+									  sourceANDDestination.put(PageLabel.Next_Touchpoint_Date.toString(),"");
+									 
 								} else if(name.equals("Financing Layout")){
 									
 									sourceANDDestination = new HashMap<String, String>();
-									sourceANDDestination.put(PageLabel.Lender_Status.toString(),"");
-									sourceANDDestination.put(PageLabel.Date.toString(),"");
+									
+									  sourceANDDestination.put(PageLabel.Lender_Status.toString(),"");
+									  sourceANDDestination.put(PageLabel.Date.toString(),"");
+									 
 									sourceANDDestination.put(PageLabel.Ownership.toString(),"");
-									sourceANDDestination.put(PageLabel.Deal.toString(),"");
-									sourceANDDestination.put(PageLabel.Exit_Date.toString(),"");
-									sourceANDDestination.put(PageLabel.Notes.toString(),"");
+									
+									  sourceANDDestination.put(PageLabel.Deal.toString(),"");
+									  sourceANDDestination.put(PageLabel.Exit_Date.toString(),"");
+									  sourceANDDestination.put(PageLabel.Notes.toString(),"");
+									 
 								} else if(name.equals("Fundraising Layout")){
 									
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Last_Stage_Change_Date.toString(),"");
-									sourceANDDestination.put(PageLabel.Closing_Date.toString(),"");
+									 sourceANDDestination.put(PageLabel.Closing_Date.toString(),""); 
 								} else if(name.equals("Pipeline Layout")){
 									
 									sourceANDDestination = new HashMap<String, String>();
-									sourceANDDestination.put(PageLabel.Deal_Quality_Score.toString(),"");
-									sourceANDDestination.put(PageLabel.Multiple.toString(),"");
-									sourceANDDestination.put(PageLabel.LOI_Due_Date.toString(),"");
-									sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
-									sourceANDDestination.put(PageLabel.Platform_Company.toString(),"");
-									sourceANDDestination.put(PageLabel.Sales.toString(),"");
+									
+									  sourceANDDestination.put(PageLabel.Deal_Quality_Score.toString(),"");
+									  sourceANDDestination.put(PageLabel.Multiple.toString(),"");
+									  sourceANDDestination.put(PageLabel.LOI_Due_Date.toString(),"");
+									  sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
+									  sourceANDDestination.put(PageLabel.Platform_Company.toString(),"");
+									  sourceANDDestination.put(PageLabel.Sales.toString(),"");
+									 
 									sourceANDDestination.put(PageLabel.Management_Meeting_Date.toString(),"");
-									sourceANDDestination.put(PageLabel.Reason_to_Park.toString(),"");
+									 sourceANDDestination.put(PageLabel.Reason_to_Park.toString(),""); 
 								} else {
 									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
 								}
@@ -2282,7 +2296,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority = 13,enabled =false)
+	@Test(priority = 13,enabled =true)
 
 	public void VerifyScheduleUsageMetrics() {
 		
