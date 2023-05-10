@@ -2306,7 +2306,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 						log(LogStatus.INFO, "Navatar Acuity Button has been clicked", YesNo.No);
 
-						
+						ThreadSleep(2000);
 						if(otherComponent!=null) {
 							
 							for(String name :otherComponent) {
@@ -2317,17 +2317,18 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								
 								log(LogStatus.INFO, "Add section after button has been clicked", YesNo.No);
 								JavascriptExecutor js = (JavascriptExecutor) driver;
-								CommonLib.clickUsingJavaScript(driver, getFirstComponent1(20),"");
+								CommonLib.clickUsingJavaScript(driver, getSectionOfComponent(20),"");
 								CommonLib.ThreadSleep(2000);
 								WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
-										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
+										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']")));
 										js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 										CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']/a")),
 									"Add Link");
-								CommonLib.switchToDefaultContent(driver);
-								if (CommonLib.click(driver, getAddButtonAfterSection(10), "Navatar Acuity component Add Button",
-										action.SCROLLANDBOOLEAN)) {
+										ThreadSleep(2000);
+								//CommonLib.switchToDefaultContent(driver);
+//								if (CommonLib.click(driver, addComp, "Navatar Acuity component Add Button",
+//										action.SCROLLANDBOOLEAN)) {
 									
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
@@ -2354,12 +2355,12 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									}
 									
 								
-								} else {
-									log(LogStatus.ERROR, "Not Able to Clicked on Navatar Acuity component Add Button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Clicked on Navatar Acuity component Add Button");
-
-
-								}
+//								} else {
+//									log(LogStatus.ERROR, "Not Able to Clicked on Navatar Acuity component Add Button", YesNo.Yes);
+//									sa.assertTrue(false, "Not Able to Clicked on Navatar Acuity component Add Button");
+//
+//
+//								}
 							} else {
 								log(LogStatus.ERROR, "Not Able to Clicked on Add section after button", YesNo.Yes);
 								sa.assertTrue(false, "Not Able to Clicked on Add section after button");

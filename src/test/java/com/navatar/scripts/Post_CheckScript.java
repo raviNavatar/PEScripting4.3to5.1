@@ -684,8 +684,8 @@ public class Post_CheckScript extends BaseLib {
 										CommonLib.ThreadSleep(3000);
 
 										if (edit.verifyAndAddAcuityTabInPages("Navatar Acuity", "Acuity", "Acuity",
-												new String[] { "Z (Do not use) Navatar Clip Edit Utility",
-														"Z (Do not use) Navatar Add Subscribe" },true)) {
+												new String[] { "Z  (Do not use) Navatar Clip Edit Utility",
+														"Z (Do not use) Navatar Add  Subscribe" },true)) {
 											log(LogStatus.INFO, "able to add tab", YesNo.No);
 											CommonLib.ThreadSleep(2000);
 											
@@ -2541,6 +2541,8 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	
+	
+	// not include in round 4 bug verification
 	@Test(priority =14 ,enabled=false)
 	public void verifyAddVFPageOnPageLayout() {
 		
