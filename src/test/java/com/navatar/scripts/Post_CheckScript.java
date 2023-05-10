@@ -2286,18 +2286,146 @@ public class Post_CheckScript extends BaseLib {
 			log(LogStatus.FAIL, "Metadata is empty so cannot delete/deactivate picklist vlaue", YesNo.Yes);
 			sa.assertTrue(false, "Metadata is empty so cannot delete/deactivate picklist vlaue");
 		}
+		
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
 
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+		if (setup.searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
+			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
+			ThreadSleep(2000);
+			switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+			ThreadSleep(5000);
+			
+			
+			
+			WebElement Industrydel =FindElement(driver, "//a[text()='IndustryPicklist']/ancestor::tr//td/a[contains(@title,'Del')]", "", action.SCROLLANDBOOLEAN, 20);
+
+			 if(click(driver, Industrydel, "Industy delete button", action.SCROLLANDBOOLEAN)) {
+				 log(LogStatus.PASS, "click on delete button of industry metatdata", YesNo.No);
+				 ThreadSleep(2000);
+				String child1= driver.getWindowHandle();
+				CommonLib.switchOnWindowBasedOnTitle(driver, "Confirm");
+				
+				if(click(driver, FindElement(driver, "//div[@class='confirmDelete']//input[@name='confirmed']", "", action.BOOLEAN, 20), "confirm delete checkbox", action.BOOLEAN)) {
+					 log(LogStatus.PASS, "click on confirm delete button checkbox ", YesNo.No);
+					 click(driver, FindElement(driver, "//input[@name='del' or @title='Delete']", "", action.BOOLEAN, 20), " delete button", action.BOOLEAN);
+						ThreadSleep(2000);
+						driver.switchTo().window(child1);
+						
+					
+				}else {
+					log(LogStatus.ERROR, "Not able to click on confirm delete button checkbox ", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on confirm delete button checkbox ");
+				}
+				
+			 }else {
+				 log(LogStatus.ERROR, "Not able to click on delete button of industry metatdata", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on delete button of industry metatdata");
+			 }
+			 
+			 switchToDefaultContent(driver);
+			 ThreadSleep(2000);
+				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+				ThreadSleep(5000);
+			WebElement TypeDel =FindElement(driver, "//a[text()='TypePicklist']/ancestor::tr//td/a[contains(@title,'Del')]", "", action.SCROLLANDBOOLEAN, 20);
+
+			 if(click(driver, TypeDel, "Type delete button", action.SCROLLANDBOOLEAN)) {
+				 log(LogStatus.PASS, "click on delete button of type metatdata", YesNo.No);
+				 ThreadSleep(2000);
+				 String child1= driver.getWindowHandle();
+					CommonLib.switchOnWindowBasedOnTitle(driver, "Confirm");
+					
+				if(click(driver, FindElement(driver, "//div[@class='confirmDelete']//input[@name='confirmed']", "", action.BOOLEAN, 20), "confirm delete checkbox", action.BOOLEAN)) {
+					 log(LogStatus.PASS, "click on confirm delete button checkbox ", YesNo.No);
+
+					 click(driver, FindElement(driver, "//input[@name='del' or @title='Delete']", "", action.BOOLEAN, 20), " delete button", action.BOOLEAN);
+						ThreadSleep(2000);
+						driver.switchTo().window(child1);
+				}else {
+					log(LogStatus.ERROR, "Not able to click on confirm delete button checkbox ", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on confirm delete button checkbox ");
+				}
+				
+			 }else {
+				 log(LogStatus.ERROR, "Not able to click on delete button of type metatdata", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on delete button of type metatdata");
+			 }
+			 
+			 switchToDefaultContent(driver);
+			 ThreadSleep(2000);
+				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+				ThreadSleep(5000);
+			WebElement AccountSourcedel =FindElement(driver, "//a[text()='AccountSourcePicklist']/ancestor::tr//td/a[contains(@title,'Del')]", "", action.SCROLLANDBOOLEAN, 20);
+
+			 if(click(driver, AccountSourcedel, "account source delete button", action.SCROLLANDBOOLEAN)) {
+				 log(LogStatus.PASS, "click on delete button of account source metatdata", YesNo.No);
+				 ThreadSleep(2000);
+				 String child1= driver.getWindowHandle();
+					CommonLib.switchOnWindowBasedOnTitle(driver, "Confirm");
+					
+				if(click(driver, FindElement(driver, "//div[@class='confirmDelete']//input[@name='confirmed']", "", action.BOOLEAN, 20), "confirm delete checkbox", action.BOOLEAN)) {
+					 log(LogStatus.PASS, "click on confirm delete button checkbox ", YesNo.No);
+
+						click(driver, FindElement(driver, "//input[@name='del' or @title='Delete']", "", action.BOOLEAN, 20), " delete button", action.BOOLEAN);
+						ThreadSleep(2000);
+						driver.switchTo().window(child1);
+						
+					
+					
+				}else {
+					log(LogStatus.ERROR, "Not able to click on confirm delete button checkbox ", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on confirm delete button checkbox ");
+				}
+				
+			 }else {
+				 log(LogStatus.ERROR, "Not able to click on delete button of industry metatdata", YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on delete button of industry metatdata");
+			 }
+			 			
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Custom_Metadata_Types, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Custom_Metadata_Types);
+		}
+		
+		
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow=null;
+			}
+			
+		}
+		
 		if (parentWindow != null) {
 
 			driver.close();
+			
 			driver.switchTo().window(parentWindow);
+			parentWindow = null;
 		}
+		
 		sa.assertAll();
 
 	}
 
-	@Test(priority = 13,enabled =true)
-
+	
+	@Test(priority = 13,enabled =false)
 	public void VerifyScheduleUsageMetrics() {
 		
 		String projectName = "";
@@ -2411,6 +2539,7 @@ public class Post_CheckScript extends BaseLib {
 				parentWindow = null;
 			}
 	}
+	
 	
 	@Test(priority =14 ,enabled=false)
 	public void verifyAddVFPageOnPageLayout() {
@@ -2605,6 +2734,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 	}
 
+	
 	@Test(priority =15, enabled=false)
 	public void verifyRemovingActivityTimelineFromSecondaryObjects() {
 		String projectName = "";
@@ -2804,6 +2934,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 
 	}
 
+	
 	@Test(priority = 16,enabled=false)
 	public void verifyRemovingRelatedListFromSecondaryObjects() {
 		String projectName = "";

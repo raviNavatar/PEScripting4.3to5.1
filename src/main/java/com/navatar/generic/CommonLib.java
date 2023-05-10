@@ -545,6 +545,56 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		}
 		return parentWindowId;
 	}
+	
+	/**
+	 * @author Ankur Rana
+	 * @param driver
+	 * @return String
+	 * @description switch to the very next window open and return the parent
+	 *              session id.
+	 */
+	public static void switchOnWindowBasedOnTitle(WebDriver driver,String exptitle) {
+		int limitForWait = 0;
+		String parentWindowId = driver.getWindowHandle();
+		String childWindowID = null;
+		Set<String> s1 = null;
+		while (true) {
+			s1 = driver.getWindowHandles();
+			if (s1.size() <= 1) {
+				try {
+					Thread.sleep(500);
+					limitForWait++;
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if (limitForWait > 200) {
+					log(LogStatus.ERROR, "No new window is open for switch.", YesNo.Yes);
+
+				}
+			} else {
+				break;
+			}
+		}
+		String title=null;
+		Iterator<String> I1 = s1.iterator();
+		while (I1.hasNext()) {
+			childWindowID = I1.next();
+			driver.switchTo().window(childWindowID);
+			title=driver.getTitle();
+			if (title.contains(exptitle)) {
+				System.out.println("child window :" + childWindowID);
+				try {
+					driver.switchTo().window(childWindowID);
+				} catch (NoSuchWindowException e) {
+					log(LogStatus.ERROR, "No new window is open for switch.", YesNo.Yes);
+					e.printStackTrace();
+				}
+				log(LogStatus.PASS, "Successfully switched to new window.", YesNo.Yes);
+				break;
+			}
+		}
+	}
 
 	/**
 	 * @author Ankit Jaiswal
