@@ -8861,13 +8861,13 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 									xpath ="//span[contains(text(),'" + src + "')]";
 									
 								}
-								else if(src.equalsIgnoreCase(PageLabel.Last_Stage_Change_Date.toString())) {
+								else if(src.equalsIgnoreCase("Last Stage Change Date")) {
 									xpath ="//span[contains(text(),'Last Stage Change')]";
 								}
 								else if(src.equalsIgnoreCase("Management Meeting Date")) {
 									xpath ="//span[contains(text(),'Management Meetin..')]";
 								}
-								else if(src.equalsIgnoreCase(PageLabel.Average_Deal_Quality_Score.toString())) {
+								else if(src.equalsIgnoreCase("Average Deal Quality Score")) {
 									xpath ="//span[contains(text(),'Average Deal')]";
 								}
 								else {
