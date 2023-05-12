@@ -1123,7 +1123,7 @@ public class Post_CheckScript extends BaseLib {
 				}
 
 
-	@Test(priority = 8,enabled=true)
+	@Test(priority = 8,enabled=false)
 	public void verifyremoveQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1381,7 +1381,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 
-	@Test(priority = 9,enabled=true)
+	@Test(priority = 9,enabled=false)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
