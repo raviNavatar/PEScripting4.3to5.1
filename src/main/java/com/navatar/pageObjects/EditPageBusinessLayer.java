@@ -1962,7 +1962,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 
 	public boolean removeTimeline(boolean removeActivityTimeline) {
-		
+		String xPath =null;
 		boolean delete=false;
 		if(removeActivityTimeline) {
 		
@@ -1971,10 +1971,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		if(activity!=null) {
 			
 			click(driver, activity, " ", action.BOOLEAN);
-			mouseOverClickOperation(driver, activity);
+		//	mouseOverClickOperation(driver, activity);
 			ThreadSleep(1000);
 			
-			if(click(driver, activityTimelineComponentDeleteButton(10), " Delete component button", action.BOOLEAN)) {
+			if(clickUsingJavaScript(driver, activityTimelineComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
 				activity =isDisplayed(driver, activityTimelineComponent(10), "visibility", 10, "");
 				if(activity==null) {
 					delete=true;
@@ -2002,7 +2002,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			WebElement highlightInsertBottom= highlightPanel(10);
 			WebElement recordDetail= recordDetailComponentComponent(20);
-			if (CommonLib.clickUsingJavaScript(driver, recordDetail, "recordDetail",
+			ThreadSleep(1000);
+			if (CommonLib.click(driver, recordDetail, "recordDetail",
 					action.SCROLLANDBOOLEAN)) {
 				System.out.println("  clicked");
 			}else {
@@ -2019,6 +2020,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			switchToDefaultContent(driver);
 			ThreadSleep(2000);
+			
 			if (CommonLib.click(driver, getSaveButton(20), " Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, " save button has been clicked", YesNo.No);
 				System.out.println(" save button has been clicked");

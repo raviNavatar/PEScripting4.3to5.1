@@ -604,7 +604,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=false)
+	@Test(priority =6 ,enabled=true)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -1151,10 +1151,9 @@ public class Post_CheckScript extends BaseLib {
 			ArrayList<String> sourceANDDestination = new ArrayList<String>();
 			
 			String[] apiname = {
-					object.Account.toString() ,object.Contact.toString(),object.Account.toString(),object.
-												  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
-												  ,object.navpeII__Pipeline__c.toString()
-												 };
+					object.Account.toString() ,object.Contact.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
+					 ,object.navpeII__Pipeline__c.toString()};
+			
 			for (String api : apiname) {
 			log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
 		
@@ -1416,7 +1415,7 @@ public class Post_CheckScript extends BaseLib {
 					}
 				}
 				String[] apiname = {
-						object.Account.toString() ,object.Contact.toString(),object.Account.toString(),object.
+						object.Account.toString() ,object.Contact.toString(),object.
 													  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
 													  ,object.navpeII__Pipeline__c.toString()
 													 };

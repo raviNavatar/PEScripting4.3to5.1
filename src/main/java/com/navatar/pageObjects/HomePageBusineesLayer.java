@@ -84,17 +84,19 @@ public class HomePageBusineesLayer extends HomePage {
 		boolean flag = false;
 		if (click(driver, getSettingLink_Lighting(20), "setting icon", action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.PASS, "Sussessfully Clicked on setting icon", YesNo.Yes);
-
+			ThreadSleep(2000);
+			if (click(driver, getUserMenuSetupLink(20), "setup link", action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "Sussessfully clicked on setup link", YesNo.Yes);
+				flag = true;
+				ThreadSleep(2000);
+			} else {
+				log(LogStatus.ERROR, "Not able to clicked on user setup link", YesNo.Yes);
+			}
 		} else {
 			log(LogStatus.ERROR, "Not able to clicked on setting icon", YesNo.Yes);
 			return flag;
 		}
-		if (click(driver, getUserMenuSetupLink(20), "setup link", action.SCROLLANDBOOLEAN)) {
-			log(LogStatus.PASS, "Sussessfully clicked on setup link", YesNo.Yes);
-			flag = true;
-		} else {
-			log(LogStatus.ERROR, "Not able to clicked on user setup link", YesNo.Yes);
-		}
+		
 		return flag;
 	}
 
