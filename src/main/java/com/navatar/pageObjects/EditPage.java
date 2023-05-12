@@ -25,7 +25,7 @@ public class EditPage extends BasePageBusinessLayer {
 		// TODO Auto-generated constructor stub
 	}
 
-	@FindBy(xpath = "//iframe[@class='surfaceFrame']")
+	@FindBy(xpath = "//iframe[@class=' surfaceFrame' or @name='surfaceFrame' or contains(@title,'Surface')]")
 	private WebElement editPageFrame;
 
 	/**
@@ -821,7 +821,7 @@ public class EditPage extends BasePageBusinessLayer {
 	}
 
 	
-	@FindBy(xpath = "//div[@data-label='Record Detail']//ancestor::div[@data-instance-type='COMPONENT' and @data-label='Tabs']")
+	@FindBy(xpath = "//span[text()='Details' or text()='Related']//ancestor::div[@data-instance-type='COMPONENT' and @data-label='Tabs']")
 	private WebElement recordDetailComponent;
 
 	public WebElement recordDetailComponentComponent(int timeOut) {

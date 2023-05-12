@@ -65,90 +65,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Search Value : " + searchValue);
 	}
 
-	public boolean addingSubTab(String subTab, String searchText, String sourceImage, String targetImage) {
-		boolean flag = false;
-		String xpath = "";
-		WebElement ele = null;
-		InstitutionsPageBusinessLayer ip = new InstitutionsPageBusinessLayer(driver);
-		HomePageBusineesLayer hp = new HomePageBusineesLayer(driver);
-		if (hp.clickOnEditPageLinkOnSetUpLink()) {
-			log(LogStatus.INFO, "click on Edit Page SetUp Link", YesNo.No);
-			// scn.nextLine();
-			switchToDefaultContent(driver);
-			switchToFrame(driver, 60, getEditPageFrame("", 120));
-			// relatedTab=relatedTabs[i];
-			ele = ip.getRelatedTab("", subTab, 5);
-			if (ele != null) {
-				log(LogStatus.INFO, "Sub Tab is Already Added : " + subTab, YesNo.No);
-			} else {
-				String relatedTab = "Details";
-				if (clickUsingJavaScript(driver, ip.getRelatedTab("", relatedTab, 30), relatedTab.toString(),
-						action.BOOLEAN)) {
-					log(LogStatus.INFO, "Click on Sub Tab : " + relatedTab, YesNo.No);
-					ThreadSleep(2000);
-					switchToDefaultContent(driver);
-					if (click(driver, getAddTab(10), "Add TAB", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Click on Add Tab Link", YesNo.No);
-						if (click(driver, getPageTabEle(relatedTab, 20), relatedTab, action.BOOLEAN)) {
-							log(LogStatus.INFO, "Click on " + relatedTab, YesNo.No);
-							List<WebElement> eleList = allOptionsInDropDrop(driver, getSubTabDropdownListt(20), "");
-							for (WebElement webElement : eleList) {
-								System.err.println(">>>>>>>> " + webElement.getText().trim());
-							}
-							if (selectVisibleTextFromDropDown(driver, getSubTabDropdownListt(20),
-									"Sub tab drop down list", subTab)) {
-								log(LogStatus.INFO, "Able to on select  " + subTab, YesNo.No);
-
-							} else {
-								BaseLib.sa.assertTrue(false, "Not Able to on select  " + subTab);
-								log(LogStatus.SKIP, "Not Able to on select  " + subTab, YesNo.Yes);
-							}
-							if (click(driver, getdoneButton(20), "Done Button", action.BOOLEAN)) {
-								log(LogStatus.INFO, "Click on Done Button", YesNo.No);
-								switchToDefaultContent(driver);
-								switchToFrame(driver, 60, getEditPageFrame("", 120));
-								relatedTab = subTab;
-								if (clickUsingJavaScript(driver, ip.getRelatedTab("", relatedTab, 120),
-										relatedTab.toString(), action.BOOLEAN)) {
-									log(LogStatus.INFO, "Click on Sub Tab : " + relatedTab, YesNo.No);
-//									if (searchAndDragDropinEditPage(searchText, sourceImage, targetImage)) {
-//										log(LogStatus.INFO, "Able to DragNDrop : " + searchText, YesNo.No);
-//										flag = true;
-//
-//									} else {
-//										BaseLib.sa.assertTrue(false, "Not Able to DragNDrop : " + searchText);
-//										log(LogStatus.FAIL, "Not Able to DragNDrop : " + searchText, YesNo.Yes);
-//									}
-
-								} else {
-									BaseLib.sa.assertTrue(false, "Not Able to Click on Sub Tab : " + relatedTab);
-									log(LogStatus.SKIP, "Not Able to Click on Sub Tab : " + relatedTab, YesNo.Yes);
-								}
-							} else {
-								BaseLib.sa.assertTrue(false, "Not Able to on Click on Done Button");
-								log(LogStatus.SKIP, "Not Able to on Click on Done Button", YesNo.Yes);
-							}
-						} else {
-							BaseLib.sa.assertTrue(false, "Not Able to on Click on " + relatedTab);
-							log(LogStatus.SKIP, "Not Able to on Click on " + relatedTab, YesNo.Yes);
-						}
-
-					} else {
-						BaseLib.sa.assertTrue(false, "Not Able to on Click on Add Tab Link");
-						log(LogStatus.SKIP, "Not Able to on Click on Add Tab Link", YesNo.Yes);
-					}
-				} else {
-					BaseLib.sa.assertTrue(false, "Not Able to Click on Sub Tab : " + relatedTab);
-					log(LogStatus.SKIP, "Not Able to Click on Sub Tab : " + relatedTab, YesNo.Yes);
-				}
-			}
-		} else {
-			log(LogStatus.ERROR, "Not Able to click on Edit Page SetUp Link", YesNo.Yes);
-			BaseLib.sa.assertTrue(false, "Not Able to click on Edit Page SetUp Link");
-		}
-
-		return flag;
-	}
+	
 
 //	public boolean searchAndDragDropinEditPage(String searchText, String sourceImage, String targetImage) {
 //		boolean flag = false;
@@ -1962,7 +1879,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 
 	public boolean removeTimeline(boolean removeActivityTimeline) {
-		
+		String xPath =null;
 		boolean delete=false;
 		if(removeActivityTimeline) {
 		
@@ -1971,10 +1888,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		if(activity!=null) {
 			
 			click(driver, activity, " ", action.BOOLEAN);
-			mouseOverClickOperation(driver, activity);
+		//	mouseOverClickOperation(driver, activity);
 			ThreadSleep(1000);
 			
-			if(click(driver, activityTimelineComponentDeleteButton(10), " Delete component button", action.BOOLEAN)) {
+			if(clickUsingJavaScript(driver, activityTimelineComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
 				activity =isDisplayed(driver, activityTimelineComponent(10), "visibility", 10, "");
 				if(activity==null) {
 					delete=true;
@@ -2002,7 +1919,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			WebElement highlightInsertBottom= highlightPanel(10);
 			WebElement recordDetail= recordDetailComponentComponent(20);
-			if (CommonLib.clickUsingJavaScript(driver, recordDetail, "recordDetail",
+			ThreadSleep(1000);
+			if (CommonLib.click(driver, recordDetail, "recordDetail",
 					action.SCROLLANDBOOLEAN)) {
 				System.out.println("  clicked");
 			}else {
@@ -2019,6 +1937,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			switchToDefaultContent(driver);
 			ThreadSleep(2000);
+			
 			if (CommonLib.click(driver, getSaveButton(20), " Save Button", action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.INFO, " save button has been clicked", YesNo.No);
 				System.out.println(" save button has been clicked");
@@ -2306,7 +2225,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 						log(LogStatus.INFO, "Navatar Acuity Button has been clicked", YesNo.No);
 
-						
+						ThreadSleep(2000);
 						if(otherComponent!=null) {
 							
 							for(String name :otherComponent) {
@@ -2317,17 +2236,18 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								
 								log(LogStatus.INFO, "Add section after button has been clicked", YesNo.No);
 								JavascriptExecutor js = (JavascriptExecutor) driver;
-								CommonLib.clickUsingJavaScript(driver, getFirstComponent1(20),"");
+								CommonLib.clickUsingJavaScript(driver, getSectionOfComponent(20),"");
 								CommonLib.ThreadSleep(2000);
 								WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
-										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
+										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']")));
 										js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 										CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']/a")),
 									"Add Link");
-								CommonLib.switchToDefaultContent(driver);
-								if (CommonLib.click(driver, getAddButtonAfterSection(10), "Navatar Acuity component Add Button",
-										action.SCROLLANDBOOLEAN)) {
+										ThreadSleep(2000);
+								//CommonLib.switchToDefaultContent(driver);
+//								if (CommonLib.click(driver, addComp, "Navatar Acuity component Add Button",
+//										action.SCROLLANDBOOLEAN)) {
 									
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
@@ -2354,12 +2274,12 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									}
 									
 								
-								} else {
-									log(LogStatus.ERROR, "Not Able to Clicked on Navatar Acuity component Add Button", YesNo.Yes);
-									sa.assertTrue(false, "Not Able to Clicked on Navatar Acuity component Add Button");
-
-
-								}
+//								} else {
+//									log(LogStatus.ERROR, "Not Able to Clicked on Navatar Acuity component Add Button", YesNo.Yes);
+//									sa.assertTrue(false, "Not Able to Clicked on Navatar Acuity component Add Button");
+//
+//
+//								}
 							} else {
 								log(LogStatus.ERROR, "Not Able to Clicked on Add section after button", YesNo.Yes);
 								sa.assertTrue(false, "Not Able to Clicked on Add section after button");
