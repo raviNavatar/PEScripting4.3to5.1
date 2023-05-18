@@ -1004,7 +1004,7 @@ public boolean addFieldToLayoutPage1(String projectName, String mode, String pag
 
 	}
 	
-	public boolean addFieldToLayoutPage1(String projectName, String mode, String pageLayoutsName, object obj, HashMap<String,String> sourceANDDestination ) {
+	public boolean addFieldToLayoutPage1(String projectName, String mode, String pageLayoutsName, HashMap<String,String> sourceANDDestination ) {
 
 		
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);

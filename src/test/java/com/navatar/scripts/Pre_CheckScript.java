@@ -231,14 +231,20 @@ public class Pre_CheckScript extends BaseLib {
 			}
 			String[] fields =null;
 			String fieldName =null;
-			object obj =object.Institution;
+//			object obj =object.Institution;
+//			
+//				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.No);
+//				
+//					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+//						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.No);
+//						CommonLib.ThreadSleep(3000);
+			String api =object.Account.toString();
 			
-				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.No);
-				
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.No);
-						CommonLib.ThreadSleep(3000);
-						
+				log(LogStatus.PASS, "Going to check and Add tab for " + api.toString() + " object", YesNo.No);
+						if(setup.searchStandardOrCustomObjectApi(api,20)) {
+							log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
+							CommonLib.ThreadSleep(3000);
+
 			
 							if(i==0) {
 								fields =industry;
@@ -251,9 +257,14 @@ public class Pre_CheckScript extends BaseLib {
 								fieldName ="Account Source";
 							}
 						// industry
-						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
-							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ obj.toString() + " object", YesNo.No);
-							
+//						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
+//							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ api.toString() + " object", YesNo.No);
+//							
+							if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
+									ObjectFeatureName.FieldAndRelationShip)) {
+								log(LogStatus.PASS, "clicked on page layout of object feature of "
+										+ api + " object", YesNo.Yes);
+								
 							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
 								CommonLib.ThreadSleep(6000);
@@ -379,23 +390,23 @@ public class Pre_CheckScript extends BaseLib {
 
 								}else {
 									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
-									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ obj + " object");
+									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ api + " object");
 								}
 							} else {
 								log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
-								sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+								sa.assertTrue(false,"Not able to click on Record type of object feature of " + api + " object");
 							}
 							
 						} else {
-							log(LogStatus.FAIL,"Not able to click on Record type of object feature of " + obj + " object",YesNo.Yes);
-							sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+							log(LogStatus.FAIL,"Not able to click on Record type of object feature of " + api + " object",YesNo.Yes);
+							sa.assertTrue(false,"Not able to click on Record type of object feature of " + api + " object");
 						}
 						
 						
 						
 					} else {
-						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not able to open " + obj + " object");
+						log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + api + " object");
 			
 			
 					}

@@ -8421,6 +8421,125 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return flag;
 	}
 	
+	public boolean removeRelatedListAPI(String apiname) {
+		boolean flag = false;
+		String xPath = "";
+		WebElement ele = null;
+		WebElement ele2 = null;
+		WebElement ele3 = null;
+		int count =0;
+
+		ThreadSleep(5000);
+		if (click(driver, relatedListOptionLink(10), xPath, null)) {
+			log(LogStatus.PASS, "Able to click on related list option ", YesNo.No);
+
+			ele = OpenActivitiesRelatedListOptionLink(10);
+			if(ele!=null) {
+				if(click(edriver, OpenActivitiesRelatedListOptionRemoveLink(20), "Open Activites remove button", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					log(LogStatus.PASS, "Able to click on remove link of open activities related list", YesNo.No);
+					ele = OpenActivitiesRelatedListOptionLink(10);
+					if(ele==null) {
+						log(LogStatus.PASS, "Able to remove open activities related list", YesNo.No);
+						count=1;
+						
+					}else {
+						log(LogStatus.ERROR, "Not Able to remove open activities related list after click on remove button", YesNo.Yes);
+
+					}
+
+				}else {
+					log(LogStatus.ERROR, "Not Able to click on remove link of open activities related list", YesNo.Yes);
+
+				}
+				
+			}else {
+				log(LogStatus.PASS, "open activites related list not present/already removed in page layout", YesNo.Yes);
+
+			}
+			
+			ele2 = ActivityHistoryRelatedListOptionLink(10);
+			if(ele2!=null) {
+				if(click(edriver, ActivityHistoryRelatedListOptionRemoveLink(20), "Activity history remove link", action.SCROLLANDBOOLEAN)) {
+					ThreadSleep(2000);
+					log(LogStatus.PASS, "Able to click on remove link of Activity history related list", YesNo.No);
+					ele2 = ActivityHistoryRelatedListOptionLink(10);
+					if(ele2==null) {
+						log(LogStatus.PASS, "Able to remove Activity history related list", YesNo.No);
+						count=2;
+					}else {
+						log(LogStatus.ERROR, "Not Able to remove Activity history related list after click on remove button", YesNo.Yes);
+
+					}
+
+				}else {
+					log(LogStatus.ERROR, "Not Able to click on remove link of Activity history related list", YesNo.Yes);
+
+				}
+				
+			}else {
+				log(LogStatus.PASS, "Activity history related list not present/already removed in page layout", YesNo.Yes);
+
+			}
+			
+			
+			ele3 = filesRelatedListOptionLink(10);
+			if(ele3==null) {
+				if(sendKeys(driver, getquickFindSearch(10), "Files", "Files", action.BOOLEAN)) {
+					
+					WebElement filesEle = isDisplayed(driver,
+							FindElement(driver, " //span[text()='Files']", "", action.BOOLEAN, 20),
+							"visibility", 20,  "Files field");
+					List<WebElement> allRL=  FindElements(driver, "//div[@class=' pbTitle relatedList']/following-sibling::div");
+					if (dragNDropField(driver, filesEle, allRL.get(allRL.size()-1))) {
+						ThreadSleep(3000);
+						log(LogStatus.PASS, "Successfully dragNDrop Files at last location", YesNo.No);
+
+						ele3 = filesRelatedListOptionLink(10);
+						if(ele3!=null) {
+							log(LogStatus.PASS, "Files related list now present after drag and drop", YesNo.No);
+							count =3;
+						}else {
+							
+							log(LogStatus.ERROR, "Files related list not present after drag and drop", YesNo.Yes);
+
+						}
+						
+					} else {
+						log(LogStatus.ERROR, "Not able to dragNDrop Files at last location", YesNo.Yes);
+
+					}
+
+				}else {
+					log(LogStatus.ERROR, "Not Able to search files related list optin linkin quick find search", YesNo.Yes);
+
+				}
+				
+			}
+			
+			
+			if (click(driver, getSaveBtn( 30), "page layouts save button",
+					action.SCROLLANDBOOLEAN)) {
+				log(LogStatus.PASS, "clicked on save button", YesNo.No);
+				flag=true;
+				ThreadSleep(2000);
+
+				click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
+						action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
+				ThreadSleep(3000);
+			} else {
+				log(LogStatus.ERROR, "Not able to click on Save button cannot save pagelayout dragged object or section", YesNo.Yes);
+
+			}
+			
+			
+		} else {
+			log(LogStatus.ERROR, "Not Able to click on related list optin link", YesNo.Yes);
+		}
+
+		return flag;
+	}
+	
 	public boolean checkanddeletesccheduleusagematrix(String environment, String mode) {
 		WebElement ele = null;
 		List<String> result = new ArrayList<String>();
@@ -8712,8 +8831,8 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return flag;
 			}
 	
-	public boolean CreateOverridingtheTaskEventstandardbuttonsView(String projectName, String mode
-			,int timeOut) {
+	public boolean CreateOverridingtheTaskEventstandardbuttonsView(String projectName, String mode , String Value,
+			int timeOut) {
 		boolean flag = false;
 		ThreadSleep(3000);
 		if (click(driver, getLightningcomponent(mode, timeOut), "Lightning component",
@@ -8721,8 +8840,8 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			appLog.info("click on Lightning component");
 			ThreadSleep(1000);
 			if (selectVisibleTextFromDropDown(driver,
-					getLightningcomponent1(projectName, 10), "getLightning component1",
-					"navpeII:navatarAllInteractionsViewOverride")) {
+					getLightningcomponent1(projectName, 10), "getLightning component1",Value
+					)) {
 				log(LogStatus.INFO,
 						"Select custom field text in setup component dropdown in PipelineCustomPage setup page",
 						YesNo.No);

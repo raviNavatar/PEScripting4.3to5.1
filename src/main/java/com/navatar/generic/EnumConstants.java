@@ -63,7 +63,7 @@ public class EnumConstants {
 		}
 		, Pipeline_Name, Company_Name
 			
-		, Stage, Source, Source_Firm, Source_Contact,New_Task,New_Event,View, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
+		, Stage, Source, Source_Firm, Source_Contact,New_Task,New_Event,View,New, Deal_Type, Employees, Website, Email, Legal_Name,Target_Close_Date, Name, Investment_Size,Updated_Investment_Size, Log_In_Date{
 			@Override
 			public String toString() {
 				return "Date Received";
@@ -326,7 +326,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 				return "Account";
 				//	}
 			}
-		},Contact,Attendee,Time_Log,navpeII__Fund__c,navpeII__Fundraising__c,navpeII__Pipeline__c
+		},Contact,Attendee,Time_Log,navpeII__Fund__c,navpeII__Theme__c,navpeII__Fundraising__c,navpeII__Pipeline__c
 		
 		,Valuation,Deal,Deal_Expert{
 			@Override

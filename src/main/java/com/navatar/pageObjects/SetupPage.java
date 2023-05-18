@@ -1663,6 +1663,19 @@ public class SetupPage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath="//span[text()='New']/ancestor::tr//a[@class='rowActionsPlaceHolder slds-button slds-button--icon-border-filled']")
+	private WebElement NewViewdropdown;
+
+	/**
+	 * @return the Viewdropdown
+	 */
+	public WebElement getNewdropdown(int timeOut) {
+
+		return isDisplayed(driver, NewViewdropdown, "Visibility", timeOut, "New View drop down");
+
+
+	}
+	
 	@FindBy(xpath="//div[contains(@class,'actionMenu')]//a[@title='Edit']")
 	private WebElement NewTaskEditbutton;
 

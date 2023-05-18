@@ -383,18 +383,31 @@ public class Post_CheckScript extends BaseLib {
 //					object.navpeII__Request_Tracker__c.toString(),object.navpeII__Review__c.toString(),object.navpeII__Log_Time__c.toString(),
 //					object.navpeII__Valuation__c.toString()
 //					};
-			object[] objects = {object.Institution, object.Contact, object.Fund, object.Fundraising, object.Pipeline};
-			for (object obj : objects) {
-//			for (String api : apiname) {
-				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
-				try {
-					if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
-						log(LogStatus.PASS, obj.toString() + " object has been opened in setup page", YesNo.Yes);
-						CommonLib.ThreadSleep(3000);
-						if (setup.clickOnObjectFeature(projectName, mode, obj,
-								ObjectFeatureName.pageLayouts)) {
-							log(LogStatus.PASS, "clicked on page layout of object feature of "
-									+ obj.toString() + " object", YesNo.Yes);
+//			object[] objects = {object.Institution, object.Contact, object.Fund, object.Fundraising, object.Pipeline};
+//			for (object obj : objects) {
+////			for (String api : apiname) {
+//				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+//				
+//					if (setup.searchStandardOrCustomObject(environment, mode, obj)) {
+//						log(LogStatus.PASS, obj.toString() + " object has been opened in setup page", YesNo.Yes);
+//						CommonLib.ThreadSleep(3000);
+//						if (setup.clickOnObjectFeature(projectName, mode, obj,
+//								ObjectFeatureName.pageLayouts)) {
+//							log(LogStatus.PASS, "clicked on page layout of object feature of "
+//									+ obj.toString() + " object", YesNo.Yes);
+							String[] apiname = {object.Contact.toString(), object.Account.toString(), object.
+									  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
+									  ,object.navpeII__Pipeline__c.toString()};
+                               for (String api : apiname) {
+                                  log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
+                                  try {
+                                  if(setup.searchStandardOrCustomObjectApi(api,20)) {
+              						log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
+              						CommonLib.ThreadSleep(3000);
+              						if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
+              								ObjectFeatureName.pageLayouts)) {
+              							log(LogStatus.PASS, "clicked on page layout of object feature of "
+              									+ api + " object", YesNo.Yes);
 							List<WebElement> allElements = setup.getAllPageLayoutList();
 							int no = allElements.size();
 							 for(int i=0;i<no;i++) {
@@ -411,13 +424,13 @@ public class Post_CheckScript extends BaseLib {
 									switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
 									CommonLib.ThreadSleep(5000);
 
-									if (setup.removeRelatedList(obj)) {
-										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+obj,
+									if (setup.removeRelatedListAPI(api)) {
+										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+api,
 												YesNo.No);
 
 									} else {
-										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+obj, YesNo.Yes);
-										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+obj);
+										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+api, YesNo.Yes);
+										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+api);
 
 									}
 
@@ -436,18 +449,18 @@ public class Post_CheckScript extends BaseLib {
 							 }
 						} else {
 							log(LogStatus.FAIL,
-									"Not able to click on Record type of object feature of " + obj + " object",
+									"Not able to click on Record type of object feature of " + api + " object",
 									YesNo.Yes);
 							sa.assertTrue(false,
-									"Not able to click on Record type of object feature of " + obj + " object");
+									"Not able to click on Record type of object feature of " + api + " object");
 						}
 					} else {
-						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not able to open " + obj + " object");
+						log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + api + " object");
 					}
 				} catch (Exception e) {
-					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
-					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + api + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + api + " object");
 					continue;
 				}
 			}
@@ -604,7 +617,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=true)
+	@Test(priority =6 ,enabled=false)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -617,12 +630,17 @@ public class Post_CheckScript extends BaseLib {
 
 		
 
-		object[] objects = {
-				 object.Institution,  object.Contact, 
-				 object.Fundraising,   object.Pipeline,object.Fund};
-		
-			for (object obj : objects) {
-				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+//		object[] objects = {
+//				 object.Institution,  object.Contact, 
+//				 object.Fundraising,   object.Pipeline,object.Fund};
+//		
+//			for (object obj : objects) {
+//				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+				String[] apiname = {object.Contact.toString(), object.Account.toString(), object.
+													  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
+													  ,object.navpeII__Pipeline__c.toString()};
+				for (String api : apiname) {
+				log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
 				try {
 					
 					CommonLib.ThreadSleep(3000);
@@ -643,13 +661,20 @@ public class Post_CheckScript extends BaseLib {
 							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 						}
 					}
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+					if(setup.searchStandardOrCustomObjectApi(api,20)) {
+						log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
 						CommonLib.ThreadSleep(3000);
-						if (setup.clickOnObjectFeature(projectName, mode, obj,
+						if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 								ObjectFeatureName.lightningRecordPages)) {
-							log(LogStatus.PASS, "clicked on lightning Record Pages of object feature of "
-									+ obj.toString() + " object", YesNo.Yes);
+							log(LogStatus.PASS, "clicked on page layout of object feature of "
+									+ api + " object", YesNo.Yes);
+//					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+//						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//						CommonLib.ThreadSleep(3000);
+//						if (setup.clickOnObjectFeature(projectName, mode, obj,
+//								ObjectFeatureName.lightningRecordPages)) {
+//							log(LogStatus.PASS, "clicked on lightning Record Pages of object feature of "
+//									+ obj.toString() + " object", YesNo.Yes);
 							List<WebElement> allElements = setup.getOtherAssignmentColumnLabelValue();
 							int no = allElements.size();
 							if(no>0) {
@@ -697,15 +722,32 @@ public class Post_CheckScript extends BaseLib {
 
 										}
 										
-										if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-											log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//										if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+//											log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//											CommonLib.ThreadSleep(3000);
+//											if (setup.clickOnObjectFeature(projectName, mode, obj,
+//													ObjectFeatureName.lightningRecordPages)) {
+//												log(LogStatus.PASS,
+//														"clicked on lightning Record Pages of object feature of "
+//																+ obj + " object",
+//														YesNo.Yes);
+//											} else {
+//												log(LogStatus.FAIL,
+//														"Not able to click on Record type of object feature of contact object so cannot going to check anohter iteration",
+//														YesNo.Yes);
+//												
+//											}
+//										} else {
+//											log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+//											sa.assertTrue(false, "Not able to open " + obj + " object");
+//										}
+										if(setup.searchStandardOrCustomObjectApi(api,20)) {
+											log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
 											CommonLib.ThreadSleep(3000);
-											if (setup.clickOnObjectFeature(projectName, mode, obj,
+											if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 													ObjectFeatureName.lightningRecordPages)) {
-												log(LogStatus.PASS,
-														"clicked on lightning Record Pages of object feature of "
-																+ obj + " object",
-														YesNo.Yes);
+												log(LogStatus.PASS, "clicked on page layout of object feature of "
+														+ api + " object", YesNo.Yes);
 											} else {
 												log(LogStatus.FAIL,
 														"Not able to click on Record type of object feature of contact object so cannot going to check anohter iteration",
@@ -713,10 +755,9 @@ public class Post_CheckScript extends BaseLib {
 												
 											}
 										} else {
-											log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-											sa.assertTrue(false, "Not able to open " + obj + " object");
+											log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+											sa.assertTrue(false, "Not able to open " + api + " object");
 										}
-										
 										
 
 									} else {
@@ -734,15 +775,32 @@ public class Post_CheckScript extends BaseLib {
 
 								}
 							} catch (Exception e) {
-								if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-									log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//								if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+//									log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//									CommonLib.ThreadSleep(3000);
+//									if (setup.clickOnObjectFeature(projectName, mode, obj,
+//											ObjectFeatureName.lightningRecordPages)) {
+//										log(LogStatus.PASS,
+//												"clicked on lightning Record Pages of object feature of "
+//														+ obj + " object",
+//												YesNo.Yes);
+//									} else {
+//										log(LogStatus.FAIL,
+//												"Not able to click on Record type of object feature of contact object so cannot going to check anohter iteration",
+//												YesNo.Yes);
+//										
+//									}
+//								} else {
+//									log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
+//									sa.assertTrue(false, "Not able to open " + obj + " object");
+//								}
+								if(setup.searchStandardOrCustomObjectApi(api,20)) {
+									log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
 									CommonLib.ThreadSleep(3000);
-									if (setup.clickOnObjectFeature(projectName, mode, obj,
+									if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 											ObjectFeatureName.lightningRecordPages)) {
-										log(LogStatus.PASS,
-												"clicked on lightning Record Pages of object feature of "
-														+ obj + " object",
-												YesNo.Yes);
+										log(LogStatus.PASS, "clicked on page layout of object feature of "
+												+ api + " object", YesNo.Yes);
 									} else {
 										log(LogStatus.FAIL,
 												"Not able to click on Record type of object feature of contact object so cannot going to check anohter iteration",
@@ -750,35 +808,34 @@ public class Post_CheckScript extends BaseLib {
 										
 									}
 								} else {
-									log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-									sa.assertTrue(false, "Not able to open " + obj + " object");
+									log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+									sa.assertTrue(false, "Not able to open " + api + " object");
 								}
-								
 								continue;
 							}
 							 }
 							}else {
 								log(LogStatus.FAIL,
-										"No lighting page found for " + obj + " object",
+										"No lighting page found for " + api + " object",
 										YesNo.Yes);
 								sa.assertTrue(false,
-										"No lighting page found for " + obj + " object");
+										"No lighting page found for " + api + " object");
 							}
 							 
 						} else {
 							log(LogStatus.FAIL,
-									"Not able to click on Record type of object feature of " + obj + " object",
+									"Not able to click on Record type of object feature of " + api + " object",
 									YesNo.Yes);
 							sa.assertTrue(false,
-									"Not able to click on Record type of object feature of " + obj + " object");
+									"Not able to click on Record type of object feature of " + api + " object");
 						}
 					} else {
-						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not able to open " + obj + " object");
+						log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + api + " object");
 					}
 				} catch (Exception e) {
-					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
-					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + api + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + api + " object");
 					if (parentWindow != null) {
 
 						driver.close();
@@ -801,7 +858,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	@Test(priority = 7,enabled=false)
+	@Test(priority = 7,enabled=true)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -825,13 +882,20 @@ public class Post_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
-				if (setup.searchStandardOrCustomObject(projectName, mode, object.Task)) {
-					log(LogStatus.PASS, object.Task + " object has been opened in setup page", YesNo.Yes);
-					CommonLib.ThreadSleep(3000);
-					if (setup.clickOnObjectFeature(projectName, mode, object.Task,
-							ObjectFeatureName.ButtonLinksAndActions)) {
-						log(LogStatus.PASS, "clicked on page layout of object feature of "
-								+ object.Task.toString() + "Task", YesNo.Yes);
+			if(setup.searchStandardOrCustomObjectApi(object.Task.toString(),20)) {
+				log(LogStatus.PASS, object.Task.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, object.Task.toString(),
+						ObjectFeatureName.ButtonLinksAndActions)) {
+					log(LogStatus.PASS, "clicked on page layout of object feature of "
+							+ object.Task.toString() + " object", YesNo.Yes);
+//				if (setup.searchStandardOrCustomObject(projectName, mode, object.Task)) {
+//					log(LogStatus.PASS, object.Task + " object has been opened in setup page", YesNo.Yes);
+//					CommonLib.ThreadSleep(3000);
+//					if (setup.clickOnObjectFeature(projectName, mode, object.Task,
+//							ObjectFeatureName.ButtonLinksAndActions)) {
+//						log(LogStatus.PASS, "clicked on page layout of object feature of "
+//								+ object.Task.toString() + "Task", YesNo.Yes);
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
 								excelLabel.New_Task.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
 							log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
@@ -902,13 +966,13 @@ public class Post_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
-				if (setup.searchStandardOrCustomObject(projectName, mode, object.Task)) {
-					log(LogStatus.PASS, object.Task + " object has been opened in setup page", YesNo.Yes);
-					CommonLib.ThreadSleep(3000);
-					if (setup.clickOnObjectFeature(projectName, mode, object.Task,
-							ObjectFeatureName.ButtonLinksAndActions)) {
-						log(LogStatus.PASS, "clicked on page layout of object feature of "
-								+ object.Task.toString() + "Task", YesNo.Yes);
+			if(setup.searchStandardOrCustomObjectApi(object.Task.toString(),20)) {
+				log(LogStatus.PASS, object.Task.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, object.Task.toString(),
+						ObjectFeatureName.ButtonLinksAndActions)) {
+					log(LogStatus.PASS, "clicked on page layout of object feature of "
+							+ object.Task.toString() + " object", YesNo.Yes);
 						if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
 								excelLabel.View.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
 							log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
@@ -920,7 +984,7 @@ public class Post_CheckScript extends BaseLib {
 									log(LogStatus.INFO, " able to click on View Edit button", YesNo.No);
 									ThreadSleep(3000);
 									switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-									if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,10)) {
+									if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,"navpeII:navatarAllInteractionsViewOverride",10)) {
 										//flag1 = true;
 										log(LogStatus.PASS, "able to Create Overriding the Task Event standard buttons" , YesNo.Yes);
 									}else {
@@ -980,13 +1044,13 @@ public class Post_CheckScript extends BaseLib {
 								exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 							}
 						}
-							if (setup.searchStandardOrCustomObject(projectName, mode, object.Event)) {
-								log(LogStatus.PASS, object.Event + " object has been opened in setup page", YesNo.Yes);
-								CommonLib.ThreadSleep(3000);
-								if (setup.clickOnObjectFeature(projectName, mode, object.Event,
-										ObjectFeatureName.ButtonLinksAndActions)) {
-									log(LogStatus.PASS, "clicked on page layout of object feature of "
-											+ object.Event.toString() + "Event", YesNo.Yes);
+						if(setup.searchStandardOrCustomObjectApi(object.Event.toString(),20)) {
+							log(LogStatus.PASS, object.Event.toString() + " object has been opened in setup page", YesNo.Yes);
+							CommonLib.ThreadSleep(3000);
+							if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, object.Event.toString(),
+									ObjectFeatureName.ButtonLinksAndActions)) {
+								log(LogStatus.PASS, "clicked on page layout of object feature of "
+										+ object.Event.toString() + " object", YesNo.Yes);
 									if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
 											excelLabel.New_Event.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
 										log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
@@ -1058,13 +1122,13 @@ public class Post_CheckScript extends BaseLib {
 								exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 							}
 						}
-							if (setup.searchStandardOrCustomObject(projectName, mode, object.Event)) {
-								log(LogStatus.PASS, object.Event + " object has been opened in setup page", YesNo.Yes);
-								CommonLib.ThreadSleep(3000);
-								if (setup.clickOnObjectFeature(projectName, mode, object.Event,
-										ObjectFeatureName.ButtonLinksAndActions)) {
-									log(LogStatus.PASS, "clicked on page layout of object feature of "
-											+ object.Event.toString() + "Event", YesNo.Yes);
+						if(setup.searchStandardOrCustomObjectApi(object.Event.toString(),20)) {
+							log(LogStatus.PASS, object.Event.toString() + " object has been opened in setup page", YesNo.Yes);
+							CommonLib.ThreadSleep(3000);
+							if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, object.Event.toString(),
+									ObjectFeatureName.ButtonLinksAndActions)) {
+								log(LogStatus.PASS, "clicked on page layout of object feature of "
+										+ object.Event.toString() + " object", YesNo.Yes);
 									if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
 											excelLabel.View.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
 										log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
@@ -1076,7 +1140,7 @@ public class Post_CheckScript extends BaseLib {
 												log(LogStatus.INFO, " able to click on View Edit button", YesNo.No);
 												ThreadSleep(3000);
 												switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-												if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,10)) {
+												if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,"navpeII:navatarAllInteractionsViewOverride",10)) {
 													//flag1 = true;
 													log(LogStatus.PASS, "able to Create Overriding the Event Event standard buttons" , YesNo.Yes);
 												}else {
@@ -1119,11 +1183,88 @@ public class Post_CheckScript extends BaseLib {
 						driver.switchTo().window(parentWindow);
 						parentWindow=null;
 					}
+					CommonLib.refresh(driver);
+					CommonLib.ThreadSleep(3000);
+					try {
+						CommonLib.ThreadSleep(3000);
+						if (home.clickOnSetUpLink()) {
+
+							parentWindow = switchOnWindow(driver);
+							if (parentWindow == null) {
+								sa.assertTrue(false,
+										"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+								log(LogStatus.FAIL,
+										"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+										YesNo.Yes);
+								exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+							}
+						}
+						if(setup.searchStandardOrCustomObjectApi(object.navpeII__Theme__c.toString(),20)) {
+							log(LogStatus.PASS, object.navpeII__Theme__c.toString() + " object has been opened in setup page", YesNo.Yes);
+							CommonLib.ThreadSleep(3000);
+							if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, object.navpeII__Theme__c.toString(),
+									ObjectFeatureName.ButtonLinksAndActions)) {
+								log(LogStatus.PASS, "clicked on page layout of object feature of "
+										+ object.navpeII__Theme__c.toString() + " object", YesNo.Yes);
+									if (sendKeys(driver, setup.getsearchTextboxFieldsAndRelationships(10),
+											excelLabel.New.toString() + Keys.ENTER, "status", action.BOOLEAN)) {
+										log(LogStatus.INFO, " able to search Text box Fields And Relationships", YesNo.No);
+										ThreadSleep(3000);
+										if(click(driver, setup.getNewdropdown(10),"New drop down",action.BOOLEAN)) {
+											log(LogStatus.INFO, " able to click on New drop down", YesNo.No);
+											
+											if(click(driver, setup.getNewTaskEditbutton(10),"View Edit button",action.BOOLEAN)) {
+												log(LogStatus.INFO, " able to click on View Edit button", YesNo.No);
+												ThreadSleep(3000);
+												switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+												if (setup.CreateOverridingtheTaskEventstandardbuttonsView(projectName, mode,"navpeII:navatarThemeTabNewRecordPopup",10)) {
+													//flag1 = true;
+													log(LogStatus.PASS, "able to Create Overriding the Task Event standard buttons" , YesNo.Yes);
+												}else {
+													log(LogStatus.FAIL, "Not able to Create Overriding the Task Event standard buttons", YesNo.Yes);
+													sa.assertTrue(false, "Not able to Create Overriding the Task Event standard buttons");
+												}
+											}else {
+												log(LogStatus.FAIL, "Not able to click on New Task Edit button", YesNo.Yes);
+												sa.assertTrue(false, "Not able to click on New Task Edit button");
+											}
+										}else {
+											log(LogStatus.FAIL, "Not able to click on New Task drop down", YesNo.Yes);
+											sa.assertTrue(false, "Not able to click on New Task drop down");
+										}
+									}else {
+										log(LogStatus.FAIL, "Not able to search Text box Fields And Relationships", YesNo.Yes);
+										sa.assertTrue(false, "Not able to search Text box Fields And Relationships");
+									}
+								}else {
+									log(LogStatus.FAIL, "Not able to clicked on page layout of object feature of "
+											+object.Task.toString() + "Task", YesNo.Yes);
+									sa.assertTrue(false, "Not able to clicked on page layout of object feature of "+object.Task.toString() + "Task");
+								}
+							}else {
+								log(LogStatus.FAIL, object.Task + " object has been opened in setup page", YesNo.Yes);
+								sa.assertTrue(false, object.Task + " object has been opened in setup page");
+							}
+								} catch (Exception e) {
+									if (parentWindow != null) {
+
+										driver.close();
+										driver.switchTo().window(parentWindow);
+										parentWindow=null;
+									}
+								}
+
+								if (parentWindow != null) {
+
+									driver.close();
+									driver.switchTo().window(parentWindow);
+									parentWindow=null;
+								}
 					sa.assertAll();
 				}
 
 	@Test(priority = 8,enabled=false)
-	public void verifyAddQuickActiononPageLayoutsofObjects () {
+	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -1151,29 +1292,15 @@ public class Post_CheckScript extends BaseLib {
 			ArrayList<String> sourceANDDestination = new ArrayList<String>();
 			
 			String[] apiname = {
-					object.Account.toString() ,object.Contact.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
-					 ,object.navpeII__Pipeline__c.toString()};
+					 object.Contact.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
+					 ,object.navpeII__Pipeline__c.toString(),object.Account.toString()};
 			
 			for (String api : apiname) {
 			log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
 		
-			if (click(driver, setup.getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
-				appLog.info("clicked on object manager tab");
-       String XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='"+api+"']/ancestor::tr//a";
-					int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
-							.executeScript("return arguments[0].scrollHeight", setup.getSelectProspectsGridScrollBox(10))));
-					((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", setup.getSelectProspectsGridScrollBox(10));
-					ThreadSleep(2000);
-					for (int i = 0; i <= widgetTotalScrollingHeight / 5; i++) {
-	ThreadSleep(2000);
-						boolean t =!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty();
-	if (t) {
-							appLog.info("Element Successfully Found and displayed");
-							ThreadSleep(500);
-							ele = FindElement(driver, XpathelementTOSearch, "", action.BOOLEAN, 10);
-							if (ele != null) {
-								if (click(driver, ele, "", action.BOOLEAN)) {
-									appLog.info("clicked on Contact Name : "+"");
+			if(setup.searchStandardOrCustomObjectApi(api,20)) {
+				log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
 				if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 						ObjectFeatureName.pageLayouts)) {
 					log(LogStatus.PASS, "clicked on page layout of object feature of "
@@ -1186,25 +1313,11 @@ public class Post_CheckScript extends BaseLib {
 						WebElement labelElement = allElements.get(j);
 						name = labelElement.getText();
 						 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
-						|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
-//								 for(int j=0;j<allElements.size();j++) {
-//							String value = allElements.get(j).getText().trim();
-//							if(value.equalsIgnoreCase("Fund Manager") ||value.equalsIgnoreCase("Fund Manager’s Fund")) {
-//								allElements.remove(j);
-//							}
-//						}
-//						 labelElement = allElements.get(i);
+						|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
 						
 							
 									
 									if(name.equals("Advisor")) {
-
-//										if (click(driver, labelElement, "lightning record  page label :" + labelElement,
-//												action.SCROLLANDBOOLEAN)) {
-//											log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
-//													YesNo.No);
-//													CommonLib.ThreadSleep(3000);
-//											switchToFrame(driver, 10, setup.getEditPageLayoutFrame_Lighting(20));
 										
 									    sourceANDDestination = new ArrayList<String>();
 										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
@@ -1360,25 +1473,6 @@ public class Post_CheckScript extends BaseLib {
 								appLog.error("Not able to clicke on Contact Name: "+"");
 						
 							}
-						}
-						break;
-					} else {
-						System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
-						((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 3000) + ")",
-								setup.getSelectProspectsGridScrollBox(10));
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (i == widgetTotalScrollingHeight / 50) {
-						
-						}
-					}
-				}
-							
-			}
 			}
 			
 		} catch (Exception e) {
@@ -1390,17 +1484,19 @@ public class Post_CheckScript extends BaseLib {
 			}
 			sa.assertAll();
 		}
-
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-			parentWindow = null;
 		}
-
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
+	
+		@Test(priority = 8,enabled=false)
+		public void verifyAddQuickActiononPageLayoutsofObjects () {
+			String projectName = "";
+			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+			String parentWindow = null;
+			WebElement ele = null;
+			int q = 0;
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(3000);
+			try {
 				CommonLib.ThreadSleep(3000);
 				if (home.clickOnSetUpLink()) {
 
@@ -1414,31 +1510,16 @@ public class Post_CheckScript extends BaseLib {
 						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					}
 				}
-				String[] apiname = {
-						object.Account.toString() ,object.Contact.toString(),object.
-													  navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
-													  ,object.navpeII__Pipeline__c.toString()
-													 };
+				
+				String[] apiname = {object.Contact.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
+						 ,object.navpeII__Pipeline__c.toString(),object.Account.toString()};
+				
 				for (String api : apiname) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
 			
-				if (click(driver, setup.getObjectManager_Lighting(30), "object manager tab", action.SCROLLANDBOOLEAN)) {
-					appLog.info("clicked on object manager tab");
-	       String XpathelementTOSearch = "//table[@data-aura-class='uiVirtualDataGrid--default uiVirtualDataGrid']//span[text()='"+api+"']/ancestor::tr//a";
-						int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
-								.executeScript("return arguments[0].scrollHeight", setup.getSelectProspectsGridScrollBox(10))));
-						((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", setup.getSelectProspectsGridScrollBox(10));
-						ThreadSleep(2000);
-						for (int i = 0; i <= widgetTotalScrollingHeight / 25; i++) {
-		ThreadSleep(2000);
-							boolean t =!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty();
-		if (t) {
-								appLog.info("Element Successfully Found and displayed");
-								ThreadSleep(500);
-								ele = FindElement(driver, XpathelementTOSearch, "", action.BOOLEAN, 10);
-								if (ele != null) {
-									if (click(driver, ele, "", action.BOOLEAN)) {
-										appLog.info("clicked on Contact Name : "+"");
+				if(setup.searchStandardOrCustomObjectApi(api,20)) {
+					log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
+					CommonLib.ThreadSleep(3000);
 					if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 							ObjectFeatureName.pageLayouts)) {
 						log(LogStatus.PASS, "clicked on page layout of object feature of "
@@ -1451,16 +1532,8 @@ public class Post_CheckScript extends BaseLib {
 							WebElement labelElement = allElements.get(j);
 							name = labelElement.getText();
 							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
-										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
-//							for(int j=0;j<allElements.size();j++) {
-//								String value = allElements.get(j).getText().trim();
-//								if(value.equalsIgnoreCase("Fund Manager") ||value.equalsIgnoreCase("Fund Manager’s Fund")) {
-//									allElements.remove(j);
-//								}
-//							}
-						 	
+							|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
 							
-								
 					
 									List<String> layoutName1 = new ArrayList<String>();
 									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
@@ -1654,25 +1727,7 @@ public class Post_CheckScript extends BaseLib {
 							
 								}
 							}
-							break;
-						} else {
-							System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
-							((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 500) + ")",
-									setup.getSelectProspectsGridScrollBox(10));
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							if (i == widgetTotalScrollingHeight / 50) {
-							
-							}
-						}
-					}
-								
-				}
-				}
+				
 		} catch (Exception e) {
 			if (parentWindow != null) {
 
@@ -1756,24 +1811,35 @@ public class Post_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
-
-			object[] objects = {
-					
-					
-					  object.Institution, object.Contact, object.Affiliation, object.Financing,
-					  object.Fundraising,
-					 
-					  object.Pipeline };
-			for (object obj : objects) {
-				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
+			String[] apiname = {
+					 object.Contact.toString(), object.Account.toString(), object.
+					 navpeII__Financing__c.toString(),object.navpeII__Fundraising__c.toString(),object.navpeII__Affiliation__c.toString(),object.navpeII__Pipeline__c.toString()};
+			for (String api : apiname) {
+			log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
+//			object[] objects = {
+//					
+//					
+//					  object.Institution, object.Contact, object.Affiliation, object.Financing,
+//					  object.Fundraising,
+//					 
+//					  object.Pipeline };
+//			for (object obj : objects) {
+//				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.Yes);
 				try {
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
+//						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.Yes);
+//						CommonLib.ThreadSleep(3000);
+//						if (setup.clickOnObjectFeature(projectName, mode, obj,
+//								ObjectFeatureName.pageLayouts)) {
+//							log(LogStatus.PASS, "clicked on page layout of object feature of "
+//									+ obj.toString() + " object", YesNo.Yes);
+					if(setup.searchStandardOrCustomObjectApi(api,20)) {
+						log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
 						CommonLib.ThreadSleep(3000);
-						if (setup.clickOnObjectFeature(projectName, mode, obj,
+						if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 								ObjectFeatureName.pageLayouts)) {
 							log(LogStatus.PASS, "clicked on page layout of object feature of "
-									+ obj.toString() + " object", YesNo.Yes);
+									+ api + " object", YesNo.Yes);
 							List<WebElement> allElements = setup.getAllPageLayoutList();
 							int no = allElements.size();
 							 for(int i=0;i<no;i++) {
@@ -1852,13 +1918,13 @@ public class Post_CheckScript extends BaseLib {
 											YesNo.No);
 									CommonLib.ThreadSleep(3000);
 
-									if (dataload.addFieldToLayoutPage1("", mode, name, obj, sourceANDDestination)) {
-										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+obj,
+									if (dataload.addFieldToLayoutPage1("", mode, name, sourceANDDestination)) {
+										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+api,
 												YesNo.No);
 
 									} else {
-										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+obj, YesNo.Yes);
-										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+obj);
+										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+api, YesNo.Yes);
+										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+api);
 
 									}
 
@@ -1879,18 +1945,18 @@ public class Post_CheckScript extends BaseLib {
 							 }
 						} else {
 							log(LogStatus.FAIL,
-									"Not able to click on Record type of object feature of " + obj + " object",
+									"Not able to click on Record type of object feature of " + api + " object",
 									YesNo.Yes);
 							sa.assertTrue(false,
-									"Not able to click on Record type of object feature of " + obj + " object");
+									"Not able to click on Record type of object feature of " + api + " object");
 						}
 					} else {
-						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not able to open " + obj + " object");
+						log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + api + " object");
 					}
 				} catch (Exception e) {
-					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + obj + " object", YesNo.Yes);
-					sa.assertTrue(false, "Not able to add Acuity Tab for the " + obj + " object");
+					log(LogStatus.FAIL, "Not able to add Acuity Tab for the " + api + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to add Acuity Tab for the " + api + " object");
 					continue;
 				}
 			}
