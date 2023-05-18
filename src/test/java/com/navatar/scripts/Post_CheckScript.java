@@ -136,7 +136,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 1,enabled =true)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -223,7 +223,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 2,enabled =false)
+	@Test(priority = 2,enabled =true)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -286,7 +286,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 3,enabled =false)
+	@Test(priority = 3,enabled =true)
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -346,7 +346,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=false)
+	@Test(priority = 4,enabled=true)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -485,7 +485,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =false)
+	@Test(priority = 5,enabled =true)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
@@ -688,7 +688,7 @@ public class Post_CheckScript extends BaseLib {
 											action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
 											YesNo.No);
-									CommonLib.ThreadSleep(3000);
+									CommonLib.ThreadSleep(5000);
 									switchToFrame(driver, 30, setup.getSetUpPageIframe(60));
 									CommonLib.ThreadSleep(5000);
 
@@ -1263,8 +1263,10 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertAll();
 				}
 
+
 	@Test(priority = 8,enabled=false)
 	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
+
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -1295,6 +1297,7 @@ public class Post_CheckScript extends BaseLib {
 					 object.Contact.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
 					 ,object.navpeII__Pipeline__c.toString(),object.Account.toString()};
 			
+
 			for (String api : apiname) {
 			log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
 		
@@ -1318,7 +1321,7 @@ public class Post_CheckScript extends BaseLib {
 							
 									
 									if(name.equals("Advisor")) {
-										
+
 									    sourceANDDestination = new ArrayList<String>();
 										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
 										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
@@ -1462,13 +1465,7 @@ public class Post_CheckScript extends BaseLib {
 								"clicked on page layout of object feature of "
 										+ api + " object");
 						}
-//				} else {
-//					log(LogStatus.ERROR,
-//							api + " object has been opened in setup page", YesNo.Yes);
-//					sa.assertTrue(false,
-//							api + " object has been opened in setup page");
-//					}
-			
+				
 							} else {
 								appLog.error("Not able to clicke on Contact Name: "+"");
 						
@@ -1484,19 +1481,23 @@ public class Post_CheckScript extends BaseLib {
 			}
 			sa.assertAll();
 		}
-		}
+		
+
+		sa.assertAll();
+	}
 	
-		@Test(priority = 8,enabled=false)
-		public void verifyAddQuickActiononPageLayoutsofObjects () {
-			String projectName = "";
-			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-			String parentWindow = null;
-			WebElement ele = null;
-			int q = 0;
-			CommonLib.refresh(driver);
-			CommonLib.ThreadSleep(3000);
-			try {
+
+	@Test(priority = 9,enabled=false)
+	public void verifyAddQuickActiononPageLayoutsofObjects () {
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		String parentWindow = null;
+		WebElement ele = null;
+		int q = 0;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
 				CommonLib.ThreadSleep(3000);
 				if (home.clickOnSetUpLink()) {
 
@@ -1524,6 +1525,7 @@ public class Post_CheckScript extends BaseLib {
 							ObjectFeatureName.pageLayouts)) {
 						log(LogStatus.PASS, "clicked on page layout of object feature of "
 								+ api + " object", YesNo.Yes);
+						ThreadSleep(2000);
 						List<WebElement> allElements = setup.getAllPageLayoutList();
 						int no = allElements.size();
 						 for(int j=0;j<no;j++) {
@@ -1532,10 +1534,10 @@ public class Post_CheckScript extends BaseLib {
 							WebElement labelElement = allElements.get(j);
 							name = labelElement.getText();
 							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
-							|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
-							
-					
-									List<String> layoutName1 = new ArrayList<String>();
+
+										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {								
+						 	
+								List<String> layoutName1 = new ArrayList<String>();
 									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
 									if(name.equals("Advisor")) {
 
@@ -1689,11 +1691,11 @@ public class Post_CheckScript extends BaseLib {
 									List<String> abc1 = setup.AddDragNDropFromPagelayoutContact("", mode, ObjectFeatureName.pageLayouts, layoutName1, sourceANDDestination1);
 									ThreadSleep(10000);
 									if (abc1.isEmpty()) {
-										log(LogStatus.PASS, "field  removed Successfully", YesNo.No);
+										log(LogStatus.PASS, "field  add Successfully"+name ,  YesNo.No);
 									}else{
-										log(LogStatus.FAIL, "field not be ABLE To removed from quick action layout", YesNo.Yes);
+										log(LogStatus.FAIL, "field not be ABLE To add from quick action layout"+name, YesNo.Yes);
 										sa.assertTrue(false,
-												"field not be ABLE To removed from quick action layout");
+												"field not be ABLE To add from quick action layout");
 									}
 
 									} else {
@@ -1715,12 +1717,6 @@ public class Post_CheckScript extends BaseLib {
 									"clicked on page layout of object feature of "
 											+ api + " object");
 							}
-//					} else {
-//						log(LogStatus.ERROR,
-//								api + " object has been opened in setup page", YesNo.Yes);
-//						sa.assertTrue(false,
-//								api + " object has been opened in setup page");
-//						}
 				
 								} else {
 									appLog.error("Not able to clicke on Contact Name: "+"");
@@ -1749,7 +1745,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =9 ,enabled=false)
+	@Test(priority =10 ,enabled=true)
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 		String projectName = "";
 		String[] appName = {"PE", "FOF"}; 
@@ -1786,7 +1782,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority =10 ,enabled=false)
+	@Test(priority =11 ,enabled=true)
 	public void verifyAddingNewFieldToPageLayout() {
 		
 		String projectName = "";
@@ -1980,7 +1976,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =11,enabled=false)
+	@Test(priority =12,enabled=true)
 	public void verifyModifyineActivityTimelineAttribute() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2129,7 +2125,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority =12 ,enabled=false)
+	@Test(priority =13 ,enabled=true)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2490,7 +2486,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 
 	
-	@Test(priority = 13,enabled =false)
+	@Test(priority = 14,enabled =true)
 	public void VerifyScheduleUsageMetrics() {
 		
 		String projectName = "";
