@@ -16,7 +16,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.navatar.generic.EnumConstants.AddProspectsTab;
+import com.navatar.generic.EnumConstants.EditViewMode;
+import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
+import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 import com.navatar.generic.EnumConstants.object;
@@ -1860,5 +1863,68 @@ public class SetupPage extends BasePageBusinessLayer {
 			return isDisplayed(driver, selectProspectsGridScrollBox, "Visibility", timeOut, "select prospects scroll box grid");
 			
 	}
+
+	@FindBy(xpath="//div/div/div[@class='oneAlohaPage']//iframe")
+	private WebElement setUpFrame_Lighting;
+
+	/**
+	 * @return the dealCreationFrame_Lighting
+	 */
+	public WebElement getnavatarSetUpTabFrame_Lighting(String projectName,int timeOut) {
+		return isDisplayed(driver, setUpFrame_Lighting, "Visibility", timeOut, " Frame Lighting");
+	}
 	
+	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//div[@class='slds-button-group float_r']")
+	private WebElement editButtonforNavatarSetUpSideMenuTab;
+
+	/**
+	 * @return the getEditButtonforNavatarSetUpSideMenuTab
+	 */
+	public WebElement getEditButtonforNavatarSetUpSideMenuTab(String projectName,NavatarSetupSideMenuTab sideMenuTab,int timeOut) {
+		return isDisplayed(driver, editButtonforNavatarSetUpSideMenuTab, "Visibility", timeOut, "Edit Button for Navatar SetUp Side Menu Tab");
+	}
+	public WebElement getEnableCheckBoxforClickNavatarSetUpSideMenuTab(String project,
+			NavatarSetupSideMenuTab sideMenuTab, EditViewMode editviewMode, int timeOut) {
+		WebElement ele =null;
+		List<WebElement> enableCheckBoxList = FindElements(driver,
+				"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
+				"Enable CheckBox for Click Navatar SetUp Side Menu Tab");
+
+//		if (NavatarSetupSideMenuTab.CommitmentCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.DealCreation.equals(sideMenuTab) || NavatarSetupSideMenuTab.IndividualInvestorCreation.equals(sideMenuTab)) {
+//			return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+//					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		}else if (EditViewMode.View.toString().equalsIgnoreCase(editviewMode.toString()) || NavatarSetupSideMenuTab.OfficeLocations.equals(sideMenuTab)) {
+//			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+//					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		} else {
+//			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+//					"Enable CheckBox for Navatar SetUp Side Menu Tab");
+//		}
+		
+		
+		for(WebElement element:enableCheckBoxList) {
+			
+			element =isDisplayed(driver, element, "Visibility", timeOut,"Enable CheckBox for Navatar SetUp Side Menu Tab");
+			
+			if(element!=null) {
+				ele= element;
+				break;
+			}
+		}
+		
+		return ele;
+		
+	}
+	public WebElement getSaveButtonforNavatarSetUpSideMenuTab(String projectName,NavatarSetupSideMenuTab sideMenuTab,int timeOut, TopOrBottom topOrBottom) {
+		String xpath ;
+		WebElement ele;
+		if (TopOrBottom.TOP.toString().equalsIgnoreCase(topOrBottom.toString())) {
+			xpath = "(//div[contains(@id,'RightMenuContentSection')]//input[@title='Save'])[1]";
+		} else {
+			xpath = "(//div[contains(@id,'RightMenuContentSection')]//input[@title='Save'])[2]";
+		}
+		ele = FindElement(driver, xpath, "Save Button : "+topOrBottom, action.SCROLLANDBOOLEAN, timeOut);
+				
+		return isDisplayed(driver, ele, "Visibility", timeOut, "Save Button for Navatar SetUp Side Menu Tab : "+topOrBottom);
+	}
 }

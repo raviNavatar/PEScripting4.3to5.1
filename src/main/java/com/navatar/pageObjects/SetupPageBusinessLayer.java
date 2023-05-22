@@ -18,10 +18,13 @@ import com.navatar.generic.AppListeners;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.ContactPagePhotoActions;
+import com.navatar.generic.EnumConstants.EditViewMode;
 import com.navatar.generic.EnumConstants.LookUpIcon;
 import com.navatar.generic.EnumConstants.Mode;
+import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PermissionType;
@@ -8704,7 +8707,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			
 		}else {
 			log(LogStatus.PASS, "Custom attribute not present for android and IOS", YesNo.Yes);
-
+			sa.assertTrue(false,"Custom attribute not present for android and IOS");
 			flag =true;
 		}
 				
@@ -9846,6 +9849,144 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return result;
 	}
 
+	/**
+	 * @author Azhar Alam
+	 * @param environment
+	 * @param mode
+	 * @param Menu
+	 * @return true if able to click on NavatarSetup SideMenu Tab
+	 */
+	public boolean clickOnNavatarSetupSideMenusTab(String projectName,NavatarSetupSideMenuTab Menu) {
+	
+			if(switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120))){
+				appLog.info("Inside Frame");
+				System.err.println("Inside Frame");
+			}
+			
+	
+		
+		boolean flag = false;
+		String sideMenu = null;
+		switch (Menu) {
+		
+		case ContactTransfer:
+			sideMenu = "Contact Transfer";
+			break;
+		case BulkEmail:
+			sideMenu = "Bulk Email";
+			break;
+		case OfficeLocations:
+			sideMenu = "Office Locations";
+			break;
+		case CommitmentCreation:
+			sideMenu = "Commitment Creation";
+			break;
+		case IndividualInvestorCreation:
+			sideMenu = "Individual Investor Creation";
+			break;
+		case DealCreation:
+			sideMenu = "Deal Creation";
+			break;
+		case CoInvestmentSettings:
+			sideMenu = "Co-investment Settings";
+			break;
+		default:
+			return false;
+		}
+		String xpath = "//div[@class='ContentStart']//li/a[contains(@title,'" + sideMenu + "')]";
+		WebElement ele = isDisplayed(driver,FindElement(driver, xpath, sideMenu,action.SCROLLANDBOOLEAN, 120),
+				"visibility", 60, sideMenu);
+		if (click(driver,ele,sideMenu, action.SCROLLANDBOOLEAN)) {
+			appLog.info("Clicked on " + sideMenu);
+			ThreadSleep(10000);
+			switchToFrame(driver, 60, getnavatarSetUpTabFrame_Lighting(projectName, 120));
+			ThreadSleep(5000);
+			flag=true;
+		}else{
+			appLog.error("Not Able to Clicked on : " + sideMenu);	
+		}
+		return flag;
+	}
+	public WebElement getEnableCheckBoxforNavatarSetUpSideMenuTab(String environment, String mode,
+			NavatarSetupSideMenuTab sideMenuTab, EditViewMode editviewMode, ClickOrCheckEnableDisableCheckBox clickOrCheckEnableDisableCheckBox, int timeOut) {
+		List<WebElement > enableCheckBoxList = new ArrayList<WebElement>();
+		enableCheckBoxList = FindElements(driver,
+				"//span[contains(@class,'primaryPaletteBorder')]/..//input",
+				"Enable CheckBox for Navatar SetUp Side Menu Tab");
 
+		if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.PipelineStageLog.toString()) ||
+				sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.OfficeLocations.toString())){
+			return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+					"Enable CheckBox for Navatar SetUp Side Menu Tab");	
+		}
+		if (editviewMode.toString().equalsIgnoreCase(EditViewMode.View.toString())) {
+
+			if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.IndividualInvestorCreation.toString())) {
+				if(clickOrCheckEnableDisableCheckBox.toString().equalsIgnoreCase(ClickOrCheckEnableDisableCheckBox.Click.toString())) {
+					enableCheckBoxList.clear();
+					enableCheckBoxList = FindElements(driver,
+							"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
+							"Enable CheckBox for Navatar SetUp Side Menu Tab");
+					if(!enableCheckBoxList.isEmpty()) {
+						return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+						
+					}else {
+						return null;
+					}
+					
+				}else {
+					if(!enableCheckBoxList.isEmpty()) {
+						return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+					}else {
+						return null;
+					}
+				}
+
+			}else{
+				return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+						"Enable CheckBox for Navatar SetUp Side Menu Tab");
+			}
+
+
+		} else {
+			if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.IndividualInvestorCreation.toString())) {
+				if(sideMenuTab.toString().equalsIgnoreCase(NavatarSetupSideMenuTab.IndividualInvestorCreation.toString())) {
+					if(clickOrCheckEnableDisableCheckBox.toString().equalsIgnoreCase(ClickOrCheckEnableDisableCheckBox.Click.toString())) {
+						enableCheckBoxList.clear();
+						enableCheckBoxList = FindElements(driver,
+								"//span[contains(@class,'primaryPaletteBorder')]/..//input/following-sibling::span",
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+						if(!enableCheckBoxList.isEmpty()) {
+							return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+									"Enable CheckBox for Navatar SetUp Side Menu Tab");
+							
+						}else {
+							return null;
+						}
+						
+					}else {
+						return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+								"Enable CheckBox for Navatar SetUp Side Menu Tab");
+					}
+
+				}else{
+					return isDisplayed(driver, enableCheckBoxList.get(0), "Visibility", timeOut,
+							"Enable CheckBox for Navatar SetUp Side Menu Tab");
+				}
+				
+			}else{
+				return isDisplayed(driver, enableCheckBoxList.get(1), "Visibility", timeOut,
+						"Enable CheckBox for Navatar SetUp Side Menu Tab");
+			}
+		}
+			
+			
+			
+			
+			
+
+	}
 }
 						

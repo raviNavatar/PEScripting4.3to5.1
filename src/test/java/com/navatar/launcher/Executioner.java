@@ -15,6 +15,7 @@ import com.navatar.generic.AppListeners;
 import com.navatar.generic.CommonLib;
 import static com.navatar.generic.CommonLib.*;
 import com.navatar.generic.ExcelUtils;
+import com.navatar.pageObjects.BasePageBusinessLayer;
 import com.navatar.generic.EnumConstants.excelLabel;
 
 public class Executioner {
@@ -30,7 +31,8 @@ public static void testNgXmlSuite( String browser, String platform, String mode)
 		List<XmlClass> classes = new ArrayList<XmlClass>();
 		List<String> listenerClasses = new ArrayList<String>();
 		Map<String, String> parameters = new LinkedHashMap<String, String>();
-		XmlClass cl = new XmlClass("com.navatar.scripts.Post_CheckScript");
+		XmlClass cl = new XmlClass("com.navatar.scripts.Pre_CheckScript");
+		BasePageBusinessLayer.className=				"Pre_CheckScript";    // update class name here as well
 		XmlSuite suite = new XmlSuite();
 		XmlTest test = new XmlTest(suite);
 		parameters.put("browser", browser);
@@ -62,6 +64,7 @@ public static void testNgXmlSuite( String browser, String platform, String mode)
 		String platform = "Sandbox";
 		String mode ="Lightning";
 		testNgXmlSuite( browser, platform, mode);
+		
 
 	}
 

@@ -404,7 +404,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 			CommonVariables.URL = "login.salesforce.com";
 		}
 		}catch (NullPointerException e) {
-			 String markup = "<html><font=Arial color=#FF0000 size=+0> " + "You have NOT initiated the process." + "</html>";
+			 String markup = "<html><font=Arial color=#FF0000 size=+0> " + "You have NOT initiated the process." + "<br> </br><br> <center>Please execute the script again<center></br></html>";
 	         JLabel l = new JLabel(markup);
 	         l.setHorizontalAlignment(SwingConstants.CENTER);
 	         JPanel p = new JPanel(new java.awt.GridLayout(0, 1));
@@ -426,6 +426,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 		}
 	}
 
+
 	public void onExecutionFinish() {
 		// TODO Auto-generated method stub
 		
@@ -433,14 +434,14 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 			new BasePageBusinessLayer(BaseLib.driver).popupPassed();
 
 		}else {
-			new BasePageBusinessLayer(BaseLib.driver).popupFailed(failedTestcase);;
+			new BasePageBusinessLayer(BaseLib.driver).popupFailed();;
 
 		}
 
 		Process process;
 		try {
 			
-			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killbrowser.bat");
+			//process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killbrowser.bat");
 			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killJRE1.bat");
 			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killJRE2.bat");
 
