@@ -6,8 +6,11 @@ import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
+import static com.navatar.generic.CommonLib.getSelectedOptionOfDropDown;
+import static com.navatar.generic.CommonLib.isSelected;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
+import static com.navatar.generic.CommonLib.selectVisibleTextFromDropDown;
 import static com.navatar.generic.CommonLib.sendKeys;
 import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
@@ -64,14 +67,18 @@ import com.google.common.io.Files;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.CommonVariables;
+import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
 import com.navatar.generic.EnumConstants.Condition;
+import com.navatar.generic.EnumConstants.EditViewMode;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
 import com.navatar.generic.EnumConstants.HTMLTAG;
+import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
 import com.navatar.generic.EnumConstants.PermissionType;
 import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
+import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.generic.EnumConstants.action;
 
@@ -136,7 +143,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =false)
+	@Test(priority = 1,enabled =true)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -207,7 +214,8 @@ public class Post_CheckScript extends BaseLib {
 	
 				if(actionflag) {
 					
-					log(LogStatus.PASS, "Action Notification Setting already Enable/Checked", YesNo.No);
+					log(LogStatus.WARNING, "Action Notification Setting already Enable/Checked", YesNo.Yes);
+					sa.assertTrue(false, "Action Notification Setting already Enable/Checked");
 
 				}else {
 					log(LogStatus.INFO, "Action Notification Setting Is disable, Now going to Enable setting", YesNo.No);
@@ -232,8 +240,8 @@ public class Post_CheckScript extends BaseLib {
 				
 				if(infoflag) {
 					
-					log(LogStatus.PASS, "Info Notification Setting already Enable/Checked", YesNo.No);
-
+					log(LogStatus.WARNING, "Info Notification Setting already Enable/Checked", YesNo.Yes);
+					sa.assertTrue(false, "Info Notification Setting already Enable/Checked");
 				}else {
 					
 					if(click(driver, bp.getInformationalNotificationCheckbox(10),"Informational Notification Checkbox",action.BOOLEAN)) {
@@ -274,7 +282,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 2,enabled =false)
+	@Test(priority = 2,enabled =true)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -337,7 +345,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 3,enabled =false)
+	@Test(priority = 3,enabled =true)
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -397,7 +405,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=false)
+	@Test(priority = 4,enabled=true)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -536,10 +544,10 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =false)
+	@Test(priority = 5,enabled =true)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
-		
+
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -565,11 +573,12 @@ public class Post_CheckScript extends BaseLib {
 			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
 				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
 				CommonLib.ThreadSleep(3000);
-			
-				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+
+				switchToFrame(driver, 30, bp.getenterpriseeditionFrame(30));
 				CommonLib.ThreadSleep(5000);
 				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
 				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
+
 				 domainurl = ele.getText();
 				domainurl="https://"+domainurl+"/navpeII/NavatarHelpandSupport.app";
 			}else {
@@ -578,35 +587,36 @@ public class Post_CheckScript extends BaseLib {
 			
 			}
 			
-			} catch (Exception e) {
-				if (parentWindow != null) {
 
-					driver.close();
-					driver.switchTo().window(parentWindow);
-					parentWindow = null;
-				}
-				sa.assertAll();
-			}
-
+		} catch (Exception e) {
 			if (parentWindow != null) {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
 				parentWindow = null;
 			}
-			CommonLib.refresh(driver);
-			CommonLib.ThreadSleep(3000);
-			if (click(driver, bp.getSalesforceHelp(20), "setting icon", action.SCROLLANDBOOLEAN)) {
-				log(LogStatus.PASS, "Sussessfully Clicked on setting icon", YesNo.Yes);
-				if(CommonLib.isDisplayed(driver,FindElement(driver,
-						"//span[text()='Navatar Help']",
-						"", action.BOOLEAN, 20),
-				"visibility", 20,"" + " Navatar Help") != null) {
-		           log(LogStatus.INFO, "element found Navatar Help:" + "",
-				    YesNo.No);
-				}else {
-					   refresh(driver);
-			try {
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		if (click(driver, bp.getSalesforceHelp(20), "setting icon", action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.PASS, "Sussessfully Clicked on setting icon", YesNo.Yes);
+			if (CommonLib.isDisplayed(driver,
+					FindElement(driver, "//span[text()='Navatar Help']", "", action.BOOLEAN, 20), "visibility", 20,
+					"" + " Navatar Help") != null) {
+				log(LogStatus.INFO, " Navatar Help is Already created in saleforce help" + "", YesNo.No);
+				sa.assertTrue(false,
+						" Navatar Help is Already created in saleforce help icon");
+			} else {
+				refresh(driver);
+				try {
 					CommonLib.ThreadSleep(3000);
 					if (home.clickOnSetUpLink()) {
 
@@ -620,55 +630,53 @@ public class Post_CheckScript extends BaseLib {
 							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 						}
 					}
-				if (setup.searchStandardOrCustomObject(projectName, mode,  object.Help_Menu)) {
-					log(LogStatus.PASS,  object.Help_Menu + " object has been opened in setup page", YesNo.Yes);
-					CommonLib.ThreadSleep(3000);
-					
-				if (setup.CreateHelpMenu(projectName, mode,"Navatar Help","View Our User Guide",domainurl, 10)) {
-					//flag1 = true;
-					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
-				}else {
-					log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
-					sa.assertTrue(false, "Not able to setup ulr in help menu");
+					if (setup.searchStandardOrCustomObject(projectName, mode, object.Help_Menu)) {
+						log(LogStatus.PASS, object.Help_Menu + " object has been opened in setup page", YesNo.Yes);
+						CommonLib.ThreadSleep(3000);
+
+						if (setup.CreateHelpMenu(projectName, mode, "Navatar Help", "View Our User Guide", domainurl,
+								10)) {
+							// flag1 = true;
+							log(LogStatus.PASS, "able to setup ulr in help menu", YesNo.Yes);
+						} else {
+							log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
+							sa.assertTrue(false, "Not able to setup ulr in help menu");
+						}
+
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + object.Help_Menu + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + object.Help_Menu + " object");
+					}
+				} catch (Exception e) {
+					if (parentWindow != null) {
+
+						driver.close();
+						driver.switchTo().window(parentWindow);
+						parentWindow = null;
+					}
+
 				}
 
-			} else {
-				log(LogStatus.FAIL, "Not able to open " + object.Help_Menu + " object", YesNo.Yes);
-				sa.assertTrue(false, "Not able to open " + object.Help_Menu + " object");
-			}
-			}
-			catch (Exception e) {
-				if (parentWindow != null) {
-
-					driver.close();
-					driver.switchTo().window(parentWindow);
-					parentWindow = null;
-				}
-
-			}
-			
-				log(LogStatus.INFO, "not able to find salesforce help:" + "",
-						YesNo.No);
-				  }
-				
-			} else {
-				log(LogStatus.FAIL, "not able to Sussessfully Clicked on setting icon", YesNo.Yes);
-				sa.assertTrue(false, "not able to Sussessfully Clicked on setting icon");
-			}
-		
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow = null;
+				log(LogStatus.INFO, "not able to find salesforce help:" + "", YesNo.No);
 			}
 
-		
+		} else {
+			log(LogStatus.FAIL, "not able to Sussessfully Clicked on setting icon", YesNo.Yes);
+			sa.assertTrue(false, "not able to Sussessfully Clicked on setting icon");
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+
 		sa.assertAll();
 
 }
 	
-	@Test(priority =6 ,enabled=false)
+	@Test(priority =6 ,enabled=true)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -739,7 +747,7 @@ public class Post_CheckScript extends BaseLib {
 											action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
 											YesNo.No);
-									CommonLib.ThreadSleep(5000);
+									CommonLib.ThreadSleep(10000);
 									switchToFrame(driver, 30, setup.getSetUpPageIframe(60));
 									CommonLib.ThreadSleep(5000);
 
@@ -756,8 +764,8 @@ public class Post_CheckScript extends BaseLib {
 
 										}
 										CommonLib.ThreadSleep(5000);
-										switchToFrame(driver, 20, edit.getEditPageFrame("", 20));
-										CommonLib.ThreadSleep(3000);
+										switchToFrame(driver, 30, edit.getEditPageFrame("", 50));
+										CommonLib.ThreadSleep(5000);
 
 										if (edit.verifyAndAddAcuityTabInPages("Navatar Acuity", "Acuity", "Acuity",
 												new String[] { "Z  (Do not use) Navatar Clip Edit Utility",
@@ -909,7 +917,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	@Test(priority = 7,enabled=false)
+	@Test(priority = 7,enabled=true)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1804,44 +1812,124 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =10 ,enabled=false)
-	public void verifyAddNotificationOnHomePageForPEFOFApp() {
-		String projectName = "";
-		String[] appName = {"PE", "FOF"}; 
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+
+	@Test(priority = 10,enabled =true)
+	public void VerifyScheduleUsageMetrics() {
+
 		
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		String domainurl = "";
+		boolean flag = false;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
-		for(int i = 0; i < appName.length; i++ ) {
-		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-		
-			if (lp.openAppFromAppLauncher(60, appName[i])) {
-				log(LogStatus.PASS, "Click on App From App Launcher : " + appName[i], YesNo.No);
-				ThreadSleep(2000);
-				if (edit.addNotificationComponent(projectName, "Navatar Notification", "Notifications", "Z (Do not use) Navatar Notification Popup")) {
-					log(LogStatus.PASS, "Component Added to Home Page: Navatar Notification", YesNo.No);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
-				else {
-					log(LogStatus.FAIL, "Component Not Able to Add to Home Page: Navatar Notification", YesNo.Yes);
-					sa.assertTrue(false, "Component Not Able to Add to Home Page: Navatar Notification");
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
+				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
+			if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
+					//flag1 = true;
+					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
+				}else {
+					log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
+					sa.assertTrue(false, "Not able to setup ulr in help menu");
+				}
+			}else {
+				log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+			
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+				CommonLib.ThreadSleep(3000);
+				if (home.clickOnSetUpLink()) {
+
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.FAIL,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					}
 				}
-				else {
-					log(LogStatus.FAIL, "Not able to click on App From App Launcher : " + appName[i], YesNo.Yes);
-					sa.assertTrue(false, "Not able to click on App From App Launcher : " + appName[i]);
+			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
+				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
+				if(CommonLib.isDisplayed(driver,FindElement(driver,
+						"//th[text()='NavatarUsageMetrics']",
+						"", action.BOOLEAN, 20),
+				"visibility", 20,"" + " Navatar Usage Metrics") != null) {
+		           log(LogStatus.INFO, "element found Navatar Usage Metrics:" + "",
+				    YesNo.No);
+				}else {
+					log(LogStatus.FAIL,"element not found Navatar Usage Metrics:", YesNo.Yes);
+					sa.assertTrue(false,"element not found Navatar Usage Metrics:");
+					flag = false;
 				}
-			} else {
-					sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-					log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+				}else {
+					log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+				
+				}
+			sa.assertAll();
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow = null;
+				}
+				sa.assertAll();
 			}
-		}
-		
-		sa.assertAll();
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
 	}
 	
-	@Test(priority =11 ,enabled=false)
+	@Test(priority =11 ,enabled=true)
 	public void verifyAddingNewFieldToPageLayout() {
 		
 		String projectName = "";
@@ -1903,7 +1991,7 @@ public class Post_CheckScript extends BaseLib {
 								allElements = setup.getAllPageLayoutList();
 								WebElement labelElement = allElements.get(i);
 								name = labelElement.getText();
-								if((name.equals("Institution")) || (name.equals("Company")) || (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+								if((name.equals("Institution")) || (name.equals("Company")) || (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.contains("Contact")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
 								if(name.equals("Institution") || name.equals("Individual Investor")) {
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
@@ -1919,7 +2007,7 @@ public class Post_CheckScript extends BaseLib {
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Start_Date.toString(),"");
 									sourceANDDestination.put(PageLabel.End_Date.toString(),"");
-								} else if(name.equals("Contact Layout")){
+								} else if(name.contains("Contact")){
 									
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Average_Deal_Quality_Score.toString(),"");
@@ -2035,7 +2123,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =12,enabled=false)
+	@Test(priority =12,enabled=true)
 	public void verifyModifyineActivityTimelineAttribute() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2184,7 +2272,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority =13 ,enabled=false)
+	@Test(priority =13 ,enabled=true)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2545,16 +2633,54 @@ public class Post_CheckScript extends BaseLib {
 	}
 
 	
-	@Test(priority = 14,enabled =false)
-	public void VerifyScheduleUsageMetrics() {
-		
+
+	@Test(priority =14 ,enabled=true)
+	public void verifyAddNotificationOnHomePageForPEFOFApp() {
+
 		String projectName = "";
+		String[] appName = {"PE", "FOF"}; 
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		for(int i = 0; i < appName.length; i++ ) {
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+		
+			if (lp.openAppFromAppLauncher(60, appName[i])) {
+				log(LogStatus.PASS, "Click on App From App Launcher : " + appName[i], YesNo.No);
+				ThreadSleep(2000);
+				if (edit.addNotificationComponent(projectName, "Navatar Notification", "Notifications", "Z (Do not use) Navatar Notification Popup")) {
+					log(LogStatus.PASS, "Component Added to Home Page: Navatar Notification", YesNo.No);
+				}
+				else {
+					log(LogStatus.FAIL, "Component Not Able to Add to Home Page: Navatar Notification", YesNo.Yes);
+					sa.assertTrue(false, "Component Not Able to Add to Home Page: Navatar Notification");
+					}
+				}
+				else {
+					log(LogStatus.FAIL, "Not able to click on App From App Launcher : " + appName[i], YesNo.Yes);
+					sa.assertTrue(false, "Not able to click on App From App Launcher : " + appName[i]);
+				}
+			} else {
+					sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+					log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+			}
+		}
+		
+		sa.assertAll();
+	}
+	
+	@Test(priority = 15,enabled =true)
+	public void VerifyDisablingContactTransferSetting() {
+
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String parentWindow = null;
-		String domainurl = "";
-		boolean flag = false;
+
+		String domainurl =null;
+		String parentWindow=null;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
@@ -2571,78 +2697,22 @@ public class Post_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
-			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
-				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
+				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
 				CommonLib.ThreadSleep(3000);
-				CommonLib.ThreadSleep(3000);
-				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
-			if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
-					//flag1 = true;
-					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
-				}else {
-					log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
-					sa.assertTrue(false, "Not able to setup ulr in help menu");
-				}
+			
+				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
+				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
+				 domainurl = ele.getText();
+				domainurl="https://"+domainurl+"/lightning/n/navpeII__Navatar_Setup";
 			}else {
-				log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-				sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
 			
 			}
-
-		} catch (Exception e) {
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow = null;
-			}
-			sa.assertAll();
-		}
-
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-			parentWindow = null;
-		}
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-				CommonLib.ThreadSleep(3000);
-				if (home.clickOnSetUpLink()) {
-
-					parentWindow = switchOnWindow(driver);
-					if (parentWindow == null) {
-						sa.assertTrue(false,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-						log(LogStatus.FAIL,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-								YesNo.Yes);
-						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					}
-				}
-			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
-				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
-				CommonLib.ThreadSleep(3000);
-				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
-				if(CommonLib.isDisplayed(driver,FindElement(driver,
-						"//th[text()='NavatarUsageMetrics']",
-						"", action.BOOLEAN, 20),
-				"visibility", 20,"" + " Navatar Usage Metrics") != null) {
-		           log(LogStatus.INFO, "element found Navatar Usage Metrics:" + "",
-				    YesNo.No);
-				}else {
-					log(LogStatus.FAIL,"element not found Navatar Usage Metrics:", YesNo.Yes);
-					sa.assertTrue(false,"element not found Navatar Usage Metrics:");
-					flag = false;
-				}
-				}else {
-					log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
-				
-				}
-			sa.assertAll();
+			
 			} catch (Exception e) {
 				if (parentWindow != null) {
 
@@ -2652,18 +2722,69 @@ public class Post_CheckScript extends BaseLib {
 				}
 				sa.assertAll();
 			}
+
 			if (parentWindow != null) {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
 				parentWindow = null;
 			}
+			
+			
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(3000);
+			
+			driver.get(domainurl);
+			CommonLib.ThreadSleep(10000);
+			if (setup.clickOnNavatarSetupSideMenusTab("", NavatarSetupSideMenuTab.ContactTransfer)) {
+				log(LogStatus.INFO, "Clicked on Contact Transfer Tab", YesNo.No);
+				if (click(driver, setup.getEditButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10), "Edit Button", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
+					
+					if (isSelected(driver, setup.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled CheckBox")) {
+						log(LogStatus.INFO, " Contact Transfer is checked going to uncheck", YesNo.No);
+						if (click(driver,setup.getEnableCheckBoxforClickNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, 10),"Enabled Contact Transfer", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Disable Contact Transfer Box Checkbox", YesNo.No);
+							ThreadSleep(2000);
+
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
+							log(LogStatus.SKIP, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.SKIP, "Enable Contact Transfer is Already Disable", YesNo.Yes);
+					}
+
+
+					if (click(driver, setup.getSaveButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Save Button for No Button", YesNo.No);
+						ThreadSleep(5000);
+
+						
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Save Button for No Button");
+						log(LogStatus.SKIP, "Not Able to Click on Save Button No Button", YesNo.Yes);
+					}
+
+
+				}else{
+					sa.assertTrue(false, "Not Able to Click on Edit Button");
+					log(LogStatus.SKIP, "Not Able to Click on Edit Button", YesNo.Yes);	
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Contact Transfer Tab");
+				log(LogStatus.SKIP, "Not Able to Click on Contact Transfer Tab", YesNo.Yes);
+			}
+			
+				
+		sa.assertAll();
 	}
 	
 	
-	
 	// not include in round 4 bug verification
-	@Test(priority =14 ,enabled=false)
+	@Test(priority =15 ,enabled=false)
 	public void verifyAddVFPageOnPageLayout() {
 		
 		String projectName = "";
@@ -2857,7 +2978,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 	}
 
 	
-	@Test(priority =15, enabled=false)
+	@Test(priority =16, enabled=false)
 	public void verifyRemovingActivityTimelineFromSecondaryObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3057,7 +3178,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 	}
 
 	
-	@Test(priority = 16,enabled=false)
+	@Test(priority = 17,enabled=false)
 	public void verifyRemovingRelatedListFromSecondaryObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3186,6 +3307,9 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 
 	}
+
+
+	
 }
 
 	

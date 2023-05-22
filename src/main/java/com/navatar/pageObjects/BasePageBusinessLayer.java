@@ -92,6 +92,7 @@ import java.util.Map.Entry;
 
 public class BasePageBusinessLayer extends BasePage implements BasePageErrorMessage {
 
+	public static String className=null;
 	/**
 	 * @param driver
 	 */
@@ -20341,16 +20342,25 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	    } else { /* TODO: error handling */ }
 	  }
 
-	 public  void popupFailed(List<String> list) {
+	
+	 public  void popupFailed() {
 		 Color color = Color.red;
-//			String markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0>  Automation Script Status: FAILED <a href=\"C:\\Users\\Ravi Kumar\\git\\PEScripting\\Reports\\ExtentReports\\ExtentLog23_03_22_01_21_13.html\">Report</a></font></body></html>";
-			
+		 String markup=null;
+		int horizon=0;
+		int vertical=0;
+		 if(className.equalsIgnoreCase("Pre_CheckScript")) {
+				 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script FAILED</center> <br><center> STOP!!! DO NOT EXECUTE ANY MORE SCRIPTS!!</center></br><br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\\ExtentReports\\LogFile\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
+				 horizon =700;
+				 vertical=170;
+		 }else {
+			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><center>  Automation Script FAILED</center> <br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\\ExtentReports\\LogFile\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
+			 horizon =700;
+			 vertical=150;
+		 }
 		 //post script message
-		 	String markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0>     Automation Script FAILED"+ "\n"+ "\n"+" Please connect with the Product Team and send the latest log file to the Product Team. Go to the \"logs\" folder to get the log file. </font></body></html>";
 
 			
 			// pre script
-		//	String markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0>  Automation Script FAILED STOP!!! DO NOT EXECUTE ANY MORE SCRIPTS!!!: Please connect with the Product Team and send the latest log file to the Product Team. Go to the \"logs\" folder to get the log file.</font></body></html>";
 			
 	        JLabel l = new JLabel(markup, JLabel.CENTER);
 	        
@@ -20364,18 +20374,13 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	        
 	        p.add(l);
 	        JFrame  f = new JFrame("Result");
-	        f.setSize(700,150);
+	        f.setSize(horizon,vertical);
 	        //f.setFont(new Font("System", Font.PLAIN, 12));
 	        f.setContentPane(p);
 	        f.setAlwaysOnTop(true);
 	        f.setLocationRelativeTo(null);
             f.setVisible(true);
-	        long STARTTIME = System.currentTimeMillis();
-	        while (System.currentTimeMillis() < (STARTTIME + 100000)) {
-	        }
-	        f.setVisible(false);
-	        f.dispose();
-	        f=null;
+	        
 			
  }
 	 public  void popup(String title, String message,Color color,String code) {

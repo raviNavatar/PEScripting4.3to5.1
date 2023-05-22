@@ -46,7 +46,7 @@ public class Pre_CheckScript extends BaseLib {
 		JPanel p = new JPanel(new java.awt.GridLayout(2, 2));
 		JFrame f = new JFrame("WARNING!!");
 		
-	
+
 	@Test(priority =0 ,enabled=true)
 	public void before() {
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -80,7 +80,7 @@ public class Pre_CheckScript extends BaseLib {
 	}
 	
 	/// Pre-check ///
-	@Test(priority = 1,enabled =true)
+	@Test(priority = 3,enabled =false)
 	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -189,7 +189,7 @@ public class Pre_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =1 ,enabled=false)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -231,13 +231,7 @@ public class Pre_CheckScript extends BaseLib {
 			}
 			String[] fields =null;
 			String fieldName =null;
-//			object obj =object.Institution;
-//			
-//				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.No);
-//				
-//					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-//						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.No);
-//						CommonLib.ThreadSleep(3000);
+		
 			String api =object.Account.toString();
 			
 				log(LogStatus.PASS, "Going to check and Add tab for " + api.toString() + " object", YesNo.No);
@@ -256,10 +250,7 @@ public class Pre_CheckScript extends BaseLib {
 								fields=AccountSource;
 								fieldName ="Account Source";
 							}
-						// industry
-//						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
-//							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ api.toString() + " object", YesNo.No);
-//							
+							
 							if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
 									ObjectFeatureName.FieldAndRelationShip)) {
 								log(LogStatus.PASS, "clicked on page layout of object feature of "
@@ -292,93 +283,6 @@ public class Pre_CheckScript extends BaseLib {
 										
 									}
 									
-									// this code will be out of scope till we are using  metadata to write value in the org
-									
-//									if(i==0) {
-//										CommonLib.ThreadSleep(5000);
-//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-//										CommonLib.ThreadSleep(5000);
-//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString(), Condition.activate,false)) {
-//											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.industryAactivatedFields.toString()+" :varibale Created", YesNo.No);
-//
-//										}else {
-//											log(LogStatus.FAIL,
-//													fieldName+"Activated_"+" :value Not created sucessfully ",
-//													YesNo.Yes);
-//											sa.assertTrue(false,
-//													fieldName+"Activated_"+" :value Not created sucessfully ");
-//										}
-//										
-//										CommonLib.ThreadSleep(5000);
-//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-//										CommonLib.ThreadSleep(5000);
-//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.industryAddedFields.toString(), Condition.activate,false)) {
-//											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.industryAddedFields.toString()+" :varibale Created", YesNo.No);
-//
-//										}else {
-//											log(LogStatus.FAIL,
-//													fieldName+"Added_"+" :value Not created sucessfully ",
-//													YesNo.Yes);
-//											sa.assertTrue(false,
-//													fieldName+"Added_"+" :value Not created sucessfully ");
-//										}
-//									}else if(i==1) {
-//										CommonLib.ThreadSleep(5000);
-//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-//										CommonLib.ThreadSleep(5000);
-//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString(), Condition.activate,false)) {
-//											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.typeAactivatedFields.toString()+" :varibale Created", YesNo.No);
-//
-//										}else {
-//											log(LogStatus.FAIL,
-//													fieldName+"Activated_"+" :value Not created sucessfully ",
-//													YesNo.Yes);
-//											sa.assertTrue(false,
-//													fieldName+"Activated_"+" :value Not created sucessfully ");
-//										}
-//										
-//										CommonLib.ThreadSleep(5000);
-//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-//										CommonLib.ThreadSleep(5000);
-//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.typeAddedFields.toString(), Condition.activate,false)) {
-//											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.typeAddedFields.toString()+" :varibale Created", YesNo.No);
-//
-//										}else {
-//											log(LogStatus.FAIL,
-//													fieldName+"Added_"+" :value Not created sucessfully ",
-//													YesNo.Yes);
-//											sa.assertTrue(false,
-//													fieldName+"Added_"+" :value Not created sucessfully ");
-//										}
-//									}else {
-//										CommonLib.ThreadSleep(5000);
-//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-//										CommonLib.ThreadSleep(5000);
-//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString(), Condition.activate,false)) {
-//											log(LogStatus.PASS, fieldName+"Activated_"+CommonVariables.accountSourceAactivatedFields.toString()+" :varibale Created", YesNo.No);
-//
-//										}else {
-//											log(LogStatus.FAIL,
-//													fieldName+"Activated_"+" :value Not created sucessfully ",
-//													YesNo.Yes);
-//											sa.assertTrue(false,
-//													fieldName+"Activated_"+" :value Not created sucessfully ");
-//										}
-//										
-//										CommonLib.ThreadSleep(5000);
-//										CommonLib.switchToFrame(driver, 20,fr.getaddPicklistIFrame(60));
-//										CommonLib.ThreadSleep(5000);
-//										if(fr.activateOrAddPicklistValueOfField("", fieldName, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString(), Condition.activate,false)) {
-//											log(LogStatus.PASS, fieldName+"Added_"+CommonVariables.accountSourceAddedFields.toString()+" :varibale Created", YesNo.No);
-//
-//										}else {
-//											log(LogStatus.FAIL,
-//													fieldName+"Added_"+" :value Not created sucessfully ",
-//													YesNo.Yes);
-//											sa.assertTrue(false,
-//													fieldName+"Added_"+" :value Not created sucessfully ");
-//										}
-//									}
 									
 									
 									if (parentWindow != null) {
@@ -434,9 +338,7 @@ public class Pre_CheckScript extends BaseLib {
 
 	}
 	
-	
-	
-	@Test(priority =3 ,enabled=true)
+	@Test(priority =2 ,enabled=false)
 	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -516,13 +418,7 @@ public class Pre_CheckScript extends BaseLib {
 		}
 		
 
-		if (parentWindow != null) {
-
-			driver.close();
-			
-			driver.switchTo().window(parentWindow);
-			parentWindow = null;
-		}
+	
 		sa.assertAll();
 
 	}

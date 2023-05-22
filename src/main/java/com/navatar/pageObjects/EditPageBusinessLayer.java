@@ -1880,10 +1880,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 	public boolean removeTimeline(boolean removeActivityTimeline) {
 		String xPath =null;
-		boolean delete=false;
+		boolean delete=true;
 		if(removeActivityTimeline) {
-		
-		WebElement activity =isDisplayed(driver, activityTimelineComponent(15), "visibility", 10, "");
+			ThreadSleep(5000);
+		WebElement activity =isDisplayed(driver, activityTimelineComponent(30), "visibility", 30, "");
 			
 		if(activity!=null) {
 			
@@ -1993,6 +1993,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		if(result.isEmpty()) {
 			log(LogStatus.INFO, tabName+": Tab is present in Lightning Record Page", YesNo.No);
 			System.out.println(tabName+": Tab is present in Lightning Record Page");
+			sa.assertTrue(false, tabName+": Tab is alreday present in Lightning Record Page");
 			if(allTabs.get(0).getText().trim().equalsIgnoreCase(tabName)) {
 				log(LogStatus.INFO, tabName+": Tab Already present in first position of Lightning Record Page", YesNo.No);
 				System.out.println(tabName+": Tab Already present in first position of Lightning Record Page");
@@ -2103,7 +2104,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 											FirsttabNameElementInEditPage(30))) {
 										log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
 												+ dropTabTo, YesNo.No);
-										CommonLib.ThreadSleep(3000);
+										CommonLib.ThreadSleep(5000);
 
 										if (CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50))) {
 											log(LogStatus.INFO, "Successfully Switched to the Frame", YesNo.No);
@@ -2215,6 +2216,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 
 			CommonLib.switchToDefaultContent(driver);
+			CommonLib.ThreadSleep(4000);
 			if (addComponentLinkFlag) {
 				if (CommonLib.sendKeys(driver, getComponentSearchBox(50), ComponentName, "SearchBox",
 						action.SCROLLANDBOOLEAN)) {
@@ -2254,7 +2256,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									if (CommonLib.sendKeys(driver, getComponentSearchBox(50), name, "SearchBox",
 											action.SCROLLANDBOOLEAN)) {
 										log(LogStatus.INFO, name + "has been Search", YesNo.No);
-
+										ThreadSleep(2000);
 										if (CommonLib.click(driver, getComponentLink(name,20), "Componetn link",
 												action.SCROLLANDBOOLEAN)) {
 

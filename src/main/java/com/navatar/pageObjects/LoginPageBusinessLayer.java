@@ -91,7 +91,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 	public boolean CRMLogin(String username, String password) {
 		BasePageBusinessLayer bp=new BasePageBusinessLayer(driver);
 		driver.get("https://"+URL);
-//		sendKeys(driver, getUserNameTextBox(20), "pe3.8_trial11_pesphase2@navatargroup.com.sb3tr4", "Username Text Box", action.THROWEXCEPTION);
+//		sendKeys(driver, getUserNameTextBox(20), "pe3.8_trial40_pesphase2@navatargroup.com.TR5SB3", "Username Text Box", action.THROWEXCEPTION);
 //		sendKeys(driver, getPasswordTextBox(20), "navatar1234", "Password Text Box", action.THROWEXCEPTION);
 //		click(driver, getLoginButton(20), "Login Button", action.THROWEXCEPTION);
 //		click(driver, getLightingCloseButton(10), "Lighting Pop-Up Close Button.", action.BOOLEAN);
@@ -118,7 +118,7 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 		if(!flag) {
 			
 			
-				 String markup = "<html><font=Arial color=#FF0000 size=+0> " + "You have NOT initiated the process." + "</html>";
+				 String markup = "<html><font=Arial color=#FF0000 size=+0> " + "You have NOT initiated the process." + "<br> </br><br> <center>Please execute the script again<center></br></html>";
 		         JLabel l = new JLabel(markup);
 		         l.setHorizontalAlignment(SwingConstants.CENTER);
 		         JPanel p = new JPanel(new java.awt.GridLayout(0, 1));
@@ -154,8 +154,8 @@ public class LoginPageBusinessLayer extends LoginPage implements LoginErrorPage 
 //			ThreadSleep(2000);
 //			click(driver, bp.getSalesForceLightingIcon(60), "sales force lighting icon", action.THROWEXCEPTION);
 //			ThreadSleep(1000);
-//			click(driver, bp.getSwitchToClassic(60), "sales force switch to classic link", action.THROWEXCEPTION);
-//			appLog.info("Sales Force is switched in classic mode successfully.");
+			click(driver, bp.getSwitchToClassic(30), "sales force switch to classic link", action.THROWEXCEPTION);
+			appLog.info("Sales Force is switched in classic mode successfully.");
 			return true;
 		} else {
 			appLog.info("Sales Force is open in classic mode.");
