@@ -884,6 +884,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				for (int i = 0; i < layoutName.size(); i++) {
 					if (obj == object.Global_Actions||obj == object.PublisherLayout) {
 						switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
+						
 						ele = isDisplayed(driver,
 								FindElement(driver,
 										"//*[text()='" + layoutName.get(i)
@@ -1277,7 +1278,10 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 									"//div[text()='Mobile & Lightning Actions']", "", action.BOOLEAN,
 									10);
 							click(driver, quicFind, "", action.BOOLEAN);
+							String xpaath = "//h1[contains(text(),'Sample')]";
+							WebElement elee = FindElement(driver, xpaath, "", action.BOOLEAN, 10);
 							
+							scrollDownThroughWebelement(driver, elee, "");
 							ThreadSleep(3000);
 													WebElement ele3= 	FindElement(driver,
 															"//h3[text()='Salesforce Mobile and Lightning Experience Actions']/..//..//a",
@@ -1295,7 +1299,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 															
 														}
 														}
-															String xpath = "//h3[text()='Highlights Panel']";
+															String xpath = "//h1[contains(text(),'Sample')]";
 															WebElement ele2 = FindElement(driver, xpath, "", action.BOOLEAN, 10);
 															
 															scrollDownThroughWebelement(driver, ele2, "");

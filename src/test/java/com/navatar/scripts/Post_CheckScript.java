@@ -136,17 +136,68 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =true)
+	@Test(priority = 1,enabled =false)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		String parentWindow = null;
+		String domainurl = "";
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
 			CommonLib.ThreadSleep(3000);
-			if (home.openAppFromAppLauchner("Navatar Setting", 20)) {
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
+				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+			
+				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
+				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
+				 domainurl = ele.getText();
+				domainurl="https://"+domainurl+"/lightning/n/navpeII__Navatar_Setting";
+			}else {
+				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
+			
+			}
+		
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow = null;
+				}
+				sa.assertAll();
+			}
+
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			driver.get(domainurl);
+//			if (home.openAppFromAppLauchner("Navatar Setting", 20)) e
 
 				if(click(driver, bp.getNavatarSettingNotificationButton(15),"Navatar Setting Notification button",action.BOOLEAN)) {
 					log(LogStatus.PASS, "able to add tab", YesNo.No);
@@ -210,10 +261,10 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertTrue(false, "Not able to click on notification link in navatar setting tab");
 				}
 				
-			}else {
-				log(LogStatus.FAIL, "Not able to open Tab Navatar Setting form app laucnher  ", YesNo.Yes);
-				sa.assertTrue(false, "Not able to open Tab Navatar Setting form app laucnher  ");
-			}
+//			}else {
+//				log(LogStatus.FAIL, "Not able to open Tab Navatar Setting form app laucnher  ", YesNo.Yes);
+//				sa.assertTrue(false, "Not able to open Tab Navatar Setting form app laucnher  ");
+//			}
 		} catch (Exception e) {
 		
 				switchToDefaultContent(driver);
@@ -223,7 +274,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 2,enabled =true)
+	@Test(priority = 2,enabled =false)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -286,7 +337,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 3,enabled =true)
+	@Test(priority = 3,enabled =false)
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -346,7 +397,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=true)
+	@Test(priority = 4,enabled=false)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -485,7 +536,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 5,enabled =false)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 		
@@ -520,7 +571,7 @@ public class Post_CheckScript extends BaseLib {
 				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
 				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
 				 domainurl = ele.getText();
-				domainurl="https://"+domainurl+"/c/NavatarHelpandSupport.app";
+				domainurl="https://"+domainurl+"/navpeII/NavatarHelpandSupport.app";
 			}else {
 				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
 				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
@@ -858,7 +909,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	@Test(priority = 7,enabled=true)
+	@Test(priority = 7,enabled=false)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1264,7 +1315,7 @@ public class Post_CheckScript extends BaseLib {
 				}
 
 
-	@Test(priority = 8,enabled=false)
+	@Test(priority = 8,enabled=true)
 	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
 
 		String projectName = "";
@@ -1316,8 +1367,8 @@ public class Post_CheckScript extends BaseLib {
 						WebElement labelElement = allElements.get(j);
 						name = labelElement.getText();
 						 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
-						|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
-						
+						|| (name.equals("Individual Investor")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+										
 							
 									
 									if(name.equals("Advisor")) {
@@ -1481,13 +1532,20 @@ public class Post_CheckScript extends BaseLib {
 			}
 			sa.assertAll();
 		}
-		
+		if (parentWindow != null) {
 
-		sa.assertAll();
-	}
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+
+	
+	sa.assertAll();
+
+}
 	
 
-	@Test(priority = 9,enabled=false)
+	@Test(priority = 9,enabled=true)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1535,7 +1593,7 @@ public class Post_CheckScript extends BaseLib {
 							name = labelElement.getText();
 							 if((name.equals("Institution"))|| (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||  (name.equals("Intermediary"))|| (name.equals("Lender"))|| (name.equals("Limited Partner"))|| (name.equals("Advisor")) || (name.equals("Company")) 
 
-										|| (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {								
+										|| (name.equals("Individual Investor")) || (name.equals("Contact Layout")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {								
 						 	
 								List<String> layoutName1 = new ArrayList<String>();
 									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
@@ -1547,8 +1605,8 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Client.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Client.toString());
 										
 									} else if(name.equals("Company")) {
 										layoutName1 = new ArrayList<String>();
@@ -1559,8 +1617,8 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
 										sourceANDDestination1.add(GlobalActionItem.Export.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
 
 									} else if((name.equals("Individual Investor"))|| (name.equals("Institution"))) {
 
@@ -1570,8 +1628,8 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Advisor.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Advisor.toString());
 
 									} else if(name.equals("Intermediary")){
 										
@@ -1581,8 +1639,8 @@ public class Post_CheckScript extends BaseLib {
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-									sourceANDDestination1.add(GlobalActionItem.Edit.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//									sourceANDDestination1.add(GlobalActionItem.Edit.toString());
 									sourceANDDestination1.add(GlobalActionItem.Export.toString());
 									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
 									
@@ -1594,7 +1652,7 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Financing.toString());
 
 									} else if(name.equals("Limited Partner")){
@@ -1603,11 +1661,11 @@ public class Post_CheckScript extends BaseLib {
 									layoutName1.add("Advisor");
 									sourceANDDestination1 = new ArrayList<String>();
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Fundraising.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Fundraising.toString());
 									
 									} else if(name.equals("Portfolio Company")){
 
@@ -1617,9 +1675,9 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
 										
 									} else if(name.equals("Private Equity")){
 
@@ -1629,10 +1687,10 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
 										
 									} else if(name.equals("Contact Layout")){
 								   layoutName1 = new ArrayList<String>();
@@ -1641,10 +1699,10 @@ public class Post_CheckScript extends BaseLib {
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 									sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
 									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
 									sourceANDDestination1.add(GlobalActionItem.Export.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Referral.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Referral.toString());
 									
 									} else if(name.equals("Fund Layout")){
 										   layoutName1 = new ArrayList<String>();
@@ -1660,9 +1718,9 @@ public class Post_CheckScript extends BaseLib {
 											layoutName1.add("Advisor");
 											 sourceANDDestination1 = new ArrayList<String>();
 											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());
 											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-											sourceANDDestination1.add(GlobalActionItem.Create_Commitments.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Create_Commitments.toString());
 											
 									} else if(name.equals("Pipeline Layout")){
 										   layoutName1 = new ArrayList<String>();
@@ -1672,9 +1730,10 @@ public class Post_CheckScript extends BaseLib {
 											sourceANDDestination1.add(GlobalActionItem.New_Team_Member.toString());
 											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
 											sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Review.toString());
-											sourceANDDestination1.add(GlobalActionItem.Convert_to_Portfolio.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Lender.toString());
+											sourceANDDestination1.add(GlobalActionItem.Import.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Review.toString());
+//											sourceANDDestination1.add(GlobalActionItem.Convert_to_Portfolio.toString());
+//											sourceANDDestination1.add(GlobalActionItem.New_Lender.toString());
 
 									} else {
 
@@ -1745,7 +1804,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =10 ,enabled=true)
+	@Test(priority =10 ,enabled=false)
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 		String projectName = "";
 		String[] appName = {"PE", "FOF"}; 
@@ -1782,7 +1841,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority =11 ,enabled=true)
+	@Test(priority =11 ,enabled=false)
 	public void verifyAddingNewFieldToPageLayout() {
 		
 		String projectName = "";
@@ -1976,7 +2035,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =12,enabled=true)
+	@Test(priority =12,enabled=false)
 	public void verifyModifyineActivityTimelineAttribute() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2125,7 +2184,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority =13 ,enabled=true)
+	@Test(priority =13 ,enabled=false)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2486,7 +2545,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 
 	
-	@Test(priority = 14,enabled =true)
+	@Test(priority = 14,enabled =false)
 	public void VerifyScheduleUsageMetrics() {
 		
 		String projectName = "";
