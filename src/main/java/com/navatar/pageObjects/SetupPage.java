@@ -1553,7 +1553,7 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, defaultRecordTypeOption, "Visibility", timeOut, "defaultRecordTypeOption");
 	}
 	
-	@FindBy(xpath = "//input[@title='Edit']")
+	@FindBy(xpath = "//input[@title='Edit' or @name ='edit']")
 	private WebElement editButton;
 
 	public WebElement editButton(int timeOut) {

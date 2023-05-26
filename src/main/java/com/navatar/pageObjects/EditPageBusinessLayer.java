@@ -1889,7 +1889,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			click(driver, activity, " ", action.BOOLEAN);
 		//	mouseOverClickOperation(driver, activity);
-			ThreadSleep(1000);
+			ThreadSleep(2000);
 			
 			if(clickUsingJavaScript(driver, activityTimelineComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
 				activity =isDisplayed(driver, activityTimelineComponent(10), "visibility", 10, "");

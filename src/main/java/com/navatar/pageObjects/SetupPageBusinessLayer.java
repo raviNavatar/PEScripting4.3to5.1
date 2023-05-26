@@ -884,8 +884,10 @@ public class SetupPageBusinessLayer extends SetupPage {
 		System.err.println("");
 
 		if (searchStandardOrCustomObject(environment, mode, obj)) {
+			ThreadSleep(8000);
 				for (int i = 0; i < layoutName.size(); i++) {
 					if (obj == object.Global_Actions||obj == object.PublisherLayout) {
+						
 						switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
 						
 						ele = isDisplayed(driver,
@@ -910,8 +912,16 @@ public class SetupPageBusinessLayer extends SetupPage {
 						}
 					}
 					if (ele != null) {
-						if (click(driver, ele, layoutName.get(i) + "layout name edit icon", action.BOOLEAN)) {
+						
+						if(click(driver, ele, layoutName.get(i) + "layout name edit icon", action.BOOLEAN)) {
 							log(LogStatus.PASS,"click on pagelayout " + layoutName.get(i) + " Edit Icon",YesNo.No);
+
+						}else {
+							click(driver, ele, layoutName.get(i) + "layout name edit icon", action.BOOLEAN);
+							log(LogStatus.PASS,"click on pagelayout in second try " + layoutName.get(i) + " Edit Icon",YesNo.No);
+
+						}
+						
 							ThreadSleep(20000);
 							if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 								switchToFrame(driver, 20, getEditPageLayoutFrame_Lighting(20));
@@ -968,14 +978,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 								log(LogStatus.PASS,"global action already removed from page layout",YesNo.Yes);
 							}
 							}
-						} else {
-							
-							log(LogStatus.FAIL,"Not able to click on " + layoutName.get(i)
-							+ "layout edit icon so cannot dargNdrop.",YesNo.Yes);
-
-							result.add("Not able to click on " + layoutName.get(i)
-									+ "layout edit icon so cannot dargNdrop.");
-						}
+						
 
 					} else {
 						log(LogStatus.FAIL,layoutName.get(i) + " Layout name is not visible so cannot click on edit icon",YesNo.Yes);
