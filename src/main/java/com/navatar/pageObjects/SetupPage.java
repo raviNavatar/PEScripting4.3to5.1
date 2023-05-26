@@ -421,6 +421,13 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, inputSaveBtn, "Visibility", timeOut, "input Save Btn");
 	}
 	
+	@FindBy(xpath = "//button[text()='Save']")
+	private WebElement overrideSaveBtn;
+
+	public WebElement getoverrideSaveBtn(int timeOut) {
+		return isDisplayed(driver, overrideSaveBtn, "Visibility", timeOut, "override Save Btn");
+	}
+	
 	@FindBy(xpath = "//h2[text()='Customize the Help Menu']//ancestor::li//span[@class='slds-checkbox_faux']")
 	private WebElement helpmenutogglebutton;
 
@@ -929,6 +936,26 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, setupComponentDropdown, "Visibility", timeOut, "setup component dropdown ");
 
 	}
+	
+	@FindBy(xpath = "//select[contains(@id,'packageSelect')]")
+	private WebElement packageComponentDropdown;
+
+	public WebElement getOverridepackageComponentDropdown(int timeOut) {
+
+		scrollDownThroughWebelement(driver, packageComponentDropdown, "package Component Dropdown");
+		return isDisplayed(driver, packageComponentDropdown, "Visibility", timeOut, "package Component Dropdown");
+
+	}
+	
+	@FindBy(xpath = "//select[contains(@id,'langSelect')]")
+	private WebElement LanguageComponentDropdown;
+
+	public WebElement getOverrideLanguageComponentDropdown(int timeOut) {
+
+		scrollDownThroughWebelement(driver, LanguageComponentDropdown, "Language Component Dropdown");
+		return isDisplayed(driver, LanguageComponentDropdown, "Visibility", timeOut, "Language Component Dropdown");
+
+	}
 
 	@FindBy(xpath = "//select[contains(@id,'assocEntSelect')]")
 	private WebElement objectDropdown;
@@ -937,6 +964,16 @@ public class SetupPage extends BasePageBusinessLayer {
 
 		scrollDownThroughWebelement(driver, objectDropdown, "override object dropdown");
 		return isDisplayed(driver, objectDropdown, "Visibility", timeOut, "override object dropdown");
+
+	}
+	
+	@FindBy(xpath = "//select[contains(@id,'aspectSelect')]")
+	private WebElement aspectDropdown;
+
+	public WebElement getOverrideaspectDropdown(int timeOut) {
+
+		scrollDownThroughWebelement(driver, aspectDropdown, "override aspect dropdown");
+		return isDisplayed(driver, aspectDropdown, "Visibility", timeOut, "override aspect Dropdown");
 
 	}
 

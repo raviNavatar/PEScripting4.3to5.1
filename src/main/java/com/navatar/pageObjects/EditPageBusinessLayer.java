@@ -1962,6 +1962,136 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return false;
 
 	}
+	
+	public boolean removeToadysTask(boolean removeTodaystask ) {
+		String xPath =null;
+		boolean delete=true;
+		if (clickOnEditPageLink()) {
+			CommonLib.ThreadSleep(2000);
+
+			CommonLib.switchToFrame(driver, 20, getAppBuilderIframe(20));
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+		if(removeTodaystask) {
+			ThreadSleep(5000);
+		
+		WebElement activity =isDisplayed(driver, TodaysTaskComponent(30), "visibility", 30, "");
+		
+		if(activity!=null) {
+			
+			click(driver, activity, " ", action.BOOLEAN);
+		//	mouseOverClickOperation(driver, activity);
+			ThreadSleep(1000);
+			
+			if(clickUsingJavaScript(driver, TodaystaskComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
+				activity =isDisplayed(driver, TodaysTaskComponent(10), "visibility", 10, "");
+				if(activity==null) {
+					delete=true;
+					log(LogStatus.PASS, "Today's Task component is removed sucessfully after delete in the record page", YesNo.No);
+
+				}else {
+					
+					log(LogStatus.ERROR, "Not able to removed Today's Task component after delete in the record page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to removed Today's Task component after delete in the record page");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Could not be click on Delete component button", YesNo.Yes);
+				sa.assertTrue(false, "Could not be click on Delete component button");
+
+			}
+			
+		}else {
+			log(LogStatus.PASS, "Today's Task component is alreday removed in the record page", YesNo.No);
+			System.out.println("Today's Task component is alreday removed in the record page");
+			
+		}
+		
+		}else {
+			return true;
+
+		}
+			CommonLib.switchToDefaultContent(driver);
+		if (CommonLib.click(driver, getSaveButton(20), " Save Button",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, " save button has been clicked", YesNo.No);
+			return true;
+		}else {
+			log(LogStatus.ERROR, "Could not be click on save button", YesNo.Yes);
+			sa.assertTrue(false, "Could not be click on save button");
+
+		}
+		}else {
+			log(LogStatus.ERROR, "Could not be click on edit page button", YesNo.Yes);
+			sa.assertTrue(false, "Could not be click on edit page button");
+
+		}
+		return true;
+	}
+		
+	
+	public boolean removeToadysEvent(boolean removeTodaysEvent) {
+		String xPath =null;
+		boolean delete=true;
+		if (clickOnEditPageLink()) {
+			CommonLib.ThreadSleep(2000);
+
+			CommonLib.switchToFrame(driver, 20, getAppBuilderIframe(20));
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+		if(removeTodaysEvent) {
+			ThreadSleep(5000);
+		WebElement activity =isDisplayed(driver, TodaysEventComponent(30), "visibility", 30, "");
+			
+		if(activity!=null) {
+			
+			click(driver, activity, " ", action.BOOLEAN);
+		//	mouseOverClickOperation(driver, activity);
+			ThreadSleep(1000);
+			
+			if(clickUsingJavaScript(driver, TodaysEventComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
+				activity =isDisplayed(driver, TodaysEventComponent(10), "visibility", 10, "");
+				if(activity==null) {
+					delete=true;
+					log(LogStatus.PASS, "Today's Events component is removed sucessfully after delete in the record page", YesNo.No);
+
+				}else {
+					
+					log(LogStatus.ERROR, "Not able to removed Today's Events component after delete in the record page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to removed Today's Events component after delete in the record page");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Could not be click on Delete component button", YesNo.Yes);
+				sa.assertTrue(false, "Could not be click on Delete component button");
+
+			}
+			
+		}else {
+			log(LogStatus.PASS, "Today's Events component is alreday removed in the record page", YesNo.No);
+			System.out.println("Today's Events component is alreday removed in the record page");
+			
+		}
+		
+		}else {
+			return true;
+
+		}
+		CommonLib.switchToDefaultContent(driver);
+		if (CommonLib.click(driver, getSaveButton(20), " Save Button",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, " save button has been clicked", YesNo.No);
+			return true;
+		}else {
+			log(LogStatus.ERROR, "Could not be click on save button", YesNo.Yes);
+			sa.assertTrue(false, "Could not be click on save button");
+
+		}
+		}else {
+			log(LogStatus.ERROR, "Could not be click on edit page button", YesNo.Yes);
+			sa.assertTrue(false, "Could not be click on edit page button");
+
+		}
+		return true;
+	}
 
 	public boolean verifyAndAddAcuityTabInPages(String ComponentName, String tabName,
 			String dropTabTo,String[] otherComponent,boolean removeActivityTimeline) {

@@ -856,11 +856,44 @@ public class EditPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, activityTimelineComponent, "Visibility", timeOut, "activityTimelineComponent");
 
 	}
+	
+	@FindBy(xpath = "//div[@data-label=\"Today's Tasks\" and @data-instance-type='COMPONENT']")
+	private WebElement TodaysTaskComponent;
+
+	public WebElement TodaysTaskComponent(int timeOut) {
+		return isDisplayed(driver, TodaysTaskComponent, "Visibility", timeOut, "TodaysTaskComponent");
+
+	}
+	
+	@FindBy(xpath = "//div[@data-label=\"Today's Events\" and @data-instance-type='COMPONENT']")
+	private WebElement TodaysEventComponent;
+
+	public WebElement TodaysEventComponent(int timeOut) {
+		return isDisplayed(driver, TodaysEventComponent, "Visibility", timeOut, "TodaysEventComponent");
+
+	}
+	
 	@FindBy(xpath = "//div[@data-label='Activities']//ancestor::div[@data-instance-type='COMPONENT']//a[@title='Delete']")
 	private WebElement activityTimelineComponentDeleteButton;
 
 	public WebElement activityTimelineComponentDeleteButton(int timeOut) {
 		return isDisplayed(driver, activityTimelineComponentDeleteButton, "Visibility", timeOut, "activityTimelineComponentDeleteButton");
+
+	}
+	
+	@FindBy(xpath = "//div[@data-label=\"Today's Tasks\" and @data-instance-type='COMPONENT']//div//a[@title='Delete']")
+	private WebElement TodaystaskComponentDeleteButton;
+
+	public WebElement TodaystaskComponentDeleteButton(int timeOut) {
+		return isDisplayed(driver, TodaystaskComponentDeleteButton, "Visibility", timeOut, "TodaystaskComponentDeleteButton");
+
+	}
+	
+	@FindBy(xpath = "//div[@data-label=\"Today's Events\" and @data-instance-type='COMPONENT']//div//a[@title='Delete']")
+	private WebElement TodaysEventComponentDeleteButton;
+
+	public WebElement TodaysEventComponentDeleteButton(int timeOut) {
+		return isDisplayed(driver, TodaysEventComponentDeleteButton, "Visibility", timeOut, "TodaysEventComponentDeleteButton");
 
 	}
 

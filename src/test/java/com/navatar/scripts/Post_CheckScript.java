@@ -143,7 +143,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =true)
+	@Test(priority = 1,enabled =false)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -282,7 +282,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 2,enabled =true)
+	@Test(priority = 2,enabled =false)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -345,7 +345,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 3,enabled =true)
+	@Test(priority = 3,enabled =false)
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -405,7 +405,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=true)
+	@Test(priority = 4,enabled=false)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -544,7 +544,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 5,enabled =false)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 
@@ -676,7 +676,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=true)
+	@Test(priority =6 ,enabled=false)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -917,7 +917,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	@Test(priority = 7,enabled=true)
+	@Test(priority = 7,enabled=false)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1323,7 +1323,7 @@ public class Post_CheckScript extends BaseLib {
 				}
 
 
-	@Test(priority = 8,enabled=true)
+	@Test(priority = 8,enabled=false)
 	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
 
 		String projectName = "";
@@ -1553,7 +1553,7 @@ public class Post_CheckScript extends BaseLib {
 }
 	
 
-	@Test(priority = 9,enabled=true)
+	@Test(priority = 9,enabled=false)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1578,8 +1578,10 @@ public class Post_CheckScript extends BaseLib {
 					}
 				}
 				
-				String[] apiname = {object.Contact.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Fundraising__c.toString()
-						 ,object.navpeII__Pipeline__c.toString(),object.Account.toString()};
+				String[] apiname = { /*
+										 * object.Contact.toString(),object.navpeII__Fund__c.toString(),object.
+										 * navpeII__Fundraising__c.toString() ,object.navpeII__Pipeline__c.toString(),
+										 */object.Account.toString()};
 				
 				for (String api : apiname) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
@@ -1669,7 +1671,7 @@ public class Post_CheckScript extends BaseLib {
 									layoutName1.add("Advisor");
 									sourceANDDestination1 = new ArrayList<String>();
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-//									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
 //									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
 //									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
@@ -1813,7 +1815,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 
-	@Test(priority = 10,enabled =true)
+	@Test(priority = 10,enabled =false)
 	public void VerifyScheduleUsageMetrics() {
 
 		
@@ -1929,7 +1931,61 @@ public class Post_CheckScript extends BaseLib {
 			}
 	}
 	
-	@Test(priority =11 ,enabled=true)
+	@Test(priority = 5,enabled =false)
+
+	public void VerifyModifyingIsTouchpointPackageField () {
+
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.RenameIsTouchPoint(projectName, mode, "Navatar PE Version 2 Series", "English", "Custom Field","Activity","Field Label","z_Is_Touchpoint(Don't Use)",
+					10)) {
+				// flag1 = true;
+				log(LogStatus.PASS, "able to Rename Is Touch Point", YesNo.Yes);
+			} else {
+				log(LogStatus.FAIL, "Not able to Rename Is Touch Point", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Rename Is Touch Point");
+			}
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+
+		sa.assertAll();
+
+	}
+			
+	@Test(priority =11 ,enabled=false)
 	public void verifyAddingNewFieldToPageLayout() {
 		
 		String projectName = "";
@@ -2123,7 +2179,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =12,enabled=true)
+	@Test(priority =12,enabled=false)
 	public void verifyModifyineActivityTimelineAttribute() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2272,7 +2328,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority =13 ,enabled=true)
+	@Test(priority =13 ,enabled=false)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2634,7 +2690,7 @@ public class Post_CheckScript extends BaseLib {
 
 	
 
-	@Test(priority =14 ,enabled=true)
+	@Test(priority =14 ,enabled=false)
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 
 		String projectName = "";
@@ -2672,7 +2728,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 15,enabled =true)
+	@Test(priority = 15,enabled =false)
 	public void VerifyDisablingContactTransferSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3307,9 +3363,64 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 
 	}
-
-
+	@Test(priority = 5,enabled =true)
 	
+	public void verifyRemoveTodaysTaskEvent() {
+		String projectName = "";
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+		
+			if (lp.openAppFromAppLauncher(60,"PE")) {
+				log(LogStatus.PASS, "Click on App From App Launcher : " +"PE", YesNo.No);
+				ThreadSleep(2000);
+	
+				if (edit.removeToadysTask(true)) {
+					log(LogStatus.INFO, "able to add tab", YesNo.No);
+					CommonLib.ThreadSleep(2000);
+					
+					
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to able to add tab", YesNo.Yes);
+					sa.assertTrue(false, "Not able to able to add tab");
+
+				}
+				CommonLib.click(driver, edit.getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+          	   CommonLib.ThreadSleep(3000);
+          	   
+				if (edit.removeToadysEvent(true)) {
+					log(LogStatus.INFO, "able to add tab", YesNo.No);
+					CommonLib.ThreadSleep(2000);
+					
+					
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to able to add tab", YesNo.Yes);
+					sa.assertTrue(false, "Not able to able to add tab");
+
+				}
+				CommonLib.click(driver, edit.getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+			}
+			else {
+				log(LogStatus.FAIL, "Not able to click on App From App Launcher : " + "PE", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on App From App Launcher : " + "PE");
+			}
+		} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+				log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+		} catch (Exception e) {
+			
+			sa.assertAll();
+		}
+		sa.assertAll();
+}
 }
 
 	

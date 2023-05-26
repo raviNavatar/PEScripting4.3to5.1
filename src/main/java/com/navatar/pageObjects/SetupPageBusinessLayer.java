@@ -4504,6 +4504,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		WebElement ele;
 		WebElement ele2;
+		
 		String fieldLabelOverride = "//div[text()='" + fieldName + "']/../following-sibling::td[1]";
 		String masterFieldLabel = "//div[text()='" + fieldName + "']";
 
@@ -4538,10 +4539,82 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
 				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
 						YesNo.No);
-				ThreadSleep(2000);
+				ThreadSleep(3000);
 				if (click(driver, setup.getPageLayoutSaveBtn(object.Global_Actions, 10), Buttons.Save.toString(),
 						action.SCROLLANDBOOLEAN)) {
 					log(LogStatus.INFO, "Successfully click on override save button", YesNo.No);
+					status = true;
+					return true;
+				} else {
+					log(LogStatus.FAIL,
+							"Not able to  click on save button name so cannot update field name" + fieldName,
+							YesNo.Yes);
+					sa.assertTrue(false, "Not able to  click on fsave button so cannot update field name" + fieldName);
+
+				}
+
+			} else {
+				log(LogStatus.FAIL, "Not able to double click on field name so cannot update field name" + fieldName,
+						YesNo.Yes);
+				sa.assertTrue(false, "Not able to double click on field name so cannot update field name" + fieldName);
+			}
+
+		} else {
+			log(LogStatus.INFO, "Successfully click on override next button going to find field label:" + fieldName
+					+ " on next page", YesNo.No);
+
+		}
+
+		switchToDefaultContent(driver);
+		return false;
+
+	}
+	
+	public boolean updateFieldLabelInOverridePage1(WebDriver driver, String fieldName, String UpdatedfieldName,
+			action action) {
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		WebElement ele;
+		WebElement ele2;
+		
+		String fieldLabelOverride = "//div[text()='" + fieldName + "']/../following-sibling::td[1]";
+		String masterFieldLabel = "//div[text()='" + fieldName + "']";
+
+		ThreadSleep(2000);
+		boolean status = false;
+		int count = 10;
+		ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
+
+		do {
+			clickUsingJavaScript(driver, setup.getOverrideSetupFieldNextBtn(20), "override field next button",
+					action.SCROLLANDBOOLEAN);
+			log(LogStatus.INFO, "Successfully click on override next button going to find field label:" + fieldName
+					+ " on next page", YesNo.No);
+			ThreadSleep(2000);
+			ele2 = FindElement(driver, masterFieldLabel, "", action.SCROLLANDBOOLEAN, 10);
+			count++;
+		} while (!setup.getOverrideSetupFieldNextBtn(20).getAttribute("class").contains("disabled") && ele2 == null
+				&& count < 5);
+
+		if (ele2 != null) {
+			ele = FindElement(driver, fieldLabelOverride, fieldName, action.SCROLLANDBOOLEAN, 10);
+			ThreadSleep(2000);
+
+			if (doubleClickUsingAction(driver, ele)) {
+				log(LogStatus.INFO, "going for edit override field label of field:" + fieldName, YesNo.No);
+				ThreadSleep(2000);
+				Actions ac = new Actions(driver);
+				JavascriptExecutor js = (JavascriptExecutor) driver;
+				// js.executeScript("arguments[0].setAttribute(arguments[1],arguments[2])",
+				// ele,"Value","");
+				doubleClickUsingAction(driver, ele);
+				ac.moveToElement(ele).sendKeys(UpdatedfieldName).sendKeys(Keys.ENTER).build().perform();
+				log(LogStatus.INFO, "Pass value:" + UpdatedfieldName + " to override field label of field:" + fieldName,
+						YesNo.No);
+				ThreadSleep(5000);
+				if (click(driver, setup.getPageLayoutSaveBtn(object.Global_Actions, 10), Buttons.Save.toString(),
+						action.SCROLLANDBOOLEAN)) {
+					log(LogStatus.INFO, "Successfully click on override save button", YesNo.No);
+					ThreadSleep(5000);
 					status = true;
 					return true;
 				} else {
@@ -8790,6 +8863,82 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return flag;
 	}
 
+	public boolean RenameIsTouchPoint(String projectName, String mode, String value1, String value2,String value3,String value4,String value5,
+			String updateLabel,int timeOut) {
+		boolean flag = false;
+		ThreadSleep(3000);
+		if (searchStandardOrCustomObject(projectName, mode, object.Override)) {
+			log(LogStatus.PASS, object.Override + " object has been opened in setup page", YesNo.Yes);
+			CommonLib.ThreadSleep(3000);
+			switchToFrame(driver, 50, getEditPageLayoutFrame_Lighting(50));
+			CommonLib.ThreadSleep(5000);
+			if (selectVisibleTextFromDropDown(driver,getOverridepackageComponentDropdown(10),
+					"Override package Component Dropdown",value1)) {
+				log(LogStatus.INFO,
+						"Select package Component text in setup component dropdown in override setup page",
+						YesNo.No);
+				ThreadSleep(1000);
+				if (selectVisibleTextFromDropDown(driver, getOverrideLanguageComponentDropdown(10),
+						"Override Language Component Dropdown", value2)) {
+					log(LogStatus.INFO,
+							"Select Language Component text in setup component dropdown in override setup page",
+							YesNo.No);
+					ThreadSleep(3000);
+					if (selectVisibleTextFromDropDown(driver, getOverrideSetupComponentDropdown(10),
+							"Override Setup Component Dropdown", value3)) {
+						log(LogStatus.INFO,
+								"Select custom field text in setup component dropdown in override setup page",
+								YesNo.No);
+						ThreadSleep(10000);
+						if (selectVisibleTextFromDropDown(driver, getOverrideObjectDropdown(50),
+								"Override Object Dropdown", value4)) {
+							log(LogStatus.INFO,
+									"Select Object field text in setup component dropdown in override setup page",
+									YesNo.No);
+							ThreadSleep(3000);
+							if (selectVisibleTextFromDropDown(driver, getOverrideaspectDropdown(10),
+									"Override aspect Component Dropdown", value5)) {
+								log(LogStatus.INFO,
+										"Select aspect field text in setup component dropdown in override setup page",
+										YesNo.No);
+								ThreadSleep(3000);
+								if (updateFieldLabelInOverridePage1(driver, PageLabel.Is_Touchpoint.toString().replace("_"," "), updateLabel,
+										action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "Field label: " + PageLabel.Is_Touchpoint.toString()
+											+ " successfully update to " + updateLabel, YesNo.No);
+                                       flag=true;
+								} else {
+									log(LogStatus.ERROR, "Not able to update Field label: " + PageLabel.Stage.toString()
+											+ " successfully update to " + updateLabel, YesNo.Yes);
+									sa.assertTrue(false, "Not able to update Field label: " + PageLabel.Stage.toString()
+											+ " to " + updateLabel);
+								}
+							} else {
+								log(LogStatus.ERROR, "Not able to Select aspect field text in setup component dropdown in override setup page: ", YesNo.Yes);
+								sa.assertTrue(false, "Not able to Select aspect field text in setup component dropdown in override setup page: ");
+							}
+						} else {
+							log(LogStatus.ERROR, "Not able to Select Objec field text in setup component dropdown in override setup page ", YesNo.Yes);
+							sa.assertTrue(false, "Not able to Select Objec field text in setup component dropdown in override setup page");
+						}
+					} else {
+						log(LogStatus.ERROR, "Not able to Select custom field text in setup component dropdown in override setup page", YesNo.Yes);
+						sa.assertTrue(false, "Not able to Select custom field text in setup component dropdown in override setup page");
+					}
+				} else {
+					log(LogStatus.ERROR, "Not able to Select custom field text in setup component dropdown in override setup page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to Select custom field text in setup component dropdown in override setup page");
+				}
+			} else {
+				log(LogStatus.ERROR, "Not able to Select package Component text in setup component dropdown in override setup page", YesNo.Yes);
+				sa.assertTrue(false, "Not able to Select package Component text in setup component dropdown in override setup page");
+			}
+		} else {
+			log(LogStatus.FAIL,"Not able to search Object: " + object.Override ,YesNo.Yes);
+			sa.assertTrue(false,"Not able to search Object: " + object.Override);
+		}
+		return flag;
+	}
 	public boolean CreateOverridingtheTaskEventstandardbuttons(String projectName, String mode ,Object value1,Object value2
 			,int timeOut) {
 		boolean flag = false;
