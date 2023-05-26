@@ -189,7 +189,7 @@ public class Pre_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority =1 ,enabled=false)
+	@Test(priority =1 ,enabled=true)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -200,12 +200,10 @@ public class Pre_CheckScript extends BaseLib {
 		CommonLib.ThreadSleep(3000);
 		String xpath =null;
 		WebElement ele = null;
-		String[] industry = {"Advanced Material","Agriculture","Apparel","Banking","Biotechnology","Business Services","Chemicals","Cleantech",
-				"Communications",
-				"Construction","Consulting","Consumer","Education","Electronics","Energy","Engineering","Entertainment","Environmental",
-				"Finance","Financial Services","Food Beverage","Government","Healthcare","Hospitality","Insurance","Leisure","Machinery","Manufacturing",
-				"Media","Media & Communications","Niche Industrials","Not For Profit","Other","Recreation","Retail","Shipping","Technology","Telecommunications",
-				"Transportation","Utilities","Semi Conductor"};
+		String[] industry = {"Agriculture","Apparel","Banking","Biotechnology","Chemicals","Communications","Construction","Consulting",
+				"Education","Electronics","Energy","Engineering","Entertainment","Environmental","Finance","Food & Beverage","Government","Healthcare",
+				"Hospitality","Insurance","Machinery","Manufacturing","Media","Not For Profit","Other","Recreation","Retail","Shipping","Technology"
+				,"Telecommunications","Transportation","Utilities","Business Services","Aerospace & Defense","Advertising"};
 		
 		String[] type = {"Analyst","Competitor","Customer","Integrator","Investor","Partner","Other","Press","Prospect","Reseller"};
 		
@@ -338,7 +336,7 @@ public class Pre_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =2 ,enabled=false)
+	@Test(priority =2 ,enabled=true)
 	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
