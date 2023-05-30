@@ -2064,12 +2064,12 @@ public class Post_CheckScript extends BaseLib {
 			String fieldName =null;
 			
 
-			object obj =object.Institution;
+			String api =object.Account.toString();
 			
-				log(LogStatus.PASS, "Going to check and Add tab for " + obj.toString() + " object", YesNo.No);
+				log(LogStatus.PASS, "Going to check and Add tab for " + api.toString() + " object", YesNo.No);
 				
-					if (setup.searchStandardOrCustomObject(projectName, mode, obj)) {
-						log(LogStatus.PASS, obj + " object has been opened in setup page", YesNo.No);
+					if (setup.searchStandardOrCustomObjectApi(api,20)) {
+						log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.No);
 						CommonLib.ThreadSleep(3000);
 						
 			
@@ -2090,8 +2090,9 @@ public class Post_CheckScript extends BaseLib {
 								 deleted = AccountSourcedescription.split("<break>")[0].split(",");
 							}
 						// industry
-						if (setup.clickOnObjectFeature(projectName, mode, obj,ObjectFeatureName.FieldAndRelationShip)) {
-							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ obj.toString() + " object", YesNo.No);
+						if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
+								ObjectFeatureName.FieldAndRelationShip)) {
+							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ api.toString() + " object", YesNo.No);
 							ThreadSleep(3000);
 							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
@@ -2100,13 +2101,14 @@ public class Post_CheckScript extends BaseLib {
 								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
 								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
-									
+									if(deactivated.length!=0) {
 									for(Object valueObj:deactivated) {
 										try {
+											String value =valueObj.toString().trim();
+											if(!value.isEmpty()||!value.equalsIgnoreCase("")) {
 										CommonLib.ThreadSleep(3000);
 										CommonLib.switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
 										CommonLib.ThreadSleep(5000);
-										String value =valueObj.toString().trim();
 										if(fr.deactivatePicklistValueOfField("", fieldName, value, Condition.deactivate)) {
 											log(LogStatus.PASS, value+" :value deactivated and revert action sucessfully ", YesNo.No);
 											switchToDefaultContent(driver);
@@ -2118,19 +2120,24 @@ public class Post_CheckScript extends BaseLib {
 													value+" :value Not deactivated and revert action not done ");
 											
 										}
+											}
 									}catch (Exception e) {
 										// TODO: handle exception
 										continue;
 									}
 										
 									}
-									switchToDefaultContent(driver);
+								}
+									switchToDefaultContent(driver);									
+									if(deleted.length!=0) {
 									for(Object delete:deleted) {
 										try {
+										String value = delete.toString().trim();
+										if(!value.isEmpty()||!value.equalsIgnoreCase("")) {
 										CommonLib.ThreadSleep(3000);
 										CommonLib.switchToFrame(driver, 20, setup.getSetUpPageIframe(60));
 										CommonLib.ThreadSleep(5000);
-										String value = delete.toString().trim();
+										
 										if(fr.deletePicklistOptionAndReplaceValue(projectName, value, null, null, Condition.replaceWithBlank)) {
 											log(LogStatus.PASS, value+" :value deleted and revert action successfully ", YesNo.No);
 											
@@ -2139,34 +2146,35 @@ public class Post_CheckScript extends BaseLib {
 													value+" :value Not deleted as for revert action ",
 													YesNo.Yes);
 											sa.assertTrue(false,
-													value+" :value Not activated and Not created sucessfully ");
+													value+" :value Not deleted as for revert action ");
 											
+										}
 										}
 										}catch (Exception e) {
 											// TODO: handle exception
 											continue;
 										}
 									}
-
+								}
 								}else {
 									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
-									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ obj + " object");
+									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ api + " object");
 								}
 							} else {
 								log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
-								sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+								sa.assertTrue(false,"Not able to click on Record type of object feature of " + api + " object");
 							}
 							
 						} else {
-							log(LogStatus.FAIL,"Not able to click on Record type of object feature of " + obj + " object",YesNo.Yes);
-							sa.assertTrue(false,"Not able to click on Record type of object feature of " + obj + " object");
+							log(LogStatus.FAIL,"Not able to click on Record type of object feature of " + api + " object",YesNo.Yes);
+							sa.assertTrue(false,"Not able to click on Record type of object feature of " + api + " object");
 						}
 						
 						
 						
 					} else {
-						log(LogStatus.FAIL, "Not able to open " + obj + " object", YesNo.Yes);
-						sa.assertTrue(false, "Not able to open " + obj + " object");
+						log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + api + " object");
 			
 			
 					}
