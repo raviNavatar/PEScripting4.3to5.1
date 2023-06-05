@@ -2913,7 +2913,7 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		try {
 			actions.clickAndHold(source).moveToElement(target).build().perform();
 			ThreadSleep(500);
-			actions.click(target).release().build().perform();
+			actions.click(target).release(target).build().perform();
 			// actions.dragAndDrop(source, target).build().perform();
 		} catch (Exception e) {
 			return false;

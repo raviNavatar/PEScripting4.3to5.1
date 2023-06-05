@@ -1317,7 +1317,7 @@ public static enum PermissionType{
 				public String toString() {
 					return "Lender Status";
 				}
-			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name, Clip_Name, Section, Custom_Links, Entity_Type, Introduction_Date, Institution, Industry_Focus, Contact_Type, Last_Touchpoint, Touchpoint_Overdue, Tier, Sector_Expertise, Next_Touchpoint_Date, 
+			}, Deal_Contact, Stage_Upd, Pipeline_Comments, Pipeline_Comments_Upd, Legal_Name, Status_Notes, Legal_Name_Upd, Status_Notes_Upd, Vintage_Year_Upd, Description_Upd, Summary_Upd, Fund, Vintage_Year, Theme, Descrption, Clip, Summary, Theme_Name, Clip_Name, Section, Custom_Links, Entity_Type, Introduction_Date,Introduced_by, Institution, Industry_Focus, Contact_Type, Last_Touchpoint, Touchpoint_Overdue, Tier, Sector_Expertise, Next_Touchpoint_Date, 
 		Ownership{
 			@Override
 			public String toString() {

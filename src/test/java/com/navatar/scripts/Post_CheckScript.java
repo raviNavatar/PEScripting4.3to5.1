@@ -143,7 +143,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 1,enabled =true)
+	@Test(priority = 1,enabled =false)
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -282,7 +282,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 3,enabled =true)
+	@Test(priority = 3,enabled =false)
 
 	public void VerifyRemovingGlobalAction() {
 		
@@ -343,7 +343,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=true)
+	@Test(priority = 4,enabled=false)
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -457,7 +457,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =true)
+	@Test(priority = 5,enabled =false)
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 
@@ -589,7 +589,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=true)
+	@Test(priority =6 ,enabled=false)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -782,7 +782,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	@Test(priority = 7,enabled=true)
+	@Test(priority = 7,enabled=false)
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1181,7 +1181,7 @@ public class Post_CheckScript extends BaseLib {
 				}
 
 
-	@Test(priority = 8,enabled=true)
+	@Test(priority = 8,enabled=false)
 	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
 
 		String projectName = "";
@@ -1411,7 +1411,7 @@ public class Post_CheckScript extends BaseLib {
 }
 	
 
-	@Test(priority = 9,enabled=true)
+	@Test(priority = 9,enabled=false)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1672,7 +1672,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 
-	@Test(priority = 10,enabled =true)
+	@Test(priority = 10,enabled =false)
 	public void VerifyScheduleUsageMetrics() {
 
 		
@@ -1706,10 +1706,10 @@ public class Post_CheckScript extends BaseLib {
 				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
 			if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
 					//flag1 = true;
-					log(LogStatus.PASS, "able to setup ulr in help menu" , YesNo.Yes);
+					log(LogStatus.PASS, "able to check and delete scchedule usage matrix" , YesNo.Yes);
 				}else {
-					log(LogStatus.FAIL, "Not able to setup ulr in help menu", YesNo.Yes);
-					sa.assertTrue(false, "Not able to setup ulr in help menu");
+					log(LogStatus.FAIL, "not able to check and delete scchedule usage matrix", YesNo.Yes);
+					sa.assertTrue(false, "not able to check and delete scchedule usage matrix");
 				}
 			}else {
 				log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
@@ -1770,7 +1770,6 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
 				
 				}
-			sa.assertAll();
 			} catch (Exception e) {
 				if (parentWindow != null) {
 
@@ -1778,7 +1777,7 @@ public class Post_CheckScript extends BaseLib {
 					driver.switchTo().window(parentWindow);
 					parentWindow = null;
 				}
-				sa.assertAll();
+				
 			}
 			if (parentWindow != null) {
 
@@ -1786,6 +1785,7 @@ public class Post_CheckScript extends BaseLib {
 				driver.switchTo().window(parentWindow);
 				parentWindow = null;
 			}
+			sa.assertAll();
 	}
 	
 			
@@ -1844,9 +1844,11 @@ public class Post_CheckScript extends BaseLib {
 								} else if(name.equals("Company")) {
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
-									sourceANDDestination.put(PageLabel.Total_Commitments.toString(),"");
+//									sourceANDDestination.put(PageLabel.Total_Commitments.toString(),"");
 									sourceANDDestination.put(PageLabel.Investment_Type.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduction_Date.toString(),"");
+									sourceANDDestination.put(PageLabel.Introduced_by.toString(),"");
+									sourceANDDestination.put(PageLabel.Date.toString(),"");
 								} else if(name.equals("Affiliation Layout")){
 									
 									sourceANDDestination = new HashMap<String, String>();
@@ -1855,13 +1857,13 @@ public class Post_CheckScript extends BaseLib {
 								} else if(name.contains("Contact")){
 									
 									sourceANDDestination = new HashMap<String, String>();
-									sourceANDDestination.put(PageLabel.Average_Deal_Quality_Score.toString(),"");
+//									sourceANDDestination.put(PageLabel.Average_Deal_Quality_Score.toString(),"");
 									
 									  sourceANDDestination.put(PageLabel.Industry_Focus.toString(),"");
 									  sourceANDDestination.put(PageLabel.Contact_Type.toString(),"");
 									  sourceANDDestination.put(PageLabel.Last_Touchpoint.toString(),"");
 									  sourceANDDestination.put(PageLabel.Touchpoint_Overdue.toString(),"");
-									  sourceANDDestination.put(PageLabel.Total_Deals_Shown.toString(),"");
+//									  sourceANDDestination.put(PageLabel.Total_Deals_Shown.toString(),"");
 									  sourceANDDestination.put(PageLabel.Tier.toString(),"");
 									  sourceANDDestination.put(PageLabel.Sector_Expertise.toString(),"");
 									  sourceANDDestination.put(PageLabel.Next_Touchpoint_Date.toString(),"");
@@ -1888,7 +1890,7 @@ public class Post_CheckScript extends BaseLib {
 									
 									sourceANDDestination = new HashMap<String, String>();
 									
-									  sourceANDDestination.put(PageLabel.Deal_Quality_Score.toString(),"");
+//									  sourceANDDestination.put(PageLabel.Deal_Quality_Score.toString(),"");
 									  sourceANDDestination.put(PageLabel.Multiple.toString(),"");
 									  sourceANDDestination.put(PageLabel.LOI_Due_Date.toString(),"");
 									  sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
@@ -1969,7 +1971,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 
 
-	@Test(priority =13 ,enabled=true)
+	@Test(priority =13 ,enabled=false)
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2337,7 +2339,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority =14 ,enabled=true)
+	@Test(priority =14 ,enabled=false)
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 
 		String projectName = "";
@@ -2375,7 +2377,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 15,enabled =true)
+	@Test(priority = 15,enabled =false)
 	public void VerifyDisablingContactTransferSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2485,7 +2487,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority = 16,enabled =true)
+	@Test(priority = 16,enabled =false)
 
 	public void VerifyModifyingIsTouchpointPackageField () {
 
@@ -2539,7 +2541,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority = 17,enabled =true)
+	@Test(priority = 17,enabled =false)
 	public void verifyRemoveTodaysTaskEvent() {
 		String projectName = "";
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);

@@ -9091,11 +9091,12 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 											}
 								}
 							} else {
-								targetElement1 = FindElement(driver,
-										"//span[text()='New Fields']/../following-sibling::div//td", "",
-										action.BOOLEAN, 10);
+//								targetElement1 = FindElement(driver,
+//										"//span[text()='New Fields']/../following-sibling::div//td", "",
+//										action.BOOLEAN, 10);
 							}
-
+							ThreadSleep(3000);
+													
 							Set<String> Sources = sourceANDDestination.keySet();
 							Iterator<String> itr = Sources.iterator();
 							while (itr.hasNext()) {
@@ -9144,6 +9145,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 
 									}
 									flag = true;
+									
 								} else if (src.split("<break>")[0].contains("Mobile")) {
 									if (click(driver, FindElement(driver, "//div[text()='Mobile & Lightning Actions']",
 											"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN)) {
@@ -9156,12 +9158,20 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 										flag = true;
 									}
 								} else {
+									String xpath1 = "//span[text()='New Fields']/../ancestor::div[contains(@class,'section fieldDrop')]/preceding-sibling::div[1]";
+									WebElement ele12 = FindElement(driver, xpath1, "", action.SCROLLANDBOOLEAN, 10);
+//									scrollDownThroughWebelementInCenter(driver, ele12, "");
+//									ThreadSleep(1500);
+//									((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
+//											ele12);
 									sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
-									String xpath = "//h3[text()='Highlights Panel']";
-									WebElement ele1 = FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10);
-									scrollDownThroughWebelement(driver, ele1, "");
+			
+									scrollDownThroughWebelementInCenter(driver, ele12, "");
+									ThreadSleep(500);
+//									((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
+//											ele12);
 									switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
-									targetElement = FindElement(driver, "//span[text()='New Fields']/ancestor::div/following-sibling::div//td[contains(@class,'entryCell')]", "",
+									targetElement = FindElement(driver, "//span[text()='New Fields']/ancestor::div[contains(@class,'section fieldDrop')]//table//td[1]", "",
 											action.BOOLEAN, 10);
 									//table[contains(@id,'ext-gen')]//td
 								}
@@ -9273,8 +9283,8 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 								click(driver, FindElement(driver, "//input[contains(@name,'ro')]",
 										"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN);
 								ThreadSleep(2000);
-								click(driver, FindElement(driver, "//button[text()='OK']",
-										"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN);
+								clickUsingJavaScript(driver, FindElement(driver, "//button[text()='OK']",
+										"", action.SCROLLANDBOOLEAN, 20), "", action.SCROLLANDBOOLEAN);
 							} 
 							ThreadSleep(2000);
 
@@ -9489,7 +9499,8 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 								if (selectVisibleTextFromDropDown(driver, getPreferredStartTime(60),
 										"Preferred Start Time List", "1:00 AM")) {
 									appLog.info("select Preferred Start Time List: " + "");
-									if (click(driver, getSaveButtonInCustomFields(10), "page layouts save button",
+									ThreadSleep(2000);
+									if (clickUsingJavaScript(driver, getSaveButtonInCustomFields(30), "page layouts save button",
 											action.SCROLLANDBOOLEAN)) {
 										appLog.info("clicked on save button");
 										flag=true;
