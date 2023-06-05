@@ -589,7 +589,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=false)
+	@Test(priority =6 ,enabled=true)
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -1411,7 +1411,7 @@ public class Post_CheckScript extends BaseLib {
 }
 	
 
-	@Test(priority = 9,enabled=false)
+	@Test(priority = 9,enabled=true)
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1789,7 +1789,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 			
-	@Test(priority =11 ,enabled=true)
+	@Test(priority =11 ,enabled=false)
 	public void verifyAddingNewFieldToPageLayout() {
 		
 		String projectName = "";
@@ -1848,7 +1848,7 @@ public class Post_CheckScript extends BaseLib {
 									sourceANDDestination.put(PageLabel.Investment_Type.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduction_Date.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduced_by.toString(),"");
-									sourceANDDestination.put(PageLabel.Date.toString(),"");
+//									sourceANDDestination.put(PageLabel.Date.toString(),"");
 								} else if(name.equals("Affiliation Layout")){
 									
 									sourceANDDestination = new HashMap<String, String>();

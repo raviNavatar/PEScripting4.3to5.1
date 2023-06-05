@@ -2908,6 +2908,19 @@ public class CommonLib extends EnumConstants implements Comparator<String> {
 		return true;
 	}
 
+	public static boolean dragNDropAcuity(WebDriver driver, WebElement source, WebElement target) {
+		Actions actions = new Actions(driver);
+		try {
+			actions.clickAndHold(source).moveToElement(target).build().perform();
+			ThreadSleep(500);
+			actions.click(target).release().build().perform();
+			// actions.dragAndDrop(source, target).build().perform();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
 	public static boolean dragNDropField(WebDriver driver, WebElement source, WebElement target) {
 		Actions actions = new Actions(driver);
 		try {

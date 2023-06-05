@@ -1920,10 +1920,12 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			WebElement highlightInsertBottom= highlightPanel(10);
 			WebElement recordDetail= recordDetailComponentComponent(20);
 			ThreadSleep(1000);
-			if (CommonLib.click(driver, recordDetail, "recordDetail",
+			if (CommonLib.clickUsingJavaScript(driver, recordDetail, "recordDetail",
 					action.SCROLLANDBOOLEAN)) {
 				System.out.println("  clicked");
 			}else {
+				CommonLib.clickUsingJavaScript(driver, recordDetail, "recordDetail",
+					action.SCROLLANDBOOLEAN);
 				System.out.println("Not clicked");
 			}
 			recordDetail.sendKeys(Keys.chord(Keys.CONTROL, "x"));
@@ -2138,7 +2140,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				log(LogStatus.INFO, "going to move "+tabName+" Tab in first position of Lightning Record Page", YesNo.No);
 				System.out.println("going to move "+tabName+" Tab in first position of Lightning Record Page");
 				switchToDefaultContent(driver);
-				if (CommonLib.dragNDropField(driver, tabNameElementInEditPage(tabName, 30),
+				if (CommonLib.dragNDropAcuity(driver, tabNameElementInEditPage(tabName, 30),
 						FirsttabNameElementInEditPage(30))) {
 					log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
 							+ dropTabTo, YesNo.No);
@@ -2230,7 +2232,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 											"Acuity", "Acuity")) {
 									CommonLib.ThreadSleep(4000);
 									
-									if (CommonLib.dragNDropField(driver, tabNameElementInEditPage(tabName, 30),
+									if (CommonLib.dragNDropAcuity(driver, tabNameElementInEditPage(tabName, 30),
 											FirsttabNameElementInEditPage(30))) {
 										log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
 												+ dropTabTo, YesNo.No);
