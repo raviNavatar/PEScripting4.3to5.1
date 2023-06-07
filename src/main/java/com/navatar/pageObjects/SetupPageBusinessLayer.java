@@ -8566,39 +8566,39 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			}
 			
 			
-			ele3 = filesRelatedListOptionLink(10);
-			if(ele3==null) {
-				if(sendKeys(driver, getquickFindSearch(10), "Files", "Files", action.BOOLEAN)) {
-					
-					WebElement filesEle = isDisplayed(driver,
-							FindElement(driver, " //span[text()='Files']", "", action.BOOLEAN, 20),
-							"visibility", 20,  "Files field");
-					List<WebElement> allRL=  FindElements(driver, "//div[@class=' pbTitle relatedList']/following-sibling::div");
-					if (dragNDropField(driver, filesEle, allRL.get(allRL.size()-1))) {
-						ThreadSleep(3000);
-						log(LogStatus.PASS, "Successfully dragNDrop Files at last location", YesNo.No);
-
-						ele3 = filesRelatedListOptionLink(10);
-						if(ele3!=null) {
-							log(LogStatus.PASS, "Files related list now present after drag and drop", YesNo.No);
-							count =3;
-						}else {
-							
-							log(LogStatus.ERROR, "Files related list not present after drag and drop", YesNo.Yes);
-
-						}
-						
-					} else {
-						log(LogStatus.ERROR, "Not able to dragNDrop Files at last location", YesNo.Yes);
-
-					}
-
-				}else {
-					log(LogStatus.ERROR, "Not Able to search files related list optin linkin quick find search", YesNo.Yes);
-
-				}
-				
-			}
+//			ele3 = filesRelatedListOptionLink(10);
+//			if(ele3==null) {
+//				if(sendKeys(driver, getquickFindSearch(10), "Files", "Files", action.BOOLEAN)) {
+//					
+//					WebElement filesEle = isDisplayed(driver,
+//							FindElement(driver, " //span[text()='Files']", "", action.BOOLEAN, 20),
+//							"visibility", 20,  "Files field");
+//					List<WebElement> allRL=  FindElements(driver, "//div[@class=' pbTitle relatedList']/following-sibling::div");
+//					if (dragNDropField(driver, filesEle, allRL.get(allRL.size()-1))) {
+//						ThreadSleep(3000);
+//						log(LogStatus.PASS, "Successfully dragNDrop Files at last location", YesNo.No);
+//
+//						ele3 = filesRelatedListOptionLink(10);
+//						if(ele3!=null) {
+//							log(LogStatus.PASS, "Files related list now present after drag and drop", YesNo.No);
+//							count =3;
+//						}else {
+//							
+//							log(LogStatus.ERROR, "Files related list not present after drag and drop", YesNo.Yes);
+//
+//						}
+//						
+//					} else {
+//						log(LogStatus.ERROR, "Not able to dragNDrop Files at last location", YesNo.Yes);
+//
+//					}
+//
+//				}else {
+//					log(LogStatus.ERROR, "Not Able to search files related list optin linkin quick find search", YesNo.Yes);
+//
+//				}
+//				
+//			}
 			
 			
 			if (click(driver, getSaveBtn( 30), "page layouts save button",
@@ -9283,8 +9283,8 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 								click(driver, FindElement(driver, "//input[contains(@name,'ro')]",
 										"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN);
 								ThreadSleep(2000);
-								clickUsingJavaScript(driver, FindElement(driver, "//button[text()='OK']",
-										"", action.SCROLLANDBOOLEAN, 20), "", action.SCROLLANDBOOLEAN);
+								click(driver, FindElement(driver, "//table[@id='field_propWindowOkBtn']//button",
+										"", action.BOOLEAN, 20), "", action.BOOLEAN);
 							} 
 							ThreadSleep(2000);
 
@@ -9293,13 +9293,6 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 									action.SCROLLANDBOOLEAN)) {
 								appLog.info("clicked on save button");
 
-
-//								if (flag && obj != object.Global_Actions) {
-//									ThreadSleep(2000);
-//									click(driver, FindElement(driver, "//button[text()='Yes']", "Yes Button",
-//											action.BOOLEAN, 30), "", action.SCROLLANDBOOLEAN);
-//
-//								}
 							} else {
 								log(LogStatus.ERROR,
 										"Not able to click on Save button cannot save pagelayout dragged object or section",YesNo.No);

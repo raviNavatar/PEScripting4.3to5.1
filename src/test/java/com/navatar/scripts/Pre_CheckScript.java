@@ -54,6 +54,7 @@ public class Pre_CheckScript extends BaseLib {
 		JPanel p = new JPanel(new java.awt.GridLayout(2, 2));
 		JFrame f = new JFrame("WARNING!!");
 		
+		final boolean flag =true;
 
 	@Test(priority =0 ,enabled=true)
 	public void before() {
@@ -81,7 +82,7 @@ public class Pre_CheckScript extends BaseLib {
 	}
 	
 	@Test(priority =1 ,enabled=true)
-	public void reportConfig() {
+	public void reportSetup() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -141,7 +142,7 @@ public class Pre_CheckScript extends BaseLib {
 				parentWindow = null;
 			}
 			DateFormat dateFormat = new SimpleDateFormat("MM_dd_YYYY");
-			DateFormat dateFormat1 = new SimpleDateFormat("HH_MM");
+			DateFormat dateFormat1 = new SimpleDateFormat("HH_mm");
 			Date date = new Date();
 			String dateTime =dateFormat.format(date).toUpperCase()+"_TIME_"+dateFormat1.format(date).toUpperCase();
 			extentReport = new ExtentReports(
@@ -149,6 +150,7 @@ public class Pre_CheckScript extends BaseLib {
 					true);
 			
 	}
+	
 	
 	@AfterTest
 	public void after() {
@@ -159,7 +161,7 @@ public class Pre_CheckScript extends BaseLib {
 	
 	
 	
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =2 ,enabled=flag)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -306,7 +308,7 @@ public class Pre_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =3 ,enabled=true)
+	@Test(priority =3 ,enabled=flag)
 	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
