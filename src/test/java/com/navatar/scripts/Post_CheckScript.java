@@ -1763,124 +1763,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-
-	@Test(priority = 10,enabled =flag)
-	public void VerifyScheduleUsageMetrics() {
-
 		
-		String projectName = "";
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String parentWindow = null;
-		String domainurl = "";
-		boolean flag = false;
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-			CommonLib.ThreadSleep(3000);
-			if (home.clickOnSetUpLink()) {
-
-				parentWindow = switchOnWindow(driver);
-				if (parentWindow == null) {
-					sa.assertTrue(false,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					log(LogStatus.FAIL,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-							YesNo.Yes);
-					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-				}
-			}
-			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
-				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
-				CommonLib.ThreadSleep(3000);
-				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
-			if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
-					//flag1 = true;
-					log(LogStatus.PASS, "able to check and delete scchedule usage matrix" , YesNo.Yes);
-				}else {
-					log(LogStatus.FAIL, "not able to check and delete scchedule usage matrix", YesNo.Yes);
-					sa.assertTrue(false, "not able to check and delete scchedule usage matrix");
-				}
-			}else {
-				log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-				sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
-			
-			}
-
-		} catch (Exception e) {
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow = null;
-			}
-			sa.assertAll();
-		}
-
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-			parentWindow = null;
-		}
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-				CommonLib.ThreadSleep(3000);
-				if (home.clickOnSetUpLink()) {
-
-					parentWindow = switchOnWindow(driver);
-					if (parentWindow == null) {
-						sa.assertTrue(false,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-						log(LogStatus.FAIL,
-								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-								YesNo.Yes);
-						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					}
-				}
-			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
-				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
-				CommonLib.ThreadSleep(3000);
-				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
-				if(CommonLib.isDisplayed(driver,FindElement(driver,
-						"//th[text()='NavatarUsageMetrics']",
-						"", action.BOOLEAN, 20),
-				"visibility", 20,"" + " Navatar Usage Metrics") != null) {
-		           log(LogStatus.INFO, "element found Navatar Usage Metrics:" + "",
-				    YesNo.No);
-				}else {
-					log(LogStatus.FAIL,"element not found Navatar Usage Metrics:", YesNo.Yes);
-					sa.assertTrue(false,"element not found Navatar Usage Metrics:");
-					flag = false;
-				}
-				}else {
-					log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
-					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
-				
-				}
-			} catch (Exception e) {
-				if (parentWindow != null) {
-
-					driver.close();
-					driver.switchTo().window(parentWindow);
-					parentWindow = null;
-				}
-				
-			}
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow = null;
-			}
-			sa.assertAll();
-	}
-	
-			
 	@Test(priority =11 ,enabled=flag)
 	public void verifyAddingNewFieldToPageLayout() {
 		
@@ -3425,6 +3308,124 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 
 	}
+	
+
+	@Test(priority = 10,enabled =false)
+	public void VerifyScheduleUsageMetrics() {
+
+		
+		String projectName = "";
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		String domainurl = "";
+		boolean flag = false;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
+				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
+			if (setup.checkanddeletesccheduleusagematrix(projectName, mode)) {
+					//flag1 = true;
+					log(LogStatus.PASS, "able to check and delete scchedule usage matrix" , YesNo.Yes);
+				}else {
+					log(LogStatus.FAIL, "not able to check and delete scchedule usage matrix", YesNo.Yes);
+					sa.assertTrue(false, "not able to check and delete scchedule usage matrix");
+				}
+			}else {
+				log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+			
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			sa.assertAll();
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+				CommonLib.ThreadSleep(3000);
+				if (home.clickOnSetUpLink()) {
+
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.FAIL,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					}
+				}
+			if (setup.searchStandardOrCustomObject("", mode, object.Scheduled_Jobs)) {
+				log(LogStatus.PASS, object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,30, setup.getenterpriseeditionFrame(30));
+				if(CommonLib.isDisplayed(driver,FindElement(driver,
+						"//th[text()='NavatarUsageMetrics']",
+						"", action.BOOLEAN, 20),
+				"visibility", 20,"" + " Navatar Usage Metrics") != null) {
+		           log(LogStatus.INFO, "element found Navatar Usage Metrics:" + "",
+				    YesNo.No);
+				}else {
+					log(LogStatus.FAIL,"element not found Navatar Usage Metrics:", YesNo.Yes);
+					sa.assertTrue(false,"element not found Navatar Usage Metrics:");
+					flag = false;
+				}
+				}else {
+					log(LogStatus.FAIL,object.Scheduled_Jobs.toString() + " object has been opened in setup page", YesNo.Yes);
+					sa.assertTrue(false,object.Scheduled_Jobs.toString() + " object has been opened in setup page");
+				
+				}
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow = null;
+				}
+				
+			}
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			sa.assertAll();
+	}
+	
 	
 }
 
