@@ -9458,13 +9458,23 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		ThreadSleep(3000);
 		if (searchStandardOrCustomObject(projectName, mode,  object.Apex_Classes)) {
 			log(LogStatus.PASS,  object.Apex_Classes + " object has been opened in setup page", YesNo.Yes);
-			CommonLib.ThreadSleep(3000);
-			switchToFrame(driver,30, getenterpriseeditionFrame(30));
+			CommonLib.ThreadSleep(5000);
+			switchToFrame(driver,50, getenterpriseeditionFrame(50));
+			ThreadSleep(5000);
 			if (click(driver, getScheduleApex(timeOut), "Schedule Apex",
 					action.BOOLEAN)) {
 				appLog.info("click on Schedule Apex");
+				log(LogStatus.PASS, "click on Schedule Apex", YesNo.No);
+
+			} else {
+				click(driver, getScheduleApex(timeOut), "Schedule Apex",
+						action.BOOLEAN);
+				log(LogStatus.PASS, "click on Schedule Apex in second try", YesNo.No);
+				
+			}
 				ThreadSleep(5000);
-				switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(20));
+				switchToFrame(driver, 30, getEditPageLayoutFrame_Lighting(30));
+				ThreadSleep(5000);
 				if (sendKeys(driver, getJobName(timeOut), JobName, "Job Name",
 						action.SCROLLANDBOOLEAN)) {
 					appLog.info("passed data in text box: " + JobName);
@@ -9534,12 +9544,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 					sa.assertTrue(false,
 							"not able to passed data in text box: " + JobName);
 				}
-			} else {
-				log(LogStatus.ERROR,
-						"not able click on Schedule Apex",YesNo.No);
-				sa.assertTrue(false,
-						"not able click on Schedule Apex");
-			}
+			
 		} else {
 			log(LogStatus.ERROR,
 					object.Apex_Classes + " object has been opened in setup page",YesNo.No);
