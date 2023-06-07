@@ -13,6 +13,12 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
+import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +41,8 @@ import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.HTMLReporter;
 import com.relevantcodes.extentreports.LogStatus;
 
 public class Pre_CheckScript extends BaseLib {
@@ -72,29 +80,21 @@ public class Pre_CheckScript extends BaseLib {
 		f.setVisible(true);		
 	}
 	
-	@AfterTest
-	public void after() {
-		f.setVisible(false);
-		f.dispose();
-		
-	}
-	
-	/// Pre-check ///
-	@Test(priority = 3,enabled =false)
-	public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
+	@Test(priority =1 ,enabled=true)
+	public void reportConfig() {
 		
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-
 		String parentWindow = null;
-		
+		String id = "";
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
+				
 		try {
 			CommonLib.ThreadSleep(3000);
 			if (home.clickOnSetUpLink()) {
-				CommonLib.ThreadSleep(3000);
+
 				parentWindow = switchOnWindow(driver);
 				if (parentWindow == null) {
 					sa.assertTrue(false,
@@ -105,91 +105,61 @@ public class Pre_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
+			if (setup.searchStandardOrCustomObject("", mode, object.Company_Information)) {
+				log(LogStatus.PASS, object.Company_Information.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(5000);
 			
-			if (setup.searchStandardOrCustomObject("", mode, object.Activity_Setting)) {
-				log(LogStatus.PASS, object.Activity_Setting.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
+				switchToFrame(driver,50, bp.getenterpriseeditionFrame(50));
+				CommonLib.ThreadSleep(5000);
+				String xpath = "//td[@class='labelCol' and contains(text(),'Organization ID')]/following-sibling::td";
+				WebElement ele = FindElement(driver, xpath, "Orgnization id", action.SCROLLANDBOOLEAN, 10);
+				id = ele.getText();
+				CommonVariables.orgID=id.trim();
 				
-				switchToFrame(driver,30, bp.getActivitySettingFrame(30));
-				CommonLib.ThreadSleep(3000);
-				if(bp.getAllowUserToRelateMulipleTaskCheckbox(10)==null) {
-					driver.navigate().refresh();
-					CommonLib.ThreadSleep(2000);
-					switchToFrame(driver,30, bp.getActivitySettingFrame(30));
-					CommonLib.ThreadSleep(3000);
-				}
-				
-				boolean permission =CommonLib.isSelected(driver, bp.getAllowUserToRelateMulipleTaskCheckbox(10), "Allow user to multiple task checkbox ");;
-				
-				if(permission) {
-					
-					log(LogStatus.PASS, "Allow user to multiple task Setting already Enable/Checked", YesNo.No);
+				log(LogStatus.PASS, "Successfully get the organization ID:"+CommonVariables.orgID, YesNo.Yes);
 
-				}else {
-					log(LogStatus.INFO, "Allow user to multiple task Setting Is disable, Now going to Enable setting", YesNo.No);
-
-					if(click(driver, bp.getAllowUserToRelateMulipleTaskCheckbox(10),"Allow user to multiple task checkbox",action.BOOLEAN)) {
-						log(LogStatus.INFO, " able to click on Allow user to multiple task in activity setting", YesNo.No);
-						
-						if(click(driver, bp.getActivitySettingSubmitButton(10),"getActivitySettingSubmitButton",action.BOOLEAN)) {
-							log(LogStatus.INFO, " able to click on submit button in activity setting", YesNo.No);
-							CommonLib.ThreadSleep(2000);
-							switchToDefaultContent(driver);
-							
-							clickUsingJavaScript(driver,
-									FindElement(driver, "(//mark[text()='Activity Setting'])[1]/parent::a",
-											"Activity Setting", action.BOOLEAN, 10),
-									"Activity Setting", action.BOOLEAN);	
-							CommonLib.ThreadSleep(3000);
-							switchToFrame(driver,30, bp.getActivitySettingFrame(30));
-							CommonLib.ThreadSleep(2000);
-							permission = CommonLib.isSelected(driver, bp.getAllowUserToRelateMulipleTaskCheckbox(10), "Allow user to multiple task checkbox ");
-							if(permission) {
-								log(LogStatus.PASS, "Allow user to multiple task Setting is now Enable/Checked", YesNo.No);
-
-								switchToDefaultContent(driver);
-							}else {
-								log(LogStatus.FAIL, "Not able to Enable/Checked Allow user to multiple task Setting ", YesNo.Yes);
-								sa.assertTrue(false, "Not able to Enable/Checked Allow user to multiple task Setting ");
-							}
-
-							
-						}else {
-							log(LogStatus.FAIL, "Not able to click on sumbit button in activity setting", YesNo.Yes);
-							sa.assertTrue(false, "Not able to click on sumbit button in activity setting");
-						}
-						
-						
-					}else {
-						log(LogStatus.FAIL, "Not able to click on Allow user to multiple task checkbox in navatar setting tab", YesNo.Yes);
-						sa.assertTrue(false, "Not able to click on Allow user to multiple task checkbox in navatar setting tab");
-					}
-					
-				}
-				
-			} else {
-
+			}else {
+				log(LogStatus.FAIL,object.Company_Information.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.Company_Information.toString() + " object has been opened in setup page");
+			
 			}
-		} catch (Exception e) {
+		
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow = null;
+				}
+				sa.assertAll();
+			}
+
 			if (parentWindow != null) {
-				switchToDefaultContent(driver);
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
-				parentWindow=null;
+				parentWindow = null;
 			}
-			sa.assertAll();
-		}
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-			parentWindow=null;
-		}
-		sa.assertAll();
+			DateFormat dateFormat = new SimpleDateFormat("MM_dd_YYYY");
+			DateFormat dateFormat1 = new SimpleDateFormat("HH_MM");
+			Date date = new Date();
+			String dateTime =dateFormat.format(date).toUpperCase()+"_TIME_"+dateFormat1.format(date).toUpperCase();
+			extentReport = new ExtentReports(
+					System.getProperty("user.dir") + "/Reports/"+orgID+"_"+orgName+"_"+dateTime+".html",
+					true);
+			
 	}
-
-	@Test(priority =1 ,enabled=true)
+	
+	@AfterTest
+	public void after() {
+		f.setVisible(false);
+		f.dispose();
+		
+	}
+	
+	
+	
+	@Test(priority =2 ,enabled=true)
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -336,7 +306,7 @@ public class Pre_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =2 ,enabled=true)
+	@Test(priority =3 ,enabled=true)
 	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -422,6 +392,121 @@ public class Pre_CheckScript extends BaseLib {
 	}
 	
 	
+	
+	
+	// out of scope
+	
+	
+	/// Pre-check ///
+		@Test(priority = 3,enabled =false)
+		public void verifyAllowUsersRelateMultipleContactsTasksEvents() {
+			
+			BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+			HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+			SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+			String parentWindow = null;
+			
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(3000);
+			try {
+				CommonLib.ThreadSleep(3000);
+				if (home.clickOnSetUpLink()) {
+					CommonLib.ThreadSleep(3000);
+					parentWindow = switchOnWindow(driver);
+					if (parentWindow == null) {
+						sa.assertTrue(false,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						log(LogStatus.FAIL,
+								"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+								YesNo.Yes);
+						exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					}
+				}
+				
+				if (setup.searchStandardOrCustomObject("", mode, object.Activity_Setting)) {
+					log(LogStatus.PASS, object.Activity_Setting.toString() + " object has been opened in setup page", YesNo.Yes);
+					CommonLib.ThreadSleep(3000);
+					
+					switchToFrame(driver,30, bp.getActivitySettingFrame(30));
+					CommonLib.ThreadSleep(3000);
+					if(bp.getAllowUserToRelateMulipleTaskCheckbox(10)==null) {
+						driver.navigate().refresh();
+						CommonLib.ThreadSleep(2000);
+						switchToFrame(driver,30, bp.getActivitySettingFrame(30));
+						CommonLib.ThreadSleep(3000);
+					}
+					
+					boolean permission =CommonLib.isSelected(driver, bp.getAllowUserToRelateMulipleTaskCheckbox(10), "Allow user to multiple task checkbox ");;
+					
+					if(permission) {
+						
+						log(LogStatus.PASS, "Allow user to multiple task Setting already Enable/Checked", YesNo.No);
+
+					}else {
+						log(LogStatus.INFO, "Allow user to multiple task Setting Is disable, Now going to Enable setting", YesNo.No);
+
+						if(click(driver, bp.getAllowUserToRelateMulipleTaskCheckbox(10),"Allow user to multiple task checkbox",action.BOOLEAN)) {
+							log(LogStatus.INFO, " able to click on Allow user to multiple task in activity setting", YesNo.No);
+							
+							if(click(driver, bp.getActivitySettingSubmitButton(10),"getActivitySettingSubmitButton",action.BOOLEAN)) {
+								log(LogStatus.INFO, " able to click on submit button in activity setting", YesNo.No);
+								CommonLib.ThreadSleep(2000);
+								switchToDefaultContent(driver);
+								
+								clickUsingJavaScript(driver,
+										FindElement(driver, "(//mark[text()='Activity Setting'])[1]/parent::a",
+												"Activity Setting", action.BOOLEAN, 10),
+										"Activity Setting", action.BOOLEAN);	
+								CommonLib.ThreadSleep(3000);
+								switchToFrame(driver,30, bp.getActivitySettingFrame(30));
+								CommonLib.ThreadSleep(2000);
+								permission = CommonLib.isSelected(driver, bp.getAllowUserToRelateMulipleTaskCheckbox(10), "Allow user to multiple task checkbox ");
+								if(permission) {
+									log(LogStatus.PASS, "Allow user to multiple task Setting is now Enable/Checked", YesNo.No);
+
+									switchToDefaultContent(driver);
+								}else {
+									log(LogStatus.FAIL, "Not able to Enable/Checked Allow user to multiple task Setting ", YesNo.Yes);
+									sa.assertTrue(false, "Not able to Enable/Checked Allow user to multiple task Setting ");
+								}
+
+								
+							}else {
+								log(LogStatus.FAIL, "Not able to click on sumbit button in activity setting", YesNo.Yes);
+								sa.assertTrue(false, "Not able to click on sumbit button in activity setting");
+							}
+							
+							
+						}else {
+							log(LogStatus.FAIL, "Not able to click on Allow user to multiple task checkbox in navatar setting tab", YesNo.Yes);
+							sa.assertTrue(false, "Not able to click on Allow user to multiple task checkbox in navatar setting tab");
+						}
+						
+					}
+					
+				} else {
+
+				}
+			} catch (Exception e) {
+				if (parentWindow != null) {
+					switchToDefaultContent(driver);
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow=null;
+				}
+				sa.assertAll();
+			}
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow=null;
+			}
+			sa.assertAll();
+		}
+
 }
 
 

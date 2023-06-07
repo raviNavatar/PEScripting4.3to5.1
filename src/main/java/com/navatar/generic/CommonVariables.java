@@ -48,7 +48,7 @@ public class CommonVariables {
 	public static double dealReceivedScore=1.0,NDASignedScore=1.0,managementMeetingScore=3.0,ioiScore=3.0,loiScore=5.0;
 	public static double dueDiligenceScore=5.0,closedScore=5.0,declinedDeadScore=5.0,parkedScore=5.0;
 	public static List<String> industryAddedFields =new ArrayList<>();
-	
+	public static String orgName,orgID;
 	public static List<String> industryAactivatedFields =new ArrayList<>();
 
 	public static List<String> typeAddedFields =new ArrayList<>();

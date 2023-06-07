@@ -78,7 +78,7 @@ public class SetupPageBusinessLayer extends SetupPage {
 				|| objectName == object.Users || objectName == object.Sharing_Settings
 				|| objectName == object.Rename_Tabs_And_Labels || objectName == object.Custom_Metadata_Types|| objectName == object.Data_Export 
 
-				|| objectName == object.My_Domain || objectName == object.Help_Menu|| objectName == object.Manage_Connected_Apps|| objectName == object.Scheduled_Jobs || objectName == object.Apex_Classes) {
+				|| objectName == object.My_Domain || objectName == object.Company_Information || objectName == object.Help_Menu|| objectName == object.Manage_Connected_Apps|| objectName == object.Scheduled_Jobs || objectName == object.Apex_Classes) {
 
 			if (objectName == object.Global_Actions || objectName == object.Tabs || objectName == object.Users) {
 				index = "[2]";

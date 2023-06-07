@@ -395,13 +395,14 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
         Object selectionObject = JOptionPane.showInputDialog(frame, " All applications must be closed to start the process. "+ "\n"+ "\n"+" Please Select Login Environment : ", "Please respond!", JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         String selectionString = selectionObject.toString(); 
          
-        
 		if(selectionString.equalsIgnoreCase("Sandbox")) {
 			CommonVariables.environment="Sandbox";
 			CommonVariables.URL = "test.salesforce.com";
+			CommonVariables.orgName="_SANDBOX_";
 		}else if(selectionString.equalsIgnoreCase("Production")){
 			CommonVariables.environment="Testing";
 			CommonVariables.URL = "login.salesforce.com";
+			CommonVariables.orgName="_PROD_";
 		}
 		}catch (NullPointerException e) {
 			 String markup = "<html><font=Arial color=#FF0000 size=+0> " + "You have NOT initiated the process." + "<br> </br><br> <center>Please execute the script again<center></br></html>";
@@ -438,20 +439,20 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 
 		}
 
-		Process process;
-		try {
-			
-			//process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killbrowser.bat");
-			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killJRE1.bat");
-			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killJRE2.bat");
-
-			Runtime.getRuntime().exit(0);
-			process.waitFor();
-
-		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Process process;
+//		try {
+//			
+//			//process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killbrowser.bat");
+////			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killJRE1.bat");
+////			process = Runtime.getRuntime().exec(System.getProperty("user.dir")+"/killJRE2.bat");
+////
+////			Runtime.getRuntime().exit(0);
+////			process.waitFor();
+//
+//		} catch (IOException | InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 
 	}
