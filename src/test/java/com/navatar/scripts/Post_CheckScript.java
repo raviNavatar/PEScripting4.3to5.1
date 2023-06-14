@@ -4,9 +4,7 @@ import static com.navatar.generic.CommonLib.FindElement;
 import static com.navatar.generic.CommonLib.FindElements;
 import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
-import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
-import static com.navatar.generic.CommonLib.getSelectedOptionOfDropDown;
 import static com.navatar.generic.CommonLib.isSelected;
 import static com.navatar.generic.CommonLib.log;
 import static com.navatar.generic.CommonLib.refresh;
@@ -16,58 +14,28 @@ import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
-import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
 
-import org.apache.commons.lang3.ClassLoaderUtils;
-import org.apache.hc.core5.net.URIBuilder;
-import org.apache.log4j.chainsaw.Main;
-import org.apache.poi.util.IOUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
+
 import org.testng.annotations.Test;
 
-import com.github.dockerjava.api.model.Image;
-import com.google.common.io.Files;
 import com.navatar.generic.BaseLib;
 import com.navatar.generic.CommonLib;
 import com.navatar.generic.CommonVariables;
@@ -75,12 +43,9 @@ import com.navatar.generic.EnumConstants.ClickOrCheckEnableDisableCheckBox;
 import com.navatar.generic.EnumConstants.Condition;
 import com.navatar.generic.EnumConstants.EditViewMode;
 import com.navatar.generic.EnumConstants.GlobalActionItem;
-import com.navatar.generic.EnumConstants.HTMLTAG;
 import com.navatar.generic.EnumConstants.NavatarSetupSideMenuTab;
 import com.navatar.generic.EnumConstants.ObjectFeatureName;
 import com.navatar.generic.EnumConstants.PageLabel;
-import com.navatar.generic.EnumConstants.PermissionType;
-import com.navatar.generic.EnumConstants.RecordType;
 import com.navatar.generic.EnumConstants.TabName;
 import com.navatar.generic.EnumConstants.TopOrBottom;
 import com.navatar.generic.EnumConstants.YesNo;
@@ -88,7 +53,6 @@ import com.navatar.generic.EnumConstants.action;
 
 import com.navatar.generic.EnumConstants.excelLabel;
 
-import com.navatar.generic.EnumConstants.fundraisingContactActions;
 
 import com.navatar.generic.EnumConstants.object;
 import com.navatar.pageObjects.BasePageBusinessLayer;
@@ -489,7 +453,6 @@ public class Post_CheckScript extends BaseLib {
 	
 	@Test(priority = 5,dependsOnMethods = {"isRexecute"})
 	public void verifyRemovingRelatedListFromObjects() {
-		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 
@@ -736,7 +699,6 @@ public class Post_CheckScript extends BaseLib {
 	@Test(priority = 7,dependsOnMethods = {"isRexecute"})
 
 	public void verifyAcuityTabAddedInObjects() {
-		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
@@ -821,7 +783,7 @@ public class Post_CheckScript extends BaseLib {
 
 										if (edit.verifyAndAddAcuityTabInPages("Navatar Acuity", "Acuity", "Acuity",
 												new String[] { "Z  (Do not use) Navatar Clip Edit Utility",
-														"Z (Do not use) Navatar Add  Subscribe" },true)) {
+														"Z (Do not use) Navatar Add  Subscribe" },true,name)) {
 											log(LogStatus.INFO, "able to add tab for object:"+api, YesNo.No);
 											CommonLib.ThreadSleep(2000);
 											
@@ -1327,12 +1289,9 @@ public class Post_CheckScript extends BaseLib {
 	@Test(priority = 9,dependsOnMethods = {"isRexecute"})
 	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
 
-		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		String parentWindow = null;
-		WebElement ele = null;
-		int q = 0;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
@@ -1375,28 +1334,10 @@ public class Post_CheckScript extends BaseLib {
 						allElements = setup.getAllPageLayoutList();
 						WebElement labelElement = allElements.get(j);
 						name = labelElement.getText();
-						if ((name.equals("Institution"))
-								/*
-								 * || (name.equals("Private Equity"))|| (name.equals("Portfolio Company")) ||
-								 * (name.equals("Intermediary"))|| (name.equals("Lender"))
-								 */ || (name.equals("Limited Partner"))
-								|| /* (name.equals("Advisor")) || */ (name.equals("Company")) 
+						if ((name.equals("Institution"))|| (name.equals("Limited Partner"))||  (name.equals("Company")) 
 						|| (name.equals("Individual Investor")) || (name.contains("Contact")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
 										
-							
-									
-							/*
-							 * if(name.equals("Advisor")) {
-							 * 
-							 * sourceANDDestination = new ArrayList<String>();
-							 * sourceANDDestination.add(GlobalActionItem.New_Event.toString());
-							 * sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
-							 * sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
-							 * sourceANDDestination.add(GlobalActionItem.New_Task.toString());
-							 * sourceANDDestination.add(GlobalActionItem.Email.toString());
-							 * 
-							 * } else
-							 */ if(name.equals("Company")) {
+							if(name.equals("Company")) {
 										 sourceANDDestination = new ArrayList<String>();
 										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
 										sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString());
@@ -1412,27 +1353,7 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
 										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
 										sourceANDDestination.add(GlobalActionItem.Email.toString());
-									} else /*
-											 * if(name.equals("Intermediary")){
-											 * 
-											 * sourceANDDestination = new ArrayList<String>();
-											 * sourceANDDestination.add(GlobalActionItem.New_Event.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString()
-											 * ); sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
-											 * sourceANDDestination.add(GlobalActionItem.New_Task.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Email.toString());
-											 * 
-											 * } else if(name.equals("Lender")){
-											 * 
-											 * sourceANDDestination = new ArrayList<String>();
-											 * sourceANDDestination.add(GlobalActionItem.New_Event.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString()
-											 * ); sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
-											 * sourceANDDestination.add(GlobalActionItem.New_Task.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Email.toString());
-											 * 
-											 * } else
-											 */ if(name.equals("Limited Partner")){
+									} else if(name.equals("Limited Partner")){
 
 										 sourceANDDestination = new ArrayList<String>();
 										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
@@ -1441,27 +1362,7 @@ public class Post_CheckScript extends BaseLib {
 										sourceANDDestination.add(GlobalActionItem.New_Task.toString());
 										sourceANDDestination.add(GlobalActionItem.Email.toString());
 									
-									} else /*
-											 * if(name.equals("Portfolio Company")){
-											 * 
-											 * sourceANDDestination = new ArrayList<String>();
-											 * sourceANDDestination.add(GlobalActionItem.New_Event.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString()
-											 * ); sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
-											 * sourceANDDestination.add(GlobalActionItem.New_Task.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Email.toString());
-											 * 
-											 * } else if(name.equals("Private Equity")){
-											 * 
-											 * sourceANDDestination = new ArrayList<String>();
-											 * sourceANDDestination.add(GlobalActionItem.New_Event.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Mobile_Smart_Actions.toString()
-											 * ); sourceANDDestination.add(GlobalActionItem.Log_a_Call.toString());
-											 * sourceANDDestination.add(GlobalActionItem.New_Task.toString());
-											 * sourceANDDestination.add(GlobalActionItem.Email.toString());
-											 * 
-											 * } else
-											 */if(name.contains("Contact")){
+									} else if(name.contains("Contact")){
 										
 										 sourceANDDestination = new ArrayList<String>();
 										sourceANDDestination.add(GlobalActionItem.New_Event.toString());
@@ -1565,12 +1466,9 @@ public class Post_CheckScript extends BaseLib {
 	
 	@Test(priority = 10,dependsOnMethods = {"isRexecute"})
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
-		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		String parentWindow = null;
-		WebElement ele = null;
-		int q = 0;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
@@ -1588,9 +1486,11 @@ public class Post_CheckScript extends BaseLib {
 					}
 				}
 				
-				String[] apiname = { object.Contact.toString(),object.navpeII__Fund__c.toString(),object.
-										  navpeII__Fundraising__c.toString() ,object.navpeII__Pipeline__c.toString(),
-										 object.Account.toString()};
+				String[] apiname = {object.Contact.toString(),
+									object.navpeII__Fund__c.toString(),
+									object.navpeII__Fundraising__c.toString(),
+									object.navpeII__Pipeline__c.toString(),
+									object.Account.toString()};
 				
 				for (String api : apiname) {
 				log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
@@ -1610,153 +1510,85 @@ public class Post_CheckScript extends BaseLib {
 							allElements = setup.getAllPageLayoutList();
 							WebElement labelElement = allElements.get(j);
 							name = labelElement.getText();
-							if ((name.equals("Institution")) || /*(name.equals("Private Equity"))
-									|| (name.equals("Portfolio Company")) || (name.equals("Intermediary"))
-									|| (name.equals("Lender"))
-									||   (name.equals("Advisor")) ||*/ (name.equals("Company"))|| (name.equals("Limited Partner"))||
-
-										 (name.equals("Individual Investor")) || (name.contains("Contact")) || (name.equals("Fund Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {								
+							if ((name.equals("Institution")) || 
+								(name.equals("Company"))|| 
+								(name.equals("Limited Partner"))||
+								(name.equals("Individual Investor")) || 
+								(name.contains("Contact")) || 
+								(name.equals("Fund Layout")) || 
+								(name.equals("Fundraising Layout")) || 
+								(name.equals("Pipeline Layout"))) {								
 						 	
 								List<String> layoutName1 = new ArrayList<String>();
 									ArrayList<String> sourceANDDestination1 = new ArrayList<String>();
-									/*
-									 * if(name.equals("Advisor")) {
-									 * 
-									 * layoutName1 = new ArrayList<String>(); layoutName1.add("Advisor");
-									 * sourceANDDestination1 = new ArrayList<String>();
-									 * sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-									 * sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-									 * sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString()); //
-									 * sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString()); //
-									 * sourceANDDestination1.add(GlobalActionItem.New_Client.toString());
-									 * 
-									 * } else
-									 */ if(name.equals("Company")) {
+									if(name.equals("Company")) {
 										layoutName1 = new ArrayList<String>();
-										layoutName1.add("");
+										layoutName1.add("Company");
 										sourceANDDestination1 = new ArrayList<String>();
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
 										sourceANDDestination1.add(GlobalActionItem.Export.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-//										sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
 
 									} else if((name.equals("Individual Investor"))|| (name.equals("Institution"))) {
 
 										layoutName1 = new ArrayList<String>();
-										layoutName1.add("Advisor");
+										layoutName1.add("");
 										 sourceANDDestination1 = new ArrayList<String>();
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-//										sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-//										sourceANDDestination1.add(GlobalActionItem.New_Advisor.toString());
 
-									} else /*
-											 * if(name.equals("Intermediary")){
-											 * 
-											 * layoutName1 = new ArrayList<String>(); layoutName1.add("Advisor");
-											 * sourceANDDestination1 = new ArrayList<String>();
-											 * sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString()); //
-											 * sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-											 * // sourceANDDestination1.add(GlobalActionItem.Edit.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.Export.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
-											 * 
-											 * } else if(name.equals("Lender")){
-											 * 
-											 * layoutName1 = new ArrayList<String>(); layoutName1.add("Advisor");
-											 * sourceANDDestination1 = new ArrayList<String>();
-											 * sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString()); //
-											 * sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-											 * sourceANDDestination1.add(GlobalActionItem.New_Financing.toString());
-											 * 
-											 * } else
-											 */ if(name.equals("Limited Partner")){
+
+									} else if(name.equals("Limited Partner")){
 
 									layoutName1 = new ArrayList<String>();
-									layoutName1.add("Advisor");
+									layoutName1.add("");
 									sourceANDDestination1 = new ArrayList<String>();
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-//									sourceANDDestination1.add(GlobalActionItem.New_Commitment.toString());
-//									sourceANDDestination1.add(GlobalActionItem.New_Fundraising.toString());
+
 									
-								} else /*
-										 * if(name.equals("Portfolio Company")){
-										 * 
-										 * layoutName1 = new ArrayList<String>(); layoutName1.add("Advisor");
-										 * sourceANDDestination1 = new ArrayList<String>();
-										 * sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										 * sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										 * sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString()); //
-										 * sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										 * sourceANDDestination1.add(GlobalActionItem.New_Deal.toString()); //
-										 * sourceANDDestination1.add(GlobalActionItem.New_Investor.toString());
-										 * 
-										 * } else if(name.equals("Private Equity")){
-										 * 
-										 * layoutName1 = new ArrayList<String>(); layoutName1.add("Advisor");
-										 * sourceANDDestination1 = new ArrayList<String>();
-										 * sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										 * sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
-										 * sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString()); //
-										 * sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-										 * sourceANDDestination1.add(GlobalActionItem.New_Deal.toString()); //
-										 * sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString()); //
-										 * sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
-										 * 
-										 * } else
-										 */ if(name.contains("Contact")){
+								} else if(name.contains("Contact")){
 								   layoutName1 = new ArrayList<String>();
-									layoutName1.add("Advisor");
+									layoutName1.add("");
 									 sourceANDDestination1 = new ArrayList<String>();
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 									sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-//									sourceANDDestination1.add(GlobalActionItem.New_Affiliation.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Sourced_Deal.toString());
 									sourceANDDestination1.add(GlobalActionItem.Export.toString());
-//									sourceANDDestination1.add(GlobalActionItem.New_Referral.toString());
 									
 									} else if(name.equals("Fund Layout")){
 										   layoutName1 = new ArrayList<String>();
-											layoutName1.add("Advisor");
+											layoutName1.add("");
 											 sourceANDDestination1 = new ArrayList<String>();
 											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-											sourceANDDestination1.add(GlobalActionItem.Bulk_Fundraising.toString());
 											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-											sourceANDDestination1.add(GlobalActionItem.New_Partnership.toString());
 											
 									} else if(name.equals("Fundraising Layout")){
 										   layoutName1 = new ArrayList<String>();
-											layoutName1.add("Advisor");
+											layoutName1.add("");
 											 sourceANDDestination1 = new ArrayList<String>();
 											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-//											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());
+											
+//											sourceANDDestination1.add(GlobalActionItem.New_Fundraising_Contact.toString());			
+											//commented due to two button visible in action	
+											
 											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
-//											sourceANDDestination1.add(GlobalActionItem.Create_Commitments.toString());
 											
 									} else if(name.equals("Pipeline Layout")){
 										   layoutName1 = new ArrayList<String>();
-											layoutName1.add("Advisor");
+											layoutName1.add("");
 											 sourceANDDestination1 = new ArrayList<String>();
 											sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
 											sourceANDDestination1.add(GlobalActionItem.New_Team_Member.toString());
 											sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
 											sourceANDDestination1.add(GlobalActionItem.New_Deal_Contact.toString());
 											sourceANDDestination1.add(GlobalActionItem.Import.toString());
-//											sourceANDDestination1.add(GlobalActionItem.New_Review.toString());
-//											sourceANDDestination1.add(GlobalActionItem.Convert_to_Portfolio.toString());
-//											sourceANDDestination1.add(GlobalActionItem.New_Lender.toString());
+
 
 									} else {
 
@@ -1864,6 +1696,7 @@ public class Post_CheckScript extends BaseLib {
 								ObjectFeatureName.pageLayouts)) {
 							log(LogStatus.PASS, "clicked on page layout of object feature of "
 									+ api + " object", YesNo.Yes);
+							CommonLib.ThreadSleep(5000);
 							List<WebElement> allElements = setup.getAllPageLayoutList();
 							int no = allElements.size();
 							 for(int i=0;i<no;i++) {
@@ -1881,6 +1714,7 @@ public class Post_CheckScript extends BaseLib {
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
 									sourceANDDestination.put(PageLabel.Investment_Type.toString(),"");
+									sourceANDDestination.put(PageLabel.Tier.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduction_Date.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduced_by.toString(),"");
 								} else if(name.equals("Affiliation Layout")){
@@ -1933,6 +1767,7 @@ public class Post_CheckScript extends BaseLib {
 								} else {
 									log(LogStatus.FAIL, "No Requested Layout",YesNo.No);
 								}
+								CommonLib.ThreadSleep(3000);
 								if (click(driver, labelElement, "lightning record  page label :" + name,
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
@@ -1940,12 +1775,12 @@ public class Post_CheckScript extends BaseLib {
 									CommonLib.ThreadSleep(3000);
 
 									if (dataload.addFieldToLayoutPage1("", mode, name, sourceANDDestination)) {
-										log(LogStatus.PASS, "able to remove open activities and activity history related list from object:"+api,
+										log(LogStatus.PASS, "able to add All field in page layout: "+name+" for object:"+api,
 												YesNo.No);
 
 									} else {
-										log(LogStatus.ERROR, "Not able to remove open activities and activity history related list from object:"+api, YesNo.Yes);
-										sa.assertTrue(false, "Not able to remove open activities and activity history related list from object:"+api);
+										log(LogStatus.ERROR, "Not able to add All field in page layout: "+name+" for object:"+api, YesNo.Yes);
+										sa.assertTrue(false, "Not able to add All field in page layout: "+name+" for object:"+api);
 
 									}
 
@@ -2182,7 +2017,6 @@ public class Post_CheckScript extends BaseLib {
 										}
 										}
 										}catch (Exception e) {
-											// TODO: handle exception
 											continue;
 										}
 									}
@@ -2523,7 +2357,6 @@ public class Post_CheckScript extends BaseLib {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String parentWindow = null;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
@@ -3452,8 +3285,6 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String parentWindow = null;
-		String domainurl = "";
-		boolean flag = false;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {

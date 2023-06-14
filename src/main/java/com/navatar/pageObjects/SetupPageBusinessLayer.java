@@ -9022,283 +9022,283 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			}
 
 	public List<String> DragNDropIfNoDestination(String environment, String mode,
-			ObjectFeatureName objectFeatureName, String section,String layoutName,
-			HashMap<String, String> sourceANDDestination) {
-		WebElement ele = null, src1 = null, targetElement1 = null;
-		List<WebElement> targetElements;
-		List<String> result = new ArrayList<String>();
-		boolean flag = false;				
-		
-							if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
-								switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
-								if(isDisplayed(driver,FindElement(driver, " //span[text()='New Fields']", "", action.BOOLEAN, 10),
-										"visibility", 10,"New Field") == null) { 
-								if (section.split("<break>")[0].contains("Section")) {
-									src1 = FindElement(driver, "//div[@id='__SECTION']", "",
-											action.SCROLLANDBOOLEAN, 10);
-										ThreadSleep(2000);
-										switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
-											targetElements = FindElements(driver,"//div[@class='pbBody canvasDrop']/div", "");
-											int j = targetElements.size();
-												
-											targetElement1 = FindElement(driver,
-														"(//div[@class='pbBody canvasDrop']/div)["+ j +"]", "",
-														action.BOOLEAN, 10);
-											
+					ObjectFeatureName objectFeatureName, String section, String layoutName,
+					HashMap<String, String> sourceANDDestination) {
+				WebElement ele = null, src1 = null, targetElement1 = null;
+				List<WebElement> targetElements;
+				List<String> result = new ArrayList<String>();
+				boolean flag = false;
+
+				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
+					switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
+					if (isDisplayed(driver, FindElement(driver, " //span[text()='New Fields']", "", action.BOOLEAN, 10),
+							"visibility", 10, "New Field") == null) {
+						if (section.split("<break>")[0].contains("Section")) {
+							src1 = FindElement(driver, "//div[@id='__SECTION']", "", action.SCROLLANDBOOLEAN, 10);
+							ThreadSleep(2000);
+							switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
+							targetElements = FindElements(driver, "//div[@class='pbBody canvasDrop']/div", "");
+							int j = targetElements.size();
+
+							targetElement1 = FindElement(driver, "(//div[@class='pbBody canvasDrop']/div)[" + j + "]",
+									"", action.BOOLEAN, 10);
+
+						} else {
+							log(LogStatus.ERROR, section + " is not visible so cannot dragNdrop " + section, YesNo.No);
+							sa.assertTrue(false, section + " is not visible so cannot dragNdrop " + section);
+						}
+
+						ThreadSleep(2000);
+						if (dragNDropField(driver, src1, targetElement1)) {
+							ThreadSleep(2000);
+							log(LogStatus.PASS, "Successfully dragNDrop " + src1 + " at " + targetElement1 + " location", YesNo.No);
+							if (sendKeys(driver, getSectionNameInput(10), "New Fields", "Textarea",
+									action.SCROLLANDBOOLEAN)) {
+								log(LogStatus.PASS, "Successfully send New Fields value to Section Name", YesNo.No);
+								ThreadSleep(2000);
+								if (isSelected(driver, getDetailPageCheckbox(10), "Detail Page Checkbox")) {
+									log(LogStatus.PASS, "Detail Page Checkbox is already selected", YesNo.No);
+
 								} else {
-									log(LogStatus.ERROR,section + " is not visible so cannot dragNdrop " + section,YesNo.No);
-									sa.assertTrue(false,section + " is not visible so cannot dragNdrop " + section);
+									clickUsingJavaScript(driver, getDetailPageCheckbox(10), "Detail Page Checkbox",
+											action.SCROLLANDBOOLEAN);
 								}
-										
-											ThreadSleep(2000);
-											if (dragNDropField(driver, src1, targetElement1)) {
-												ThreadSleep(2000);
-												appLog.info("Successfully dragNDrop " + src1 + " at " + targetElement1 + " location");
-												if(sendKeys(driver, getSectionNameInput(10), "New Fields", "Textarea", action.SCROLLANDBOOLEAN)) {
-													appLog.info("Successfully send New Fields value to Section Name");
-													if(isSelected(driver, getDetailPageCheckbox(10), "Detail Page Checkbox")) {
-														appLog.info("Detail Page Checkbox is already selected");
-													} else {
-														clickUsingJavaScript(driver, getDetailPageCheckbox(10), "Detail Page Checkbox", action.SCROLLANDBOOLEAN);	
-													}
-													ThreadSleep(1000);
-													if(isSelected(driver, getEditPageCheckbox(10), "Edit Page Checkbox")) {
-														appLog.info("Edit Page Checkbox is already selected");
-													} else {
-														clickUsingJavaScript(driver, getEditPageCheckbox(10), "Edit Page Checkbox", action.SCROLLANDBOOLEAN);	
-													}
-													ThreadSleep(1000);
-													if(isSelected(driver, getTwoColumnRadioBtn(10), "Two Cloumn Radio Button")) {
-														appLog.info("Two Cloumn Radio Button is already selected");
-													} else {
-														clickUsingJavaScript(driver, getTwoColumnRadioBtn(10), "Two Cloumn Radio Button", action.SCROLLANDBOOLEAN);	
-													}
-													ThreadSleep(1000);
-													if(isSelected(driver, getLeftRightRadioBtn(10), "Left Right Radio Button")) {
-														appLog.info("Left Right Radio Button is already selected");
-													} else {
-														clickUsingJavaScript(driver, getLeftRightRadioBtn(10), "Left Right Radio Button", action.SCROLLANDBOOLEAN);	
-													}
-													ThreadSleep(1000);
-													click(driver, getOkBtn(10), "OK Button", action.SCROLLANDBOOLEAN);
-												} else {
-													log(LogStatus.ERROR,"Not able to send New Fields value to Section Name",YesNo.No);
-													sa.assertTrue(false,"Not able to send New Fields value to Section Name");
-												}
-											} else {
-												log(LogStatus.ERROR,"Not able to dragNDrop " + src1 + " at " + targetElement1 + " location",YesNo.No);
-												sa.assertTrue(false,"Not able to dragNDrop " + src1 + " at " + targetElement1 + " location");
-											}
+								ThreadSleep(1000);
+								if (isSelected(driver, getEditPageCheckbox(10), "Edit Page Checkbox")) {
+									log(LogStatus.PASS, "Edit Page Checkbox is already selected", YesNo.No);
+
+								} else {
+									clickUsingJavaScript(driver, getEditPageCheckbox(10), "Edit Page Checkbox",
+											action.SCROLLANDBOOLEAN);
+								}
+								ThreadSleep(1000);
+								if (isSelected(driver, getTwoColumnRadioBtn(10), "Two Cloumn Radio Button")) {
+									log(LogStatus.PASS, "Two Cloumn Radio Button is already selected", YesNo.No);
+
+								} else {
+									clickUsingJavaScript(driver, getTwoColumnRadioBtn(10), "Two Cloumn Radio Button",
+											action.SCROLLANDBOOLEAN);
+								}
+								ThreadSleep(1000);
+								if (isSelected(driver, getLeftRightRadioBtn(10), "Left Right Radio Button")) {
+									
+									log(LogStatus.PASS, "Left Right Radio Button is already selected", YesNo.No);
+
+								} else {
+									clickUsingJavaScript(driver, getLeftRightRadioBtn(10), "Left Right Radio Button",
+											action.SCROLLANDBOOLEAN);
+								}
+								ThreadSleep(2000);
+								WebElement ok= FindElement(driver, "", "ok button", action.BOOLEAN, 20);
+								
+								if (click(driver, ok, "OK Button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the Save button", YesNo.No);
+									
+								} else {
+									log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
 								}
 							} else {
+								log(LogStatus.ERROR, "Not able to send New Fields value to Section Name", YesNo.No);
+								sa.assertTrue(false, "Not able to send New Fields value to Section Name");
+							}
+						} else {
+							log(LogStatus.ERROR,
+									"Not able to dragNDrop " + src1 + " at " + targetElement1 + " location", YesNo.No);
+							sa.assertTrue(false,
+									"Not able to dragNDrop " + src1 + " at " + targetElement1 + " location");
+						}
+					}
+				} else {
 //								targetElement1 = FindElement(driver,
 //										"//span[text()='New Fields']/../following-sibling::div//td", "",
 //										action.BOOLEAN, 10);
-							}
-							ThreadSleep(3000);
-													
-							Set<String> Sources = sourceANDDestination.keySet();
-							Iterator<String> itr = Sources.iterator();
-							while (itr.hasNext()) {
-								String src = itr.next();
-								String trgt = sourceANDDestination.get(src);
-								if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(src)) {
+				}
+				ThreadSleep(3000);
 
-								}
+				Set<String> Sources = sourceANDDestination.keySet();
+				Iterator<String> itr = Sources.iterator();
+				while (itr.hasNext()) {
+					String src = itr.next();
+					String trgt = sourceANDDestination.get(src);
+					if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(src)) {
 
-								else {
-									src = src.replace("_", " ");
-								}
+					}
 
-								if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(trgt)) {
+					else {
+						src = src.replace("_", " ");
+					}
 
-								} else {
-									trgt = trgt.replace("_", " ");
-								}
+					if (PageLabel.Is_Touchpoint.toString().equalsIgnoreCase(trgt)) {
 
-								// src=src.replace("_", " ");
-								// trgt=trgt.replace("_", " ");
+					} else {
+						trgt = trgt.replace("_", " ");
+					}
 
-								WebElement targetElement = null;
-								if (src.split("<break>")[0].contains("Related List")) {
-									if (click(driver, FindElement(driver, "//div[text()='Related Lists']", "",
-											action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN)) {
+					// src=src.replace("_", " ");
+					// trgt=trgt.replace("_", " ");
 
-										if (trgt.split("<break>")[0].equalsIgnoreCase("Above")) {
-											trgt = trgt.split("<break>")[trgt.split("<break>").length - 1];
-											targetElement = FindElement(driver,
-													"//h3[text()='" + trgt
-															+ "']/../../../../../../../../preceding-sibling::div[1]",
-													"", action.BOOLEAN, 10);
+					WebElement targetElement = null;
+					if (src.split("<break>")[0].contains("Related List")) {
+						if (click(driver,
+								FindElement(driver, "//div[text()='Related Lists']", "", action.SCROLLANDBOOLEAN, 10),
+								"", action.SCROLLANDBOOLEAN)) {
 
-										} else {
-											trgt = trgt.split("<break>")[trgt.split("<break>").length - 1];
-											targetElement = FindElement(driver,
-													"//h3[text()='" + trgt
-															+ "']/../../../../../../../../following-sibling::div[1]",
-													"", action.BOOLEAN, 10);
-										}
-										src = src.split("<break>")[src.split("<break>").length - 1];
-									} else {
-										log(LogStatus.ERROR,src + " is not visible so cannot dragNdrop " + src,YesNo.No);
-										sa.assertTrue(false,src + " is not visible so cannot dragNdrop " + src);
-
-									}
-									flag = true;
-									
-								} else if (src.split("<break>")[0].contains("Mobile")) {
-									if (click(driver, FindElement(driver, "//div[text()='Mobile & Lightning Actions']",
-											"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN)) {
-										src = src.split("<break>")[1];
-										sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
-										targetElement = FindElement(driver,
-												"//div[contains(@id,'item_QuickAction')][text()='" + trgt + "']", "",
-
-												action.BOOLEAN, 10);
-										flag = true;
-									}
-								} else {
-									String xpath1 = "//span[text()='New Fields']/../ancestor::div[contains(@class,'section fieldDrop')]/preceding-sibling::div[1]";
-									WebElement ele12 = FindElement(driver, xpath1, "", action.SCROLLANDBOOLEAN, 10);
-//									scrollDownThroughWebelementInCenter(driver, ele12, "");
-//									ThreadSleep(1500);
-//									((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
-//											ele12);
-									sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
-			
-									scrollDownThroughWebelementInCenter(driver, ele12, "");
-									ThreadSleep(500);
-//									((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();",
-//											ele12);
-									switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
-									targetElement = FindElement(driver, "//span[text()='New Fields']/ancestor::div[contains(@class,'section fieldDrop')]//table//td[1]", "",
-											action.BOOLEAN, 10);
-									//table[contains(@id,'ext-gen')]//td
-								}
-								String xpath = null;
-								if(src.equalsIgnoreCase(PageLabel.Total_Commitments.toString())) {
-									xpath ="//span[contains(text(),'" + src + "')]";
-									
-								}
-								else if(src.equalsIgnoreCase("Last Stage Change Date")) {
-									xpath ="//span[contains(text(),'Last Stage Change')]";
-								}
-								else if(src.equalsIgnoreCase("Management Meeting Date")) {
-									xpath ="//span[contains(text(),'Management Meetin..')]";
-								}
-								else if(src.equalsIgnoreCase("Average Deal Quality Score")) {
-									xpath ="//span[contains(text(),'Average Deal')]";
-								}
-								else {
-									xpath="//span[text()='" + src + "']";
-								}
-								
-								ele = isDisplayed(driver,
-										FindElement(driver, xpath, "", action.BOOLEAN, 10),
-										"visibility", 10, src + " field");
-								if (ele != null) {
-								}
-
-								else
-									ele = isDisplayed(driver, FindElement(driver,
-
-											"//table[@class='troughItems ']//div/div[@class='item unused']", "", action.BOOLEAN, 20),
-											"visibility", 10, src + " field");
-								//(//table[@class='troughItems ']//div/div)[3]
-
-								if (ele != null) {
-									WebElement ele1 = isDisplayed(driver, targetElement, "visibility", 20,
-											trgt + " field");
-
-
-									ThreadSleep(1000);
-									if (ele1 != null) {
-										if (dragNDropField(driver, ele, ele1)) {
-											ThreadSleep(2000);
-
-											appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
-											if (src.equalsIgnoreCase(PageLabel.Convert_to_Portfolio.toString())) {
-												if (FindElement(driver,
-														"//div[contains(@id,'QuickAction')][text()='" + src + "']", "",
-														action.BOOLEAN, 20) != null) {
-													appLog.info("successfully verified drag and drop of " + src);
-												} else {
-
-													log(LogStatus.ERROR,"Not able to dragNDrop " + src + " at " + trgt
-															+ " location",YesNo.No);
-													sa.assertTrue(false,"Not able to dragNDrop " + src + " at " + trgt
-
-															+ " location");
-												}
-
-											} else {
-												if (FindElement(driver,
-														"//span[@class='labelText'][text()='" + src + "']", "",
-														action.BOOLEAN, 10) != null) {
-													appLog.info("successfully verified drag and drop of " + src);
-												} else if (FindElement(driver,
-														"//span[@class='label'][contains(text(),'" + src + "')]", "",
-														action.BOOLEAN, 10) != null) {
-													appLog.info("successfully verified drag and drop of " + src);
-													
-												} else {
-													log(LogStatus.ERROR,"Not able to dragNDrop " + src + " at " + trgt
-															+ " location",YesNo.No);
-													sa.assertTrue(false,"Not able to dragNDrop " + src + " at " + trgt
-
-															+ " location");
-												}
-											}
-											appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
-										} else {
-
-											log(LogStatus.ERROR,"Not able to dragNDrop " + src + " at " + trgt + " location",YesNo.No);
-											sa.assertTrue(false,"Not able to dragNDrop " + src + " at " + trgt + " location");
-										}
-									} else {
-										log(LogStatus.ERROR,trgt + " location is not visible so cannot dragNDrop " + src
-												+ " at location " + trgt,YesNo.No);
-										sa.assertTrue(false,trgt + " location is not visible so cannot dragNDrop " + src
-												+ " at location " + trgt);
-									}
-								} else {
-									log(LogStatus.ERROR,src + " is not visible so cannot dragNdrop " + src,YesNo.No);
-									sa.assertTrue(false,src + " is not visible so cannot dragNdrop " + src);
-								}
-
-							}
-							ThreadSleep(2000);
-							if (isDisplayed(driver,FindElement(driver, "//td[contains(@class,'entry')]//span[text()='Last Touchpoint']", "", action.BOOLEAN, 10),
-									"visibility", 10,"Last Touch Point") != null) {
-								ThreadSleep(2000);
-								WebElement touchPoint = FindElement(driver,
-										"//td[contains(@class,'entry')]//span[text()='Last Touchpoint']", "Last Touch Point",
-										action.BOOLEAN, 10);
-								mouseOverClickOperation(driver, touchPoint);
-								WebElement properties = FindElement(driver,
-										"//span[text()='Last Touchpoint']/../..//div[@class='properties']", "properties Icon",
-										action.BOOLEAN, 10);
-								mouseOverClickOperation(driver, properties);
-								ThreadSleep(2000);
-								click(driver, FindElement(driver, "//input[contains(@name,'ro')]",
-										"", action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN);
-								ThreadSleep(2000);
-								click(driver, FindElement(driver, "//table[@id='field_propWindowOkBtn']//button",
-										"", action.BOOLEAN, 20), "", action.BOOLEAN);
-							} 
-							ThreadSleep(2000);
-
-
-							if (click(driver, getSaveBtn( 30), "page layouts save button",
-									action.SCROLLANDBOOLEAN)) {
-								appLog.info("clicked on save button");
+							if (trgt.split("<break>")[0].equalsIgnoreCase("Above")) {
+								trgt = trgt.split("<break>")[trgt.split("<break>").length - 1];
+								targetElement = FindElement(driver,
+										"//h3[text()='" + trgt + "']/../../../../../../../../preceding-sibling::div[1]",
+										"", action.BOOLEAN, 10);
 
 							} else {
-								log(LogStatus.ERROR,
-										"Not able to click on Save button cannot save pagelayout dragged object or section",YesNo.No);
-								sa.assertTrue(false,
-										"Not able to click on Save button cannot save pagelayout dragged object or section");
+								trgt = trgt.split("<break>")[trgt.split("<break>").length - 1];
+								targetElement = FindElement(driver,
+										"//h3[text()='" + trgt + "']/../../../../../../../../following-sibling::div[1]",
+										"", action.BOOLEAN, 10);
 							}
+							src = src.split("<break>")[src.split("<break>").length - 1];
+						} else {
+							log(LogStatus.ERROR, src + " is not visible so cannot dragNdrop " + src, YesNo.No);
+							sa.assertTrue(false, src + " is not visible so cannot dragNdrop " + src);
+
+						}
+						flag = true;
+
+					} else if (src.split("<break>")[0].contains("Mobile")) {
+						if (click(driver, FindElement(driver, "//div[text()='Mobile & Lightning Actions']", "",
+								action.SCROLLANDBOOLEAN, 10), "", action.SCROLLANDBOOLEAN)) {
+							src = src.split("<break>")[1];
+							sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
+							targetElement = FindElement(driver,
+									"//div[contains(@id,'item_QuickAction')][text()='" + trgt + "']", "",
+
+									action.BOOLEAN, 10);
+							flag = true;
+						}
+					} else {
+						String xpath1 = "//span[text()='New Fields']/../ancestor::div[contains(@class,'section fieldDrop')]/preceding-sibling::div[1]";
+						WebElement ele12 = FindElement(driver, xpath1, "", action.SCROLLANDBOOLEAN, 10);									
+						sendKeys(driver, getquickFindSearch(10), src, src, action.BOOLEAN);
+
+						scrollDownThroughWebelementInCenter(driver, ele12, "");
+						ThreadSleep(500);									
+						switchToFrame(driver, 10, getEditPageLayoutFrame_Lighting(10));
+						ThreadSleep(3000);	
+						targetElement = FindElement(driver,
+								"//span[text()='New Fields']/ancestor::div[contains(@class,'section fieldDrop')]//table//td[1]",
+								"", action.BOOLEAN, 10);
+						// table[contains(@id,'ext-gen')]//td
+					}
+					String xpath = null;
+					if (src.equalsIgnoreCase(PageLabel.Total_Commitments.toString())) {
+						xpath = "//span[contains(text(),'" + src + "')]";
+
+					} else if (src.equalsIgnoreCase("Last Stage Change Date")) {
+						xpath = "//span[contains(text(),'Last Stage Change')]";
+					} else if (src.equalsIgnoreCase("Management Meeting Date")) {
+						xpath = "//span[contains(text(),'Management Meetin..')]";
+					} else if (src.equalsIgnoreCase("Average Deal Quality Score")) {
+						xpath = "//span[contains(text(),'Average Deal')]";
+					} else {
+						xpath = "//span[text()='" + src + "']";
+					}
+
+					ele = isDisplayed(driver, FindElement(driver, xpath, "", action.BOOLEAN, 10), "visibility", 10,
+							src + " field");
+					
+					if (ele != null) {
+					//	WebElement ele1 = isDisplayed(driver, targetElement, "visibility", 20, trgt + " field");
+						WebElement ele1=targetElement;
+						ThreadSleep(1000);
+						if (ele1 != null) {
+							if (dragNDropField(driver, ele, ele1)) {
+								ThreadSleep(2000);
+
+								appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
+//								if (src.equalsIgnoreCase(PageLabel.Convert_to_Portfolio.toString())) {
+//									if (FindElement(driver, "//div[contains(@id,'QuickAction')][text()='" + src + "']",
+//											"", action.BOOLEAN, 20) != null) {
+//										appLog.info("successfully verified drag and drop of " + src);
+//									} else {
+//
+//										log(LogStatus.ERROR,
+//												"Not able to dragNDrop " + src + " at " + trgt + " location", YesNo.No);
+//										sa.assertTrue(false, "Not able to dragNDrop " + src + " at " + trgt
+//
+//												+ " location");
+//									}
+//
+//								} else {
+//									if (FindElement(driver, "//span[@class='labelText'][text()='" + src + "']", "",
+//											action.BOOLEAN, 10) != null) {
+//										appLog.info("successfully verified drag and drop of " + src);
+//									} else if (FindElement(driver,
+//											"//span[@class='label'][contains(text(),'" + src + "')]", "",
+//											action.BOOLEAN, 10) != null) {
+//										appLog.info("successfully verified drag and drop of " + src);
+//
+//									} else {
+//										log(LogStatus.ERROR,
+//												"Not verified drag and drop of " + src + " at " + trgt + " location", YesNo.No);
+//										sa.assertTrue(false, "Not verified drag and drop of " + src + " at " + trgt
+//
+//												+ " location");
+//									}
+//								}
+								appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
+							} else {
+
+								log(LogStatus.ERROR, "Not able to dragNDrop " + src + " at " + trgt + " location for page layout: "+layoutName,
+										YesNo.No);
+								sa.assertTrue(false, "Not able to dragNDrop " + src + " at " + trgt + " location for page layout: "+layoutName);
+								result.add("Not able to dragNDrop " + src + " at " + trgt + " location for page layout: "+layoutName);
+							}
+						} else {
+							log(LogStatus.ERROR, trgt + " drop Target location is not visible so cannot dragNDrop " + src
+									+ " at location " + trgt+" for layout: "+layoutName, YesNo.No);
+							sa.assertTrue(false, trgt + " drop Target location is not visible so cannot dragNDrop " + src
+									+ " at location " + trgt+" for layout: "+layoutName);
+							result.add(trgt + " drop Target location is not visible so cannot dragNDrop " + src
+									+ " at location " + trgt+" for layout: "+layoutName);
+						}
+					} else {
+						log(LogStatus.ERROR, src + " source item is not visible so cannot dragNdrop " + src+" for layout"+layoutName, YesNo.No);
+						sa.assertTrue(false, src + " source item is not visible so cannot dragNdrop " + src+" for layout"+layoutName);
+					}
+
+				}
+				ThreadSleep(2000);
+				if (isDisplayed(driver, FindElement(driver,
+						"//td[contains(@class,'entry')]//span[text()='Last Touchpoint']", "", action.BOOLEAN, 10),
+						"visibility", 10, "Last Touch Point") != null) {
+					ThreadSleep(2000);
+					WebElement touchPoint = FindElement(driver,
+							"//td[contains(@class,'entry')]//span[text()='Last Touchpoint']", "Last Touch Point",
+							action.BOOLEAN, 10);
+					mouseOverClickOperation(driver, touchPoint);
+					WebElement properties = FindElement(driver,
+							"//span[text()='Last Touchpoint']/../..//div[@class='properties']", "properties Icon",
+							action.BOOLEAN, 10);
+					mouseOverClickOperation(driver, properties);
+					ThreadSleep(2000);
+					click(driver, FindElement(driver, "//input[contains(@name,'ro')]", "", action.SCROLLANDBOOLEAN, 10),
+							"", action.SCROLLANDBOOLEAN);
+					ThreadSleep(2000);
+					click(driver,
+							FindElement(driver, "//table[@id='field_propWindowOkBtn']//button", "", action.BOOLEAN, 20),
+							"", action.BOOLEAN);
+				}
+				ThreadSleep(2000);
+
+				if (click(driver, getSaveBtn(30), "page layouts save button", action.SCROLLANDBOOLEAN)) {
+					appLog.info("clicked on save button");
+
+				} else {
+					log(LogStatus.ERROR,
+							"Not able to click on Save button cannot save pagelayout dragged object or section",
+							YesNo.No);
+					sa.assertTrue(false,
+							"Not able to click on Save button cannot save pagelayout dragged object or section");
+				}
 
 				if (mode.equalsIgnoreCase(Mode.Lightning.toString())) {
 					ThreadSleep(5000);
@@ -9306,9 +9306,8 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 
 				}
 
-
-		return result;
-	}
+				return result;
+			}
 
 	
 	public boolean searchStandardOrCustomObjectApi(String api, int timeout) {

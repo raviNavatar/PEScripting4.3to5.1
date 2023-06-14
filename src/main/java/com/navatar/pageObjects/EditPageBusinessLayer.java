@@ -2096,7 +2096,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	}
 
 	public boolean verifyAndAddAcuityTabInPages(String ComponentName, String tabName,
-			String dropTabTo,String[] otherComponent,boolean removeActivityTimeline) {
+			String dropTabTo,String[] otherComponent,boolean removeActivityTimeline,String name) {
 		int status = 0;
 		boolean addComponentLinkFlag = false;
 		String allTabXpath ="//ul[@class='tabs__nav']/li";
@@ -2123,12 +2123,12 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		
 		List<String> result =compareMultipleList(driver, tabName, allTabs);
 		if(result.isEmpty()) {
-			log(LogStatus.INFO, tabName+": Tab is present in Lightning Record Page", YesNo.No);
-			System.out.println(tabName+": Tab is present in Lightning Record Page");
-			sa.assertTrue(false, tabName+": Tab is alreday present in Lightning Record Page");
+			log(LogStatus.INFO, tabName+": Tab is present in Lightning Record Page:"+name, YesNo.No);
+			System.out.println(tabName+": Tab is present in Lightning Record Page:"+name);
+			sa.assertTrue(false, tabName+": Tab is alreday present in Lightning Record Page:"+name);
 			if(allTabs.get(0).getText().trim().equalsIgnoreCase(tabName)) {
-				log(LogStatus.INFO, tabName+": Tab Already present in first position of Lightning Record Page", YesNo.No);
-				System.out.println(tabName+": Tab Already present in first position of Lightning Record Page");
+				log(LogStatus.INFO, tabName+": Tab Already present in first position of Lightning Record Page:"+name, YesNo.No);
+				System.out.println(tabName+": Tab Already present in first position of Lightning Record Page:"+name);
 				switchToDefaultContent(driver);
 				CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
 //				 if (CommonLib.click(driver, getLightingRecordPage(10), "Lighting Record Page", action.SCROLLANDBOOLEAN)) {
@@ -2137,8 +2137,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				return true;
 
 			}else {
-				log(LogStatus.INFO, "going to move "+tabName+" Tab in first position of Lightning Record Page", YesNo.No);
-				System.out.println("going to move "+tabName+" Tab in first position of Lightning Record Page");
+				log(LogStatus.INFO, "going to move "+tabName+" Tab in first position of Lightning Record Page:"+name, YesNo.No);
+				System.out.println("going to move "+tabName+" Tab in first position of Lightning Record Page:"+name);
 				switchToDefaultContent(driver);
 				if (CommonLib.dragNDropAcuity(driver, tabNameElementInEditPage(tabName, 30),
 						FirsttabNameElementInEditPage(30))) {
@@ -2173,16 +2173,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					CommonLib.ThreadSleep(5000);
 					allTabs= FindElements(driver, allTabXpath);
 					if(allTabs.get(0).getText().trim().equalsIgnoreCase(tabName)) {
-						log(LogStatus.INFO, tabName+": Tab now present in first position of Lightning Record Page", YesNo.No);
-						System.out.println(tabName+": Tab now present in first position of Lightning Record Page");
+						log(LogStatus.INFO, tabName+": Tab now present in first position of Lightning Record Page:"+name, YesNo.No);
+						System.out.println(tabName+": Tab now present in first position of Lightning Record Page:"+name);
 						switchToDefaultContent(driver);
 						CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
 						return true;
 						
 					}else {
-						log(LogStatus.INFO, tabName+": Tab is not present in first position of Lightning Record Page", YesNo.No);
-						System.out.println(tabName+": Tab is not present in first position of Lightning Record Page");
-						sa.assertTrue(false, tabName+": Tab is not present in first position of Lightning Record Page");
+						log(LogStatus.INFO, tabName+": Tab is not present in first position of Lightning Record Page:"+name, YesNo.No);
+						System.out.println(tabName+": Tab is not present in first position of Lightning Record Page:"+name);
+						sa.assertTrue(false, tabName+": Tab is not present in first position of Lightning Record Page:"+name);
 						switchToDefaultContent(driver);
 						CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
 						return false;
@@ -2362,7 +2362,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 						ThreadSleep(2000);
 						if(otherComponent!=null) {
 							
-							for(String name :otherComponent) {
+							for(String name1 :otherComponent) {
 							CommonLib.switchToFrame(driver, 50, getAppBuilderIframe(50));
 							ThreadSleep(5000);
 							if (CommonLib.click(driver, getSectionOfComponent(10), " section after button",
@@ -2385,18 +2385,18 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									
 									switchToDefaultContent(driver);
 									ThreadSleep(5000);
-									if (CommonLib.sendKeys(driver, getComponentSearchBox(50), name, "SearchBox",
+									if (CommonLib.sendKeys(driver, getComponentSearchBox(50), name1, "SearchBox",
 											action.SCROLLANDBOOLEAN)) {
-										log(LogStatus.INFO, name + "has been Search", YesNo.No);
+										log(LogStatus.INFO, name1 + "has been Search", YesNo.No);
 										ThreadSleep(2000);
-										if (CommonLib.click(driver, getComponentLink(name,20), "Componetn link",
+										if (CommonLib.click(driver, getComponentLink(name1,20), "Componetn link",
 												action.SCROLLANDBOOLEAN)) {
 
-											log(LogStatus.INFO, name+":Component Button has been clicked", YesNo.No);
+											log(LogStatus.INFO, name1+":Component Button has been clicked", YesNo.No);
 
 										} else {
-											log(LogStatus.ERROR, "Could not click on the component:"+name, YesNo.Yes);
-											sa.assertTrue(false, "Could not click on the component:"+name);
+											log(LogStatus.ERROR, "Could not click on the component:"+name1, YesNo.Yes);
+											sa.assertTrue(false, "Could not click on the component:"+name1);
 
 										}
 
@@ -2474,6 +2474,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			CommonLib.ThreadSleep(3000);
 			switchToFrame(driver, 30, getEditPageFrame("", 20));
 			CommonLib.ThreadSleep(3000);
+			CommonLib.clickUsingJavaScript(driver,AlltabNameElementInEditPageComponent(20),"All tab");
+			CommonLib.ThreadSleep(2000);
 			allTabs= FindElements(driver, allTabXpath);
 			List<String>	result2 =compareMultipleList(driver, tabName, allTabs);
 			
@@ -2481,8 +2483,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				log(LogStatus.INFO, tabName+": Tab is Added in Lightning Record Page", YesNo.No);
 				System.out.println(tabName+": Tab is Added in Lightning Record Page");
 				if(allTabs.get(0).getText().trim().equalsIgnoreCase(tabName)) {
-					log(LogStatus.INFO, tabName+": Tab  Added in first position of Lightning Record Page", YesNo.No);
-					System.out.println(tabName+": Tab  Added in first position of Lightning Record Page");
+					log(LogStatus.INFO, tabName+": Tab  Added in first position of Lightning Record Page:"+name, YesNo.No);
+					System.out.println(tabName+": Tab  Added in first position of Lightning Record Page:"+name);
 					driver.switchTo().defaultContent();
 					CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
 					
@@ -2490,17 +2492,17 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 				}else {
 					
-					log(LogStatus.INFO,tabName+ ": Tab Not  Added in first position of Lightning Record Page", YesNo.No);
-					System.out.println(tabName+": Tab Not Added in first position of Lightning Record Page");
-					sa.assertTrue(false, tabName+": Tab Not Added in first position of Lightning Record Page");
+					log(LogStatus.INFO,tabName+ ": Tab Not  Added in first position of Lightning Record Page:"+name, YesNo.No);
+					System.out.println(tabName+": Tab Not Added in first position of Lightning Record Page:"+name);
+					sa.assertTrue(false, tabName+": Tab Not Added in first position of Lightning Record Page:"+name);
 					switchToDefaultContent(driver);
 					CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
 					return false;
 					
 				}
 			}else {
-				log(LogStatus.INFO, "Not able to add "+tabName+" Tab in Lightning Record Page", YesNo.No);
-				System.out.println("Not able to add "+tabName+" Tab in Lightning Record Page");
+				log(LogStatus.INFO, "Not able to add "+tabName+" Tab in Lightning Record Page:"+name, YesNo.No);
+				System.out.println("Not able to add "+tabName+" Tab in Lightning Record Page:"+name);
 			}
 			
 			
