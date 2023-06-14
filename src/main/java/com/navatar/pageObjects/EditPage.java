@@ -803,7 +803,7 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement FirsttabNameElementInEditPage( int timeOut) {
 
 		try {
-			return FindElement(driver, "(//span[@class='uiOutputText']/parent::a)[1]",
+			return FindElement(driver, "(//span[@class='uiOutputText']/parent::a)[1]//ancestor::fieldset/*[text()='Tabs']",
 					"First Tab : ", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
 			return FindElement(driver, "(//span[@class='uiOutputText']/parent::a)[1]",

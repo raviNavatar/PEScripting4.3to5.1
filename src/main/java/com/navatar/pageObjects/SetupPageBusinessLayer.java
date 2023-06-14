@@ -9089,13 +9089,13 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 											action.SCROLLANDBOOLEAN);
 								}
 								ThreadSleep(2000);
-								WebElement ok= FindElement(driver, "", "ok button", action.BOOLEAN, 20);
+								WebElement ok= FindElement(driver, "//button[text()='OK']", "ok button", action.BOOLEAN, 20);
 								
 								if (click(driver, ok, "OK Button", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "clicked on the Save button", YesNo.No);
+									log(LogStatus.INFO, "clicked on the OK button", YesNo.No);
 									
 								} else {
-									log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+									log(LogStatus.ERROR, "Not able to click on OK button", YesNo.No);
 								}
 							} else {
 								log(LogStatus.ERROR, "Not able to send New Fields value to Section Name", YesNo.No);
@@ -9244,7 +9244,6 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 //												+ " location");
 //									}
 //								}
-								appLog.info("Successfully dragNDrop " + src + " at " + trgt + " location");
 							} else {
 
 								log(LogStatus.ERROR, "Not able to dragNDrop " + src + " at " + trgt + " location for page layout: "+layoutName,

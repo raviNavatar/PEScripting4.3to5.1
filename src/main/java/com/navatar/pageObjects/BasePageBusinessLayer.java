@@ -20389,11 +20389,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		int horizon=0;
 		int vertical=0;
 		 if(className.equalsIgnoreCase("Pre_CheckScript")) {
-				 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script SKIPED</center> <br><center>Soft Error on Installation Script 2- Script has been already excecuted in your org. Please execute the Installation_Script 3</center></br></font></body></html>";
+				 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script SKIPPED</center> <br><center>Script has been already excecuted in your org. Please execute the Installation_Script 3</center></br></font></body></html>";
 				 horizon =700;
 				 vertical=170;
 		 }else {
-			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script SKIPED</center> <br><center>Soft Error on Installation Script 4- Script has been already excecuted in your org. Please move to next step</center></br></font></body></html>";
+			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script SKIPPED</center> <br><center>Script has been already excecuted in your org. Please move to next step</center></br></font></body></html>";
 			 horizon =700;
 			 vertical=150;
 		 }
