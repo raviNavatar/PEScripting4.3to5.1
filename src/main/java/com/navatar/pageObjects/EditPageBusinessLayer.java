@@ -2103,6 +2103,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		
 		
 		removeTimeline(removeActivityTimeline);
+		String xPat = "//div[@role='dialog']//button[contains(@title,'Close')]";
+		List<WebElement> closeButton = FindElements(driver, xPat);
+
+		for (WebElement elem : closeButton) {
+
+			click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+			CommonLib.ThreadSleep(1000);
+
+		}
 		CommonLib.ThreadSleep(3000);
 		switchToFrame(driver, 10, getEditPageFrame("", 20));
 		CommonLib.ThreadSleep(5000);
@@ -2140,6 +2149,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				log(LogStatus.INFO, "going to move "+tabName+" Tab in first position of Lightning Record Page:"+name, YesNo.No);
 				System.out.println("going to move "+tabName+" Tab in first position of Lightning Record Page:"+name);
 				switchToDefaultContent(driver);
+				ThreadSleep(3000);
 				if (CommonLib.dragNDropAcuity(driver, tabNameElementInEditPage(tabName, 30),
 						FirsttabNameElementInEditPage(30))) {
 					log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
@@ -2206,6 +2216,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			switchToDefaultContent(driver);
 			ThreadSleep(2000);
+			String xPath = "//div[@role='dialog']//button[contains(@title,'Close')]";
+			List<WebElement> closeButtons = FindElements(driver, xPath);
+
+			for (WebElement elem : closeButtons) {
+
+				click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+				CommonLib.ThreadSleep(1000);
+
+			}
+			ThreadSleep(2000);
 			if (CommonLib.click(driver, addTabButtonInEditPage(30), "Add Tab Button", action.SCROLLANDBOOLEAN)) {
 
 				log(LogStatus.INFO, "Add Tab Button has been Clicked", YesNo.No);
@@ -2231,7 +2251,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									if (CommonLib.selectVisibleTextFromDropDown(driver, getDefaultTab(30),
 											"Acuity", "Acuity")) {
 									CommonLib.ThreadSleep(4000);
-									
+									String xPath1 = "//div[@role='dialog']//button[contains(@title,'Close')]";
+									List<WebElement> closeButtons1 = FindElements(driver, xPath1);
+
+									for (WebElement elem : closeButtons1) {
+
+										click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+										CommonLib.ThreadSleep(1000);
+
+									}
+									CommonLib.ThreadSleep(1000);
 									if (CommonLib.dragNDropAcuity(driver, tabNameElementInEditPage(tabName, 30),
 											FirsttabNameElementInEditPage(30))) {
 										log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
@@ -2423,6 +2452,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 							
 							}
 						
+							String xPath1 = "//div[@role='dialog']//button[contains(@title,'Close')]";
+							List<WebElement> closeButtons1 = FindElements(driver, xPath1);
+
+							for (WebElement elem : closeButtons1) {
+
+								click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+								CommonLib.ThreadSleep(1000);
+
+							}
+							CommonLib.ThreadSleep(1000);
 	
 						if (CommonLib.click(driver, getSaveButton(50), " Save Button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, " save button has been clicked", YesNo.No);
@@ -2468,7 +2507,16 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 
 			}
-		
+				String xPath = "//div[@role='dialog']//button[contains(@title,'Close')]";
+				List<WebElement> closeButtons = FindElements(driver, xPath);
+
+				for (WebElement elem : closeButtons) {
+
+					click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+					CommonLib.ThreadSleep(1000);
+
+				}
+				ThreadSleep(2000);
 
 		if (status > 0) {
 			CommonLib.ThreadSleep(3000);
@@ -2492,13 +2540,59 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 				}else {
 					
-					log(LogStatus.INFO,tabName+ ": Tab Not  Added in first position of Lightning Record Page:"+name, YesNo.No);
-					System.out.println(tabName+": Tab Not Added in first position of Lightning Record Page:"+name);
-					sa.assertTrue(false, tabName+": Tab Not Added in first position of Lightning Record Page:"+name);
 					switchToDefaultContent(driver);
-					CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
-					return false;
-					
+					ThreadSleep(3000);
+					if (CommonLib.dragNDropAcuity(driver, tabNameElementInEditPage(tabName, 30),
+							FirsttabNameElementInEditPage(30))) {
+						log(LogStatus.INFO, "Successfully Drag the Tab: " + tabName + " And Drop it to "
+								+ dropTabTo, YesNo.No);
+						CommonLib.ThreadSleep(5000);
+						
+						
+
+						if (CommonLib.click(driver, getSaveButton(20), " Save Button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, " save button has been clicked", YesNo.No);
+							System.out.println(" save button has been clicked");
+							if (changesSavedMsg(50) != null) {
+								log(LogStatus.INFO, "Changes Saved Msg Displayed", YesNo.No);
+								System.out.println("Changes Saved Msg Displayed");
+								status++;
+							} else {
+								log(LogStatus.ERROR, "Changes Saved Msg Not Displayed", YesNo.Yes);
+								sa.assertTrue(false, "Changes Saved Msg Not Displayed");
+
+							}
+
+						}
+
+						else {
+							log(LogStatus.ERROR, "Could not be click on save button", YesNo.Yes);
+							sa.assertTrue(false, "-----------Not Able to Add Acuity tab: ------------");
+
+						}
+						CommonLib.ThreadSleep(3000);
+						switchToFrame(driver, 10, getEditPageFrame("", 20));
+						CommonLib.ThreadSleep(5000);
+						allTabs= FindElements(driver, allTabXpath);
+						if(allTabs.get(0).getText().trim().equalsIgnoreCase(tabName)) {
+							log(LogStatus.INFO, tabName+": Tab now present in first position of Lightning Record Page:"+name, YesNo.No);
+							System.out.println(tabName+": Tab now present in first position of Lightning Record Page:"+name);
+							switchToDefaultContent(driver);
+							CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+							return true;
+							
+						}else {
+							log(LogStatus.INFO, tabName+": Tab is not present in first position of Lightning Record Page:"+name, YesNo.No);
+							System.out.println(tabName+": Tab is not present in first position of Lightning Record Page:"+name);
+							sa.assertTrue(false, tabName+": Tab is not present in first position of Lightning Record Page:"+name);
+							switchToDefaultContent(driver);
+							CommonLib.click(driver, getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+							return false;
+						}
+						
+
+					}
+										
 				}
 			}else {
 				log(LogStatus.INFO, "Not able to add "+tabName+" Tab in Lightning Record Page:"+name, YesNo.No);
