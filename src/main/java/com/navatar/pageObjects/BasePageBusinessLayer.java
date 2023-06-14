@@ -20342,7 +20342,6 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 	    } else { /* TODO: error handling */ }
 	  }
 
-	
 	 public  void popupFailed() {
 		 Color color = Color.red;
 		 String markup=null;
@@ -20354,6 +20353,47 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 				 vertical=170;
 		 }else {
 			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><center>  Automation Script FAILED</center> <br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\\LogFile\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
+			 horizon =700;
+			 vertical=150;
+		 }
+		 //post script message
+
+			
+			// pre script
+			
+	        JLabel l = new JLabel(markup, JLabel.CENTER);
+	        
+	        //JLabel hello = new JLabel, JLabel.CENTER);
+	        l.setHorizontalAlignment(SwingConstants.CENTER);
+	        l.setFont(new Font("Arial Bold", Font.BOLD, 8));
+	        JPanel p = new JPanel();
+	        GridLayout layout = new GridLayout(1,1);
+	        //layout.setHgap(55);
+	        p.setLayout(layout);
+	        
+	        p.add(l);
+	        JFrame  f = new JFrame("Result");
+	        f.setSize(horizon,vertical);
+	        //f.setFont(new Font("System", Font.PLAIN, 12));
+	        f.setContentPane(p);
+	        f.setAlwaysOnTop(true);
+	        f.setLocationRelativeTo(null);
+            f.setVisible(true);
+	        
+			
+ }
+	 
+	 public  void popupSkipped() {
+		 Color color = Color.red;
+		 String markup=null;
+		int horizon=0;
+		int vertical=0;
+		 if(className.equalsIgnoreCase("Pre_CheckScript")) {
+				 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script SKIPED</center> <br><center>Soft Error on Installation Script 2- Script has been already excecuted in your org. Please execute the Installation_Script 3</center></br></font></body></html>";
+				 horizon =700;
+				 vertical=170;
+		 }else {
+			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script SKIPED</center> <br><center>Soft Error on Installation Script 4- Script has been already excecuted in your org. Please move to next step</center></br></font></body></html>";
 			 horizon =700;
 			 vertical=150;
 		 }

@@ -16,6 +16,7 @@ import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
+import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
@@ -110,7 +111,6 @@ public class Post_CheckScript extends BaseLib {
 		JPanel p = new JPanel(new java.awt.GridLayout(2, 2));
 		JFrame f = new JFrame("WARNING!!");
 		
-		final boolean flag =true;
 	
 	@Test(priority =0 ,enabled=true)
 	public void before() {
@@ -208,6 +208,74 @@ public class Post_CheckScript extends BaseLib {
 			
 	}
 	
+	@Test(priority=2,enabled = true)
+	public void isRexecute() {
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+		if (setup.searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
+			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
+			ThreadSleep(8000);
+			switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+			ThreadSleep(5000);
+			WebElement Industrydescription =FindElement(driver, "//a[text()='IndustryPicklist']", "", action.SCROLLANDBOOLEAN, 10);
+			WebElement Typedescription =FindElement(driver, "//a[text()='TypePicklist']", "", action.SCROLLANDBOOLEAN, 10);
+			WebElement AccountSourcedescription =FindElement(driver, "//a[text()='AccountSourcePicklist']", "", action.SCROLLANDBOOLEAN, 10);
+
+			 if(Industrydescription!=null ||Typedescription!=null||AccountSourcedescription!=null) {
+				 	log(LogStatus.PASS, "Metadata record is present Script need to execute", YesNo.Yes);
+			 }else {
+				 	log(LogStatus.FAIL, "Metadata record is not present ", YesNo.Yes);
+				 	log(LogStatus.INFO, "Soft Error on Installation Script 4- Script has been already excecuted in your org. Please move to next step.", YesNo.No);
+					sa.assertTrue(false, "Soft Error on Installation Script 4- Script has been already excecuted in your org. Please move to next step.");
+					
+			 }
+			 
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Custom_Metadata_Types, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Custom_Metadata_Types);
+		}
+		
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow=null;
+			}
+			
+		}
+		
+		if (parentWindow != null) {
+
+			driver.close();
+			
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		
+		sa.assertAll();
+		
+	}
 	
 	@AfterTest
 	public void after() {
@@ -220,7 +288,7 @@ public class Post_CheckScript extends BaseLib {
 	// Post Script primary items
 	
 	
-	@Test(priority = 2,enabled =flag)
+	@Test(priority = 3,dependsOnMethods = {"isRexecute"})
 	public void VerifyAcuityNavatarSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -359,8 +427,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 3,enabled =flag)
-
+	@Test(priority = 4,dependsOnMethods = {"isRexecute"})
 	public void VerifyRemovingGlobalAction() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -420,7 +487,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
-	@Test(priority = 4,enabled=flag)
+	@Test(priority = 5,dependsOnMethods = {"isRexecute"})
 	public void verifyRemovingRelatedListFromObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -534,7 +601,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 					
-	@Test(priority = 5,enabled =flag)
+	@Test(priority = 6,dependsOnMethods = {"isRexecute"})
 
 	public void VerifyHelpmenutodisplaycustomdetails() {
 
@@ -666,7 +733,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-	@Test(priority =6 ,enabled=flag)
+	@Test(priority = 7,dependsOnMethods = {"isRexecute"})
 
 	public void verifyAcuityTabAddedInObjects() {
 		String projectName = "";
@@ -859,7 +926,7 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 	// Post Script Secondary items
-	@Test(priority = 7,enabled=flag)
+	@Test(priority = 8,dependsOnMethods = {"isRexecute"})
 	public void verifyOverridingtheTaskEventstandardbuttons() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1257,8 +1324,7 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertAll();
 				}
 
-
-	@Test(priority = 8,enabled=flag)
+	@Test(priority = 9,dependsOnMethods = {"isRexecute"})
 	public void verifyRemoveQuickActiononPageLayoutsofObjects () {
 
 		String projectName = "";
@@ -1484,7 +1550,6 @@ public class Post_CheckScript extends BaseLib {
 				driver.switchTo().window(parentWindow);
 				parentWindow = null;
 			}
-			sa.assertAll();
 		}
 		if (parentWindow != null) {
 
@@ -1498,8 +1563,7 @@ public class Post_CheckScript extends BaseLib {
 
 }
 	
-
-	@Test(priority = 9,enabled=flag)
+	@Test(priority = 10,dependsOnMethods = {"isRexecute"})
 	public void verifyAddQuickActiononPageLayoutsofObjects () {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1749,7 +1813,6 @@ public class Post_CheckScript extends BaseLib {
 				driver.switchTo().window(parentWindow);
 				parentWindow = null;
 			}
-			sa.assertAll();
 		}
 
 		if (parentWindow != null) {
@@ -1762,9 +1825,8 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 
 	}
-	
-		
-	@Test(priority =11 ,enabled=flag)
+			
+	@Test(priority = 11,dependsOnMethods = {"isRexecute"})
 	public void verifyAddingNewFieldToPageLayout() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -1927,7 +1989,6 @@ public class Post_CheckScript extends BaseLib {
 				driver.switchTo().window(parentWindow);
 				parentWindow = null;
 			}
-			sa.assertAll();
 		}
 
 		if (parentWindow != null) {
@@ -1939,8 +2000,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-
-	@Test(priority =13 ,enabled=flag)
+	@Test(priority = 12,dependsOnMethods = {"isRexecute"})
 	public void verifydeleteAndDectivatePicklistValueAfterDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -2308,7 +2368,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority =14 ,enabled=flag)
+	@Test(priority = 13,dependsOnMethods = {"isRexecute"})
 	public void verifyAddNotificationOnHomePageForPEFOFApp() {
 
 		String projectName = "";
@@ -2346,7 +2406,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 15,enabled =flag)
+	@Test(priority = 14,dependsOnMethods = {"isRexecute"})
 	public void VerifyDisablingContactTransferSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -2456,7 +2516,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 
-	@Test(priority = 16,enabled =flag)
+	@Test(priority = 15,dependsOnMethods = {"isRexecute"})
 
 	public void VerifyModifyingIsTouchpointPackageField () {
 
@@ -2510,7 +2570,7 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority = 17,enabled =flag)
+	@Test(priority = 16,dependsOnMethods = {"isRexecute"})
 	public void verifyRemoveTodaysTaskEvent() {
 		String projectName = "";
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2568,7 +2628,80 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 }
 	
-	
+	@Test(priority = 17,dependsOnMethods = {"isRexecute"})
+	public void VerifyEmailDeliverabilitySetting() {
+		
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.Deliverability)) {
+				log(LogStatus.PASS, object.Deliverability.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+
+				switchToFrame(driver, 30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				
+				
+				
+				if(selectVisibleTextFromDropDown(driver, setup.getEmailAccessControlDropdown("", 20), "Email access dropdown", "All email")) {
+					log(LogStatus.PASS,"able to select 'All email' value in email access dropdown", YesNo.No);
+					ThreadSleep(2000);
+					if(click(driver,  setup.getemailDelivarabiltySaveBtn(20), "save button", action.BOOLEAN)) {
+						log(LogStatus.PASS,"click on save button", YesNo.Yes);
+						ThreadSleep(3000);
+					}else {
+						log(LogStatus.FAIL,"Not able to click on save button", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on save button");
+					
+					}
+				}else {
+					log(LogStatus.FAIL,"Not able to select 'All email' value in email access dropdown", YesNo.Yes);
+					sa.assertTrue(false,"Not able to select 'All email' value in email access dropdown");
+				
+				}
+			}else {
+				log(LogStatus.FAIL,object.Deliverability.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.Deliverability.toString() + " object has been opened in setup page");
+			
+			}
+			
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		
+		sa.assertAll();
+		
+	}
 	
 	
 	

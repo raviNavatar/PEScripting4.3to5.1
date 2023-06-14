@@ -2,10 +2,13 @@ package com.navatar.generic;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.beans.ExceptionListener;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,6 +35,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.FindsByXPath;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.testng.*;
+import org.testng.annotations.ITestAnnotation;
 
 import com.navatar.generic.EnumConstants.YesNo;
 import com.navatar.pageObjects.BasePageBusinessLayer;
@@ -53,6 +57,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 	public static int iPassCount;
 	public static int iFailCount;
 	public static int iskipCount;
+	public static boolean iskipped=false;
 	public static Logger appLog;
 	public static Map<String, String> status = new LinkedHashMap<String, String>();
 	public static int exe;
@@ -93,6 +98,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 		return m.getName();
 	}
 
+	
 	@Override
 	public void onTestStart(ITestResult result) {
 		currentlyExecutingTC=result.getMethod().getMethodName();
@@ -156,6 +162,9 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
+
+		
+		iskipped=true;
 		 String screenshot=CommonLib.screenshot(result.getMethod().getMethodName());
 		 extentLog.log(LogStatus.SKIP, result.getMethod().getMethodName()+" is skipped.",extentLog.addScreenCapture(screenshot));
 		iskipCount++;
@@ -427,14 +436,17 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 		}
 	}
 
-
 	public void onExecutionFinish() {
 		// TODO Auto-generated method stub
 		
 		if(failedTestcase.isEmpty()) {
 			new BasePageBusinessLayer(BaseLib.driver).popupPassed();
 
-		}else {
+		}else if(iskipped) {
+			new BasePageBusinessLayer(BaseLib.driver).popupSkipped();
+		}
+		
+		else {
 			new BasePageBusinessLayer(BaseLib.driver).popupFailed();;
 
 		}

@@ -1069,6 +1069,13 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, footerSaveBtn, "Visibility", timeOut, "footer save button");
 	}
 
+	@FindBy(xpath = "//input[@title='Save']")
+	private WebElement emailDelivarabiltySaveBtn;
+
+	public WebElement getemailDelivarabiltySaveBtn(int timeOut) {
+		return isDisplayed(driver, emailDelivarabiltySaveBtn, "Visibility", timeOut, "footer save button");
+	}
+
 	@FindBy(xpath = "//span[text()='Fields & Relationships']")
 	private WebElement fieldandRelationshipHeading;
 
@@ -1911,6 +1918,8 @@ public class SetupPage extends BasePageBusinessLayer {
 		return isDisplayed(driver, setUpFrame_Lighting, "Visibility", timeOut, " Frame Lighting");
 	}
 	
+	
+	
 	@FindBy(xpath="//div[contains(@id,'RightMenuContentSection')]//div[@class='slds-button-group float_r']")
 	private WebElement editButtonforNavatarSetUpSideMenuTab;
 
@@ -1919,6 +1928,16 @@ public class SetupPage extends BasePageBusinessLayer {
 	 */
 	public WebElement getEditButtonforNavatarSetUpSideMenuTab(String projectName,NavatarSetupSideMenuTab sideMenuTab,int timeOut) {
 		return isDisplayed(driver, editButtonforNavatarSetUpSideMenuTab, "Visibility", timeOut, "Edit Button for Navatar SetUp Side Menu Tab");
+	}
+	
+	@FindBy(xpath="//select[contains(@id,'sendEmailAccessControlSection')]")
+	private WebElement emailAccessControlDropdown;
+
+	/**
+	 * @return the getEditButtonforNavatarSetUpSideMenuTab
+	 */
+	public WebElement getEmailAccessControlDropdown(String projectName,int timeOut) {
+		return isDisplayed(driver, emailAccessControlDropdown, "Visibility", timeOut, "Email Access control dropdown");
 	}
 	public WebElement getEnableCheckBoxforClickNavatarSetUpSideMenuTab(String project,
 			NavatarSetupSideMenuTab sideMenuTab, EditViewMode editviewMode, int timeOut) {
@@ -1964,4 +1983,6 @@ public class SetupPage extends BasePageBusinessLayer {
 				
 		return isDisplayed(driver, ele, "Visibility", timeOut, "Save Button for Navatar SetUp Side Menu Tab : "+topOrBottom);
 	}
+	
+	
 }

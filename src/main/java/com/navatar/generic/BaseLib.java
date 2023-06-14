@@ -115,32 +115,8 @@ public class BaseLib extends AppListeners {
 		}
 		extentReport.loadConfig(new File(System.getProperty("user.dir") + "\\ConfigFiles\\extent-config.xml"));
 	}
+
 	
-	public static void main(String[] args) {
-		String orgID="1213456000000";
-		DateFormat dateFormat = new SimpleDateFormat("MM_dd_YYYY");
-		DateFormat dateFormat1 = new SimpleDateFormat("hh_mm_a");
-		Date date = new Date();
-		String dateTime =dateFormat.format(date).toUpperCase()+"_TIME_"+dateFormat1.format(date).toUpperCase();
-		System.out.println(dateTime);
-		reportNameWithTime=dateFormat.format(date);
-		extentReport = new ExtentReports(
-				System.getProperty("user.dir") + "/Reports/"+orgID+"_PROD_" + dateTime + ".html",
-				true);
-		try {
-			extentReport.addSystemInfo("Host Name", InetAddress.getLocalHost().getHostName());
-			extentReport.addSystemInfo("User Name", System.getProperty("user.name"));
-//			extentReport.addSystemInfo("Environment", ExcelUtils.readDataFromPropertyFile("Environment"));
-//			extentReport.addSystemInfo("Mode", ExcelUtils.readDataFromPropertyFile("Mode"));
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		extentReport.loadConfig(new File(System.getProperty("user.dir") + "\\ConfigFiles\\extent-config.xml"));
-		
-		extentReport.flush();
-		extentReport.close();
-	}
 	@Parameters(value = "browser")
 	@BeforeClass
 	public void config(String browserName){

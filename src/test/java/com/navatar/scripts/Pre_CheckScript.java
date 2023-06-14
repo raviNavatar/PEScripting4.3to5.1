@@ -1,6 +1,7 @@
 package com.navatar.scripts;
 
 import static com.navatar.generic.CommonLib.FindElement;
+import static com.navatar.generic.CommonLib.ThreadSleep;
 import static com.navatar.generic.CommonLib.click;
 import static com.navatar.generic.CommonLib.clickUsingJavaScript;
 import static com.navatar.generic.CommonLib.exit;
@@ -159,11 +160,77 @@ public class Pre_CheckScript extends BaseLib {
 		
 	}
 	
+	@Test(priority=2,enabled = true)
+	public void isRexecute() {
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+		if (setup.searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
+			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
+			ThreadSleep(8000);
+			switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+			ThreadSleep(5000);
+			WebElement Industrydescription =FindElement(driver, "//a[text()='IndustryPicklist']", "", action.SCROLLANDBOOLEAN, 10);
+			WebElement Typedescription =FindElement(driver, "//a[text()='TypePicklist']", "", action.SCROLLANDBOOLEAN, 10);
+			WebElement AccountSourcedescription =FindElement(driver, "//a[text()='AccountSourcePicklist']", "", action.SCROLLANDBOOLEAN, 10);
+
+			 if(Industrydescription==null ||Typedescription==null||AccountSourcedescription==null) {
+				 	log(LogStatus.PASS, "Metadata record is not present Script need to execute", YesNo.Yes);
+			 }else {
+				 	log(LogStatus.INFO, "Metadata record is already present ", YesNo.Yes);
+				 	log(LogStatus.ERROR, "Soft Error on Installation Script 2- Script has been already excecuted in your org. Please execute the Installation_Script 3.", YesNo.No);
+					sa.assertTrue(false, "Soft Error on Installation Script 2- Script has been already excecuted in your org. Please execute the Installation_Script 3.");
+					
+			 }
+			 
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Custom_Metadata_Types, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Custom_Metadata_Types);
+		}
+		
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow=null;
+			}
+			
+		}
+		
+		if (parentWindow != null) {
+
+			driver.close();
+			
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		
+		sa.assertAll();
+		
+	}
 	
-	
-	@Test(priority =2 ,enabled=flag)
+	@Test(priority =3 ,dependsOnMethods = {"isRexecute"})
 	public void verifyAddAndActivatePicklistValueBeforeDeploymentforObjects() {
-		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		FieldAndRelationshipPageBusinessLayer fr = new FieldAndRelationshipPageBusinessLayer(driver);
@@ -181,7 +248,6 @@ public class Pre_CheckScript extends BaseLib {
 		
 		String[] AccountSource = {"Advertisement","Employee Referral","External Referral","Public Relations","Seminar - Internal","Seminar - Partner",
 				"Trade Show","Word of mouth","Partner","Web","Other"};
-		
 		
 		
 		for(int i=0;i<3;i++) {
@@ -308,7 +374,7 @@ public class Pre_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority =3 ,enabled=flag)
+	@Test(priority =4 ,dependsOnMethods = {"isRexecute"})
 	public void createMetadataOfAddAndActivatePicklistValueBeforeDeploymentforObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -318,7 +384,6 @@ public class Pre_CheckScript extends BaseLib {
 		String parentWindow = null;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
-		
 		String fieldName="";
 		String list ="";
 		for(int i=0;i<3;i++) {
