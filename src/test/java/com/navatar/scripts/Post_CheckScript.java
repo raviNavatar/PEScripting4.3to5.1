@@ -3285,6 +3285,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		String parentWindow = null;
+		boolean flag;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
 		try {
