@@ -241,6 +241,7 @@ public class Post_CheckScript extends BaseLib {
 		
 	}
 	
+	
 	@AfterTest
 	public void after() {
 		f.setVisible(false);
@@ -1657,7 +1658,8 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 
 	}
-			
+	
+		
 	@Test(priority = 11,dependsOnMethods = {"isRexecute"})
 	public void verifyAddingNewFieldToPageLayout() {
 		
@@ -2117,6 +2119,8 @@ public class Post_CheckScript extends BaseLib {
 			 
 			 switchToDefaultContent(driver);
 			 ThreadSleep(2000);
+			 CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(5000);
 				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
 				ThreadSleep(5000);
 			WebElement TypeDel =FindElement(driver, "//a[text()='TypePicklist']/ancestor::tr//td/a[contains(@title,'Del')]", "", action.SCROLLANDBOOLEAN, 20);
@@ -2145,6 +2149,8 @@ public class Post_CheckScript extends BaseLib {
 			 
 			 switchToDefaultContent(driver);
 			 ThreadSleep(2000);
+			 CommonLib.refresh(driver);
+				CommonLib.ThreadSleep(5000);
 				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
 				ThreadSleep(5000);
 			WebElement AccountSourcedel =FindElement(driver, "//a[text()='AccountSourcePicklist']/ancestor::tr//td/a[contains(@title,'Del')]", "", action.SCROLLANDBOOLEAN, 20);
@@ -2461,82 +2467,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 }
 	
-	@Test(priority = 17,dependsOnMethods = {"isRexecute"})
-	public void VerifyEmailDeliverabilitySetting() {
-		
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		String parentWindow = null;
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-			CommonLib.ThreadSleep(3000);
-			if (home.clickOnSetUpLink()) {
 
-				parentWindow = switchOnWindow(driver);
-				if (parentWindow == null) {
-					sa.assertTrue(false,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					log(LogStatus.FAIL,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-							YesNo.Yes);
-					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-				}
-			}
-			if (setup.searchStandardOrCustomObject("", mode, object.Deliverability)) {
-				log(LogStatus.PASS, object.Deliverability.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
-
-				switchToFrame(driver, 30, bp.getenterpriseeditionFrame(30));
-				CommonLib.ThreadSleep(5000);
-				
-				
-				
-				if(selectVisibleTextFromDropDown(driver, setup.getEmailAccessControlDropdown("", 20), "Email access dropdown", "All email")) {
-					log(LogStatus.PASS,"able to select 'All email' value in email access dropdown", YesNo.No);
-					ThreadSleep(2000);
-					if(click(driver,  setup.getemailDelivarabiltySaveBtn(20), "save button", action.BOOLEAN)) {
-						log(LogStatus.PASS,"click on save button", YesNo.Yes);
-						ThreadSleep(3000);
-					}else {
-						log(LogStatus.FAIL,"Not able to click on save button", YesNo.Yes);
-						sa.assertTrue(false,"Not able to click on save button");
-					
-					}
-				}else {
-					log(LogStatus.FAIL,"Not able to select 'All email' value in email access dropdown", YesNo.Yes);
-					sa.assertTrue(false,"Not able to select 'All email' value in email access dropdown");
-				
-				}
-			}else {
-				log(LogStatus.FAIL,object.Deliverability.toString() + " object has been opened in setup page", YesNo.Yes);
-				sa.assertTrue(false,object.Deliverability.toString() + " object has been opened in setup page");
-			
-			}
-			
-
-		} catch (Exception e) {
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow = null;
-			}
-		}
-
-		if (parentWindow != null) {
-
-			driver.close();
-			driver.switchTo().window(parentWindow);
-			parentWindow = null;
-		}
-		
-		sa.assertAll();
-		
-	}
-	
-	
 	
 	// not include in round 4 bug verification
 	@Test(priority =15 ,enabled=false)
@@ -3391,6 +3322,82 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 			sa.assertAll();
 	}
 	
+	
+
+	@Test(priority = 17,enabled =false)
+	public void VerifyEmailDeliverabilitySetting() {
+		
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		String parentWindow = null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.Deliverability)) {
+				log(LogStatus.PASS, object.Deliverability.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+
+				switchToFrame(driver, 30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				
+				
+				
+				if(selectVisibleTextFromDropDown(driver, setup.getEmailAccessControlDropdown("", 20), "Email access dropdown", "All email")) {
+					log(LogStatus.PASS,"able to select 'All email' value in email access dropdown", YesNo.No);
+					ThreadSleep(2000);
+					if(click(driver,  setup.getemailDelivarabiltySaveBtn(20), "save button", action.BOOLEAN)) {
+						log(LogStatus.PASS,"click on save button", YesNo.Yes);
+						ThreadSleep(3000);
+					}else {
+						log(LogStatus.FAIL,"Not able to click on save button", YesNo.Yes);
+						sa.assertTrue(false,"Not able to click on save button");
+					
+					}
+				}else {
+					log(LogStatus.FAIL,"Not able to select 'All email' value in email access dropdown", YesNo.Yes);
+					sa.assertTrue(false,"Not able to select 'All email' value in email access dropdown");
+				
+				}
+			}else {
+				log(LogStatus.FAIL,object.Deliverability.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.Deliverability.toString() + " object has been opened in setup page");
+			
+			}
+			
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		
+		sa.assertAll();
+		
+	}
 	
 }
 
