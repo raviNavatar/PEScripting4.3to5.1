@@ -3215,6 +3215,17 @@ public abstract class BasePage extends BaseLib {
 	public WebElement getViewOperatorDropDown(int timeOut) {
 		return isDisplayed(driver, viewOperatorDropDown, "Visibility", timeOut, "View Operator Drop Down");
 	}
+	
+	
+	@FindBy(xpath = "//select[@id='fop1']")
+	private WebElement viewDropDown;
+
+	/**
+	 * @return the viewOperatorDropDown
+	 */
+	public WebElement getViewDropDown(int timeOut) {
+		return isDisplayed(driver, viewDropDown, "Visibility", timeOut, "View Drop Down");
+	}
 
 	@FindBy(xpath = "//input[@id='fval1']")
 	private WebElement viewValueBox;

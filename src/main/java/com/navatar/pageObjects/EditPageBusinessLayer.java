@@ -1968,10 +1968,10 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 	public boolean removeToadysTask(boolean removeTodaystask ) {
 		String xPath =null;
 		boolean delete=true;
-		if (clickOnEditPageLink()) {
-			CommonLib.ThreadSleep(2000);
+//		if (clickOnEditPageLink()) {
+			CommonLib.ThreadSleep(5000);
 
-			CommonLib.switchToFrame(driver, 20, getAppBuilderIframe(20));
+			CommonLib.switchToFrame(driver, 30, getAppBuilderIframe(30));
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 		if(removeTodaystask) {
 			ThreadSleep(5000);
@@ -1979,10 +1979,11 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		WebElement activity =isDisplayed(driver, TodaysTaskComponent(30), "visibility", 30, "");
 		
 		if(activity!=null) {
-			
-			click(driver, activity, " ", action.BOOLEAN);
-		//	mouseOverClickOperation(driver, activity);
+			mouseOverClickOperation(driver, activity);
 			ThreadSleep(1000);
+			clickUsingJavaScript(driver, activity, " ", action.BOOLEAN);
+			
+			ThreadSleep(2000);
 			
 			if(clickUsingJavaScript(driver, TodaystaskComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
 				activity =isDisplayed(driver, TodaysTaskComponent(10), "visibility", 10, "");
@@ -2008,11 +2009,45 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 		}
 		
+		
+		WebElement activity2 =isDisplayed(driver, TodaysEventComponent(30), "visibility", 30, "");
+		
+		if(activity2!=null) {
+			mouseOverClickOperation(driver, activity);
+			ThreadSleep(1000);
+			clickUsingJavaScript(driver, activity2, " ", action.BOOLEAN);
+		//	
+			ThreadSleep(2000);
+			
+			if(clickUsingJavaScript(driver, TodaysEventComponentDeleteButton(10), "Delete component button", action.BOOLEAN)) {
+				activity2 =isDisplayed(driver, TodaysEventComponent(10), "visibility", 10, "");
+				if(activity2==null) {
+					delete=true;
+					log(LogStatus.PASS, "Today's Events component is removed sucessfully after delete in the record page", YesNo.No);
+
+				}else {
+					
+					log(LogStatus.ERROR, "Not able to removed Today's Events component after delete in the record page", YesNo.Yes);
+					sa.assertTrue(false, "Not able to removed Today's Events component after delete in the record page");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Could not be click on Delete component button", YesNo.Yes);
+				sa.assertTrue(false, "Could not be click on Delete component button");
+
+			}
+			
+		}else {
+			log(LogStatus.PASS, "Today's Events component is alreday removed in the record page", YesNo.No);
+			System.out.println("Today's Events component is alreday removed in the record page");
+			
+		}
 		}else {
 			return true;
 
 		}
 			CommonLib.switchToDefaultContent(driver);
+			ThreadSleep(5000);
 		if (CommonLib.click(driver, getSaveButton(20), " Save Button",
 				action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.INFO, " save button has been clicked", YesNo.No);
@@ -2022,11 +2057,11 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			sa.assertTrue(false, "Could not be click on save button");
 
 		}
-		}else {
-			log(LogStatus.ERROR, "Could not be click on edit page button", YesNo.Yes);
-			sa.assertTrue(false, "Could not be click on edit page button");
-
-		}
+//		}else {
+//			log(LogStatus.ERROR, "Could not be click on edit page button", YesNo.Yes);
+//			sa.assertTrue(false, "Could not be click on edit page button");
+//
+//		}
 		return true;
 	}
 		
@@ -2132,9 +2167,8 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		
 		List<String> result =compareMultipleList(driver, tabName, allTabs);
 		if(result.isEmpty()) {
-			log(LogStatus.INFO, tabName+": Tab is present in Lightning Record Page:"+name, YesNo.No);
+			log(LogStatus.WARNING, tabName+": Tab is present in Lightning Record Page:"+name, YesNo.Yes);
 			System.out.println(tabName+": Tab is present in Lightning Record Page:"+name);
-			sa.assertTrue(false, tabName+": Tab is alreday present in Lightning Record Page:"+name);
 			if(allTabs.get(0).getText().trim().equalsIgnoreCase(tabName)) {
 				log(LogStatus.INFO, tabName+": Tab Already present in first position of Lightning Record Page:"+name, YesNo.No);
 				System.out.println(tabName+": Tab Already present in first position of Lightning Record Page:"+name);
@@ -2613,11 +2647,15 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		boolean flag = false;
 		int status = 0;
 
-		if (clickOnEditPageLink()) {
-			CommonLib.ThreadSleep(2000);
+			CommonLib.switchToDefaultContent(driver);
+			CommonLib.ThreadSleep(3000);
 
 			CommonLib.switchToFrame(driver, 20, getAppBuilderIframe(20));
+			CommonLib.ThreadSleep(5000);
 			JavascriptExecutor js = (JavascriptExecutor) driver;
+			WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//h2[text()='" + Title + "']",
+					"Component Title ", action.SCROLLANDBOOLEAN, 20);
+			if(alreadyAddedComponentToHomePage==null) {
 			CommonLib.clickUsingJavaScript(driver, getFirstComponent(20),"");
 			CommonLib.ThreadSleep(2000);
 			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
@@ -2715,36 +2753,37 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 				log(LogStatus.FAIL, "Could not be Search the item" + Component, YesNo.Yes);
 				sa.assertTrue(false,"Could not be Search the item" + Component);
 			}
-		}
-		else {
-			log(LogStatus.FAIL, "Could not click on the Edit Page", YesNo.Yes);
-			sa.assertTrue(false,"Could not click on the Edit Page");
-			return false;
-		}
+			}else {
+				 status++;
+				 log(LogStatus.PASS, "Component:"+Title+"Already Added to Referenced Component", YesNo.Yes);
+			}
 
 		if (status > 0) {
+			ThreadSleep(2000);
+			 alreadyAddedComponentToHomePage = FindElement(driver, "//h2[text()='"+Title+"']",
+					"Component Title ", action.SCROLLANDBOOLEAN, 10);
+			if (alreadyAddedComponentToHomePage != null) {
+
+				log(LogStatus.PASS, "Component Title Matched to Home Page " + ComponentName, YesNo.Yes);
+				status++;
+			}
+			else {
+				log(LogStatus.FAIL, "Component Title Not Matched to Home Page :" + ComponentName, YesNo.No);
+				sa.assertTrue(false,"Component Title Not Matched to Home Page :" + ComponentName);
+			}
+			switchToDefaultContent(driver);
 			ThreadSleep(5000);
 			if (CommonLib.clickUsingJavaScript(driver, getEditPageBackButton(projectName, 20), "Edit Page Back Button",
 					action.SCROLLANDBOOLEAN)) {
 				log(LogStatus.PASS, "Clicked on Edit Page Back Button", YesNo.No);
 				ThreadSleep(5000);
-				WebElement alreadyAddedComponentToHomePage = FindElement(driver, "//h2[text()='" + Title + "']",
-						"Component Title ", action.SCROLLANDBOOLEAN, 10);
-				if (alreadyAddedComponentToHomePage != null) {
-
-					log(LogStatus.PASS, "Component Title Matched to Home Page " + ComponentName, YesNo.Yes);
-					status++;
-				}
-				else {
-					log(LogStatus.FAIL, "Component Title Not Matched to Home Page :" + ComponentName, YesNo.No);
-					sa.assertTrue(false,"Component Title Not Matched to Home Page :" + ComponentName);
-				}
+				
 			} else {
 				log(LogStatus.FAIL, "Not Able to Click on Edit Page Back Button", YesNo.No);
 				sa.assertTrue(false,"Not Able to Click on Edit Page Back Button");
 			}
 		}
-		if (status >= 2)
+		if (status >0)
 			return flag = true;
 
 		else

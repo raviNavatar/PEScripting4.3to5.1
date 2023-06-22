@@ -14,6 +14,7 @@ import static com.navatar.generic.CommonLib.switchOnWindow;
 import static com.navatar.generic.CommonLib.switchToDefaultContent;
 import static com.navatar.generic.CommonLib.switchToFrame;
 import static com.navatar.generic.CommonVariables.*;
+import static org.testng.Assert.assertTrue;
 
 import java.awt.Color;
 import java.text.DateFormat;
@@ -60,6 +61,7 @@ import com.navatar.pageObjects.DataLoaderWizardPageBusinessLayer;
 import com.navatar.pageObjects.EditPageBusinessLayer;
 import com.navatar.pageObjects.FieldAndRelationshipPageBusinessLayer;
 import com.navatar.pageObjects.HomePageBusineesLayer;
+import com.navatar.pageObjects.LightningAppBuilderPageBusinessLayer;
 import com.navatar.pageObjects.LoginPageBusinessLayer;
 import com.navatar.pageObjects.SetupPageBusinessLayer;
 import com.relevantcodes.extentreports.ExtentReports;
@@ -325,7 +327,6 @@ public class Post_CheckScript extends BaseLib {
 				if(actionflag) {
 					
 					log(LogStatus.WARNING, "Action Notification Setting already Enable/Checked", YesNo.Yes);
-					sa.assertTrue(false, "Action Notification Setting already Enable/Checked");
 
 				}else {
 					log(LogStatus.INFO, "Action Notification Setting Is disable, Now going to Enable setting", YesNo.No);
@@ -351,7 +352,6 @@ public class Post_CheckScript extends BaseLib {
 				if(infoflag) {
 					
 					log(LogStatus.WARNING, "Info Notification Setting already Enable/Checked", YesNo.Yes);
-					sa.assertTrue(false, "Info Notification Setting already Enable/Checked");
 				}else {
 					
 					if(click(driver, bp.getInformationalNotificationCheckbox(10),"Informational Notification Checkbox",action.BOOLEAN)) {
@@ -632,9 +632,8 @@ public class Post_CheckScript extends BaseLib {
 			if (CommonLib.isDisplayed(driver,
 					FindElement(driver, "//span[text()='Navatar Help']", "", action.BOOLEAN, 20), "visibility", 20,
 					"" + " Navatar Help") != null) {
-				log(LogStatus.INFO, " Navatar Help is Already created in saleforce help" + "", YesNo.No);
-				sa.assertTrue(false,
-						" Navatar Help is Already created in saleforce help icon");
+				log(LogStatus.WARNING, " Navatar Help is Already created in saleforce help" + "", YesNo.Yes);
+				
 			} else {
 				refresh(driver);
 				try {
@@ -678,7 +677,6 @@ public class Post_CheckScript extends BaseLib {
 
 				}
 
-				log(LogStatus.INFO, "not able to find salesforce help:" + "", YesNo.No);
 			}
 
 		} else {
@@ -2209,54 +2207,19 @@ public class Post_CheckScript extends BaseLib {
 	}
 
 	@Test(priority = 13,dependsOnMethods = {"isRexecute"})
-	public void verifyAddNotificationOnHomePageForPEFOFApp() {
+	public void verifyAddNotificationOnHomePageAndRemoveTodayTaskNEvents () {
 
 		String projectName = "";
-		String[] appName = {"PE", "FOF"}; 
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
-		
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		for(int i = 0; i < appName.length; i++ ) {
-		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-		
-			if (lp.openAppFromAppLauncher(60, appName[i])) {
-				log(LogStatus.PASS, "Click on App From App Launcher : " + appName[i], YesNo.No);
-				ThreadSleep(2000);
-				if (edit.addNotificationComponent(projectName, "Navatar Notification", "Notifications", "Z (Do not use) Navatar Notification Popup")) {
-					log(LogStatus.PASS, "Component Added to Home Page: Navatar Notification", YesNo.No);
-				}
-				else {
-					log(LogStatus.FAIL, "Component Not Able to Add to Home Page: Navatar Notification", YesNo.Yes);
-					sa.assertTrue(false, "Component Not Able to Add to Home Page: Navatar Notification");
-					}
-				}
-				else {
-					log(LogStatus.FAIL, "Not able to click on App From App Launcher : " + appName[i], YesNo.Yes);
-					sa.assertTrue(false, "Not able to click on App From App Launcher : " + appName[i]);
-				}
-			} else {
-					sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-					log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
-			}
-		}
-		
-		sa.assertAll();
-	}
-	
-	@Test(priority = 14,dependsOnMethods = {"isRexecute"})
-	public void VerifyDisablingContactTransferSetting() {
-
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-
-		String domainurl =null;
-		String parentWindow=null;
+		SetupPageBusinessLayer setup =new SetupPageBusinessLayer(driver);
+		LightningAppBuilderPageBusinessLayer light =new LightningAppBuilderPageBusinessLayer(driver);
+		
+			String	parentWindow=null;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
+		
 		try {
 			CommonLib.ThreadSleep(3000);
 			if (home.clickOnSetUpLink()) {
@@ -2271,90 +2234,189 @@ public class Post_CheckScript extends BaseLib {
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
 			}
-			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
-				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
+		if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
+			log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
+			ThreadSleep(5000);
+			switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+			ThreadSleep(5000);
 			
-				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-				CommonLib.ThreadSleep(5000);
-				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
-				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
-				 domainurl = ele.getText();
-				domainurl="https://"+domainurl+"/lightning/n/navpeII__Navatar_Setup";
-			}else {
-				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
-				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
+			if(light.createNewListView("HomePageListView", "Type", "equals", "Home Page")) {
 			
-			}
-			
-			} catch (Exception e) {
-				if (parentWindow != null) {
+				log(LogStatus.INFO, "abel to create 'HomePageListView' list view ", YesNo.No);
+				
+				switchToDefaultContent(driver);
+				ThreadSleep(5000);
+				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+				ThreadSleep(5000);
+				
+				String api=null;
+				String xPath =null;
+				List<WebElement> allElements = light.getAllHomepageList();
+				int no = allElements.size();
+				if(no>0) {
+				 for(int i=0;i<no;i++) {
+				String name = null;
+				try {
+					allElements = light.getAllHomepageList();
+					WebElement labelElement = allElements.get(i);
+					name = labelElement.getText();
+					if(click(driver, labelElement, "lightning home  page label :" + name,
+								action.SCROLLANDBOOLEAN)) {
+						log(LogStatus.INFO, "clicked on the lightning home  page label:" + name,
+								YesNo.No);
+						CommonLib.ThreadSleep(10000);
+						switchToFrame(driver, 30, setup.getSetUpPageIframe(60));
+						CommonLib.ThreadSleep(5000);
 
-					driver.close();
-					driver.switchTo().window(parentWindow);
-					parentWindow = null;
+
+						if(click(driver, setup.editButton(60), "edit button", action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "clicked on the edit button", YesNo.No);
+
+						}else {
+							click(driver, setup.editButton(60), "edit button", action.SCROLLANDBOOLEAN);
+							log(LogStatus.INFO, "clicked on the edit button in second try", YesNo.No);
+
+						}
+
+							CommonLib.ThreadSleep(10000);
+							xPath = "//div[@role='dialog']//button[contains(@title,'Close')]";
+							List<WebElement> closeButtons = FindElements(driver, xPath);
+
+							for (WebElement elem : closeButtons) {
+
+								click(driver, elem, "close popup button", action.SCROLLANDBOOLEAN);
+								CommonLib.ThreadSleep(1000);
+
+							}
+							
+
+							if (edit.removeToadysTask(true)) {
+								log(LogStatus.INFO, "able to add tab", YesNo.No);
+								CommonLib.ThreadSleep(2000);
+
+							} else {
+								log(LogStatus.ERROR, "Not able to able to add tab", YesNo.Yes);
+								sa.assertTrue(false, "Not able to able to add tab");
+
+							}
+							
+							if (edit.addNotificationComponent(projectName, "Navatar Notification", "Notifications",
+									"Z (Do not use) Navatar Notification Popup")) {
+								log(LogStatus.PASS, "Component Added to Home Page: Navatar Notification", YesNo.No);
+							} else {
+								log(LogStatus.FAIL, "Component Not Able to Add to Home Page: Navatar Notification", YesNo.Yes);
+								sa.assertTrue(false, "Component Not Able to Add to Home Page: Navatar Notification");
+							}
+							
+							if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
+								log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
+								CommonLib.ThreadSleep(3000);
+								switchToDefaultContent(driver);
+								ThreadSleep(5000);
+								switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+								ThreadSleep(5000);
+							}else {
+								log(LogStatus.FAIL,
+										"No lighting Home page found ",
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"No lighting Home page found ");
+							}
+							
+							
+
+						
+					} else {
+						log(LogStatus.ERROR,
+								"Not able to clicked on the lightning home  page label:" + name,
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"Not able to clicked on the lightning home  page label:" + name);
+
+					}
+				} catch (Exception e) {							
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
+						log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
+						CommonLib.ThreadSleep(3000);
+						switchToDefaultContent(driver);
+						ThreadSleep(5000);
+						switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+						ThreadSleep(5000);
+						
+					}else {
+						log(LogStatus.FAIL,
+								"No lighting Home page found ",
+								YesNo.Yes);
+						sa.assertTrue(false,
+								"No lighting Home page found ");
+					}
+					
+					continue;
 				}
-				sa.assertAll();
-			}
+				 }
+				 if (CommonLib.selectVisibleTextFromDropDown(driver,home.getViewDropDown(20), "view dropdown", "All")) {
+						log(LogStatus.INFO, "Selected the All view dropdown", YesNo.No);
+						
+					} else {
+						log(LogStatus.ERROR, "Not Able To Select All view value dropdown", YesNo.No);
 
+					}
+				 
+				}else {
+					log(LogStatus.FAIL,
+							"No lighting Home page found ",
+							YesNo.Yes);
+					sa.assertTrue(false,
+							"No lighting Home page found ");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Not able to create 'HomePageListView' list view ", YesNo.Yes);
+				sa.assertTrue(false, "Not able to create 'HomePageListView' list view ");
+			}
+			
+			
+			
+		} else {
+			log(LogStatus.ERROR, "Not able to search/click on " + object.Lightning_App_Builder, YesNo.Yes);
+			sa.assertTrue(false, "Not able to search/click on " + object.Lightning_App_Builder);
+		}
+		
+		} catch (Exception e) {
 			if (parentWindow != null) {
 
 				driver.close();
 				driver.switchTo().window(parentWindow);
-				parentWindow = null;
+				parentWindow=null;
 			}
 			
+		}
+		
+		if (parentWindow != null) {
+
+			driver.close();
 			
-			CommonLib.refresh(driver);
-			CommonLib.ThreadSleep(3000);
-			
-			driver.get(domainurl);
-			CommonLib.ThreadSleep(10000);
-			if (setup.clickOnNavatarSetupSideMenusTab("", NavatarSetupSideMenuTab.ContactTransfer)) {
-				log(LogStatus.INFO, "Clicked on Contact Transfer Tab", YesNo.No);
-				if (click(driver, setup.getEditButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10), "Edit Button", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
-					
-					if (isSelected(driver, setup.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled CheckBox")) {
-						log(LogStatus.INFO, " Contact Transfer is checked going to uncheck", YesNo.No);
-						if (click(driver,setup.getEnableCheckBoxforClickNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, 10),"Enabled Contact Transfer", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Disable Contact Transfer Box Checkbox", YesNo.No);
-							ThreadSleep(2000);
-
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
-							log(LogStatus.FAIL, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
-						}
-
-					} else {
-						log(LogStatus.FAIL, "Enable Contact Transfer is Already Disable", YesNo.Yes);
-					}
-
-
-					if (click(driver, setup.getSaveButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Save Button for No Button", YesNo.No);
-						ThreadSleep(5000);
-
-						
-					} else {
-						sa.assertTrue(false, "Not Able to Click on Save Button for No Button");
-						log(LogStatus.FAIL, "Not Able to Click on Save Button No Button", YesNo.Yes);
-					}
-
-
-				}else{
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-					log(LogStatus.FAIL, "Not Able to Click on Edit Button", YesNo.Yes);	
-				}
-
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Contact Transfer Tab");
-				log(LogStatus.FAIL, "Not Able to Click on Contact Transfer Tab", YesNo.Yes);
-			}
-			
-				
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		
 		sa.assertAll();
+		
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+		
+			
+
+		} else {
+			sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+			log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+		
+	///	
+		
+		
 	}
+	
 
 	@Test(priority = 15,dependsOnMethods = {"isRexecute"})
 
@@ -2409,63 +2471,6 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 	
-	@Test(priority = 16,dependsOnMethods = {"isRexecute"})
-	public void verifyRemoveTodaysTaskEvent() {
-		String projectName = "";
-		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
-		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-			CommonLib.ThreadSleep(3000);
-		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
-			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
-		
-			if (lp.openAppFromAppLauncher(60,"PE")) {
-				log(LogStatus.PASS, "Click on App From App Launcher : " +"PE", YesNo.No);
-				ThreadSleep(2000);
-	
-				if (edit.removeToadysTask(true)) {
-					log(LogStatus.INFO, "able to add tab", YesNo.No);
-					CommonLib.ThreadSleep(2000);
-					
-					
-					
-				} else {
-					log(LogStatus.ERROR, "Not able to able to add tab", YesNo.Yes);
-					sa.assertTrue(false, "Not able to able to add tab");
-
-				}
-				CommonLib.click(driver, edit.getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
-          	   CommonLib.ThreadSleep(3000);
-          	   
-				if (edit.removeToadysEvent(true)) {
-					log(LogStatus.INFO, "able to add tab", YesNo.No);
-					CommonLib.ThreadSleep(2000);
-					
-					
-					
-				} else {
-					log(LogStatus.ERROR, "Not able to able to add tab", YesNo.Yes);
-					sa.assertTrue(false, "Not able to able to add tab");
-
-				}
-				CommonLib.click(driver, edit.getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
-			}
-			else {
-				log(LogStatus.FAIL, "Not able to click on App From App Launcher : " + "PE", YesNo.Yes);
-				sa.assertTrue(false, "Not able to click on App From App Launcher : " + "PE");
-			}
-		} else {
-				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
-				log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
-		}
-		} catch (Exception e) {
-			
-			sa.assertAll();
-		}
-		sa.assertAll();
-}
 	
 
 	
@@ -2663,6 +2668,53 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 	}
 
+	@Test(priority = 16,enabled =false)
+	public void verifyRemoveTodaysTaskEvent() {
+		String projectName = "";
+		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
+		EditPageBusinessLayer edit = new EditPageBusinessLayer(driver);
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+		if (lp.clickOnTab(projectName, TabName.HomeTab)) {
+			log(LogStatus.PASS, "Click on Tab : " + TabName.HomeTab, YesNo.No);
+		
+			if (lp.openAppFromAppLauncher(60,"PE")) {
+				log(LogStatus.PASS, "Click on App From App Launcher : " +"PE", YesNo.No);
+				ThreadSleep(2000);
+	
+				
+				CommonLib.click(driver, edit.getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+          	   CommonLib.ThreadSleep(3000);
+          	   
+				if (edit.removeToadysEvent(true)) {
+					log(LogStatus.INFO, "able to add tab", YesNo.No);
+					CommonLib.ThreadSleep(2000);
+					
+					
+					
+				} else {
+					log(LogStatus.ERROR, "Not able to able to add tab", YesNo.Yes);
+					sa.assertTrue(false, "Not able to able to add tab");
+
+				}
+				CommonLib.click(driver, edit.getbBackIcon(50), "",action.SCROLLANDBOOLEAN);
+			}
+			else {
+				log(LogStatus.FAIL, "Not able to click on App From App Launcher : " + "PE", YesNo.Yes);
+				sa.assertTrue(false, "Not able to click on App From App Launcher : " + "PE");
+			}
+		} else {
+				sa.assertTrue(false, "Not Able to Click on Tab : " + TabName.HomeTab);
+				log(LogStatus.FAIL, "Not Able to Click on Tab : " + TabName.HomeTab, YesNo.Yes);
+		}
+		} catch (Exception e) {
+			
+			sa.assertAll();
+		}
+		sa.assertAll();
+}
 	
 	@Test(priority =16, enabled=false)
 	public void verifyRemovingActivityTimelineFromSecondaryObjects() {
@@ -3322,7 +3374,116 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 			sa.assertAll();
 	}
 	
-	
+
+	@Test(priority = 14,dependsOnMethods = {"isRexecute"})
+	public void VerifyDisablingContactTransferSetting() {
+
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		String domainurl =null;
+		String parentWindow=null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
+				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+			
+				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
+				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
+				 domainurl = ele.getText();
+				domainurl="https://"+domainurl+"/lightning/n/navpeII__Navatar_Setup";
+			}else {
+				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
+			
+			}
+			
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow = null;
+				}
+				sa.assertAll();
+			}
+
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			
+			
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(3000);
+			
+			driver.get(domainurl);
+			CommonLib.ThreadSleep(10000);
+			if (setup.clickOnNavatarSetupSideMenusTab("", NavatarSetupSideMenuTab.ContactTransfer)) {
+				log(LogStatus.INFO, "Clicked on Contact Transfer Tab", YesNo.No);
+				if (click(driver, setup.getEditButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10), "Edit Button", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
+					
+					if (isSelected(driver, setup.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled CheckBox")) {
+						log(LogStatus.INFO, " Contact Transfer is checked going to uncheck", YesNo.No);
+						if (click(driver,setup.getEnableCheckBoxforClickNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, 10),"Enabled Contact Transfer", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Disable Contact Transfer Box Checkbox", YesNo.No);
+							ThreadSleep(2000);
+
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
+							log(LogStatus.FAIL, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.FAIL, "Enable Contact Transfer is Already Disable", YesNo.Yes);
+					}
+
+
+					if (click(driver, setup.getSaveButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Save Button for No Button", YesNo.No);
+						ThreadSleep(5000);
+
+						
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Save Button for No Button");
+						log(LogStatus.FAIL, "Not Able to Click on Save Button No Button", YesNo.Yes);
+					}
+
+
+				}else{
+					sa.assertTrue(false, "Not Able to Click on Edit Button");
+					log(LogStatus.FAIL, "Not Able to Click on Edit Button", YesNo.Yes);	
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Contact Transfer Tab");
+				log(LogStatus.FAIL, "Not Able to Click on Contact Transfer Tab", YesNo.Yes);
+			}
+			
+				
+		sa.assertAll();
+	}
 
 	@Test(priority = 17,enabled =false)
 	public void VerifyEmailDeliverabilitySetting() {
