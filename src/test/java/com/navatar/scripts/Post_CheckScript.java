@@ -494,8 +494,8 @@ public class Post_CheckScript extends BaseLib {
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
 											YesNo.No);
-									CommonLib.ThreadSleep(3000);
-									switchToFrame(driver, 20, setup.getSetUpPageIframe(20));
+									CommonLib.ThreadSleep(5000);
+									switchToFrame(driver, 30, setup.getSetUpPageIframe(30));
 									CommonLib.ThreadSleep(5000);
 
 									if (setup.removeRelatedListAPI(api)) {

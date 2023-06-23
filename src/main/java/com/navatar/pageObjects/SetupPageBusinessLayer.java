@@ -8512,10 +8512,10 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		WebElement ele3 = null;
 		int count =0;
 
-		ThreadSleep(5000);
-		if (click(driver, relatedListOptionLink(10), xPath, null)) {
+		ThreadSleep(3000);
+		if (click(driver, relatedListOptionLink(20), xPath, null)) {
 			log(LogStatus.PASS, "Able to click on related list option ", YesNo.No);
-
+			ThreadSleep(2000);
 			ele = OpenActivitiesRelatedListOptionLink(10);
 			if(ele!=null) {
 				if(click(edriver, OpenActivitiesRelatedListOptionRemoveLink(20), "Open Activites remove button", action.SCROLLANDBOOLEAN)) {
