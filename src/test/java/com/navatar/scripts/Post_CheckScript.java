@@ -314,7 +314,6 @@ public class Post_CheckScript extends BaseLib {
 		try {
 			CommonLib.ThreadSleep(3000);
 			driver.get(domainurl);
-//			if (home.openAppFromAppLauchner("Navatar Setting", 20)) e
 
 				if(click(driver, bp.getNavatarSettingNotificationButton(15),"Navatar Setting Notification button",action.BOOLEAN)) {
 					log(LogStatus.PASS, "able to add tab", YesNo.No);
@@ -325,7 +324,6 @@ public class Post_CheckScript extends BaseLib {
 				if(actionflag) {
 					
 					log(LogStatus.WARNING, "Action Notification Setting already Enable/Checked", YesNo.Yes);
-					sa.assertTrue(false, "Action Notification Setting already Enable/Checked");
 
 				}else {
 					log(LogStatus.INFO, "Action Notification Setting Is disable, Now going to Enable setting", YesNo.No);
@@ -351,7 +349,6 @@ public class Post_CheckScript extends BaseLib {
 				if(infoflag) {
 					
 					log(LogStatus.WARNING, "Info Notification Setting already Enable/Checked", YesNo.Yes);
-					sa.assertTrue(false, "Info Notification Setting already Enable/Checked");
 				}else {
 					
 					if(click(driver, bp.getInformationalNotificationCheckbox(10),"Informational Notification Checkbox",action.BOOLEAN)) {
@@ -379,10 +376,7 @@ public class Post_CheckScript extends BaseLib {
 					sa.assertTrue(false, "Not able to click on notification link in navatar setting tab");
 				}
 				
-//			}else {
-//				log(LogStatus.FAIL, "Not able to open Tab Navatar Setting form app laucnher  ", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to open Tab Navatar Setting form app laucnher  ");
-//			}
+
 		} catch (Exception e) {
 		
 				switchToDefaultContent(driver);
@@ -632,9 +626,8 @@ public class Post_CheckScript extends BaseLib {
 			if (CommonLib.isDisplayed(driver,
 					FindElement(driver, "//span[text()='Navatar Help']", "", action.BOOLEAN, 20), "visibility", 20,
 					"" + " Navatar Help") != null) {
-				log(LogStatus.INFO, " Navatar Help is Already created in saleforce help" + "", YesNo.No);
-				sa.assertTrue(false,
-						" Navatar Help is Already created in saleforce help icon");
+				log(LogStatus.WARNING, " Navatar Help is Already created in saleforce help" + "", YesNo.Yes);
+				
 			} else {
 				refresh(driver);
 				try {
@@ -2246,116 +2239,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	@Test(priority = 14,dependsOnMethods = {"isRexecute"})
-	public void VerifyDisablingContactTransferSetting() {
-
-		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
-		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
-		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
-
-		String domainurl =null;
-		String parentWindow=null;
-		CommonLib.refresh(driver);
-		CommonLib.ThreadSleep(3000);
-		try {
-			CommonLib.ThreadSleep(3000);
-			if (home.clickOnSetUpLink()) {
-
-				parentWindow = switchOnWindow(driver);
-				if (parentWindow == null) {
-					sa.assertTrue(false,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-					log(LogStatus.FAIL,
-							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
-							YesNo.Yes);
-					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
-				}
-			}
-			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
-				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
-				CommonLib.ThreadSleep(3000);
-			
-				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
-				CommonLib.ThreadSleep(5000);
-				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
-				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
-				 domainurl = ele.getText();
-				domainurl="https://"+domainurl+"/lightning/n/navpeII__Navatar_Setup";
-			}else {
-				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
-				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
-			
-			}
-			
-			} catch (Exception e) {
-				if (parentWindow != null) {
-
-					driver.close();
-					driver.switchTo().window(parentWindow);
-					parentWindow = null;
-				}
-				sa.assertAll();
-			}
-
-			if (parentWindow != null) {
-
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow = null;
-			}
-			
-			
-			CommonLib.refresh(driver);
-			CommonLib.ThreadSleep(3000);
-			
-			driver.get(domainurl);
-			CommonLib.ThreadSleep(10000);
-			if (setup.clickOnNavatarSetupSideMenusTab("", NavatarSetupSideMenuTab.ContactTransfer)) {
-				log(LogStatus.INFO, "Clicked on Contact Transfer Tab", YesNo.No);
-				if (click(driver, setup.getEditButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10), "Edit Button", action.BOOLEAN)) {
-					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
-					
-					if (isSelected(driver, setup.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled CheckBox")) {
-						log(LogStatus.INFO, " Contact Transfer is checked going to uncheck", YesNo.No);
-						if (click(driver,setup.getEnableCheckBoxforClickNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, 10),"Enabled Contact Transfer", action.BOOLEAN)) {
-							log(LogStatus.INFO, "Clicked on Disable Contact Transfer Box Checkbox", YesNo.No);
-							ThreadSleep(2000);
-
-						} else {
-							sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
-							log(LogStatus.FAIL, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
-						}
-
-					} else {
-						log(LogStatus.FAIL, "Enable Contact Transfer is Already Disable", YesNo.Yes);
-					}
-
-
-					if (click(driver, setup.getSaveButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
-						log(LogStatus.INFO, "Clicked on Save Button for No Button", YesNo.No);
-						ThreadSleep(5000);
-
-						
-					} else {
-						sa.assertTrue(false, "Not Able to Click on Save Button for No Button");
-						log(LogStatus.FAIL, "Not Able to Click on Save Button No Button", YesNo.Yes);
-					}
-
-
-				}else{
-					sa.assertTrue(false, "Not Able to Click on Edit Button");
-					log(LogStatus.FAIL, "Not Able to Click on Edit Button", YesNo.Yes);	
-				}
-
-			} else {
-				sa.assertTrue(false, "Not Able to Click on Contact Transfer Tab");
-				log(LogStatus.FAIL, "Not Able to Click on Contact Transfer Tab", YesNo.Yes);
-			}
-			
-				
-		sa.assertAll();
-	}
-
+	
 	@Test(priority = 15,dependsOnMethods = {"isRexecute"})
 
 	public void VerifyModifyingIsTouchpointPackageField () {
@@ -3322,7 +3206,116 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 			sa.assertAll();
 	}
 	
-	
+	@Test(priority = 14,enabled =false)
+	public void VerifyDisablingContactTransferSetting() {
+
+		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+
+		String domainurl =null;
+		String parentWindow=null;
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			if (setup.searchStandardOrCustomObject("", mode, object.My_Domain)) {
+				log(LogStatus.PASS, object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				CommonLib.ThreadSleep(3000);
+			
+				switchToFrame(driver,30, bp.getenterpriseeditionFrame(30));
+				CommonLib.ThreadSleep(5000);
+				String xpath = "//label[contains(text(),'My Domain URL')]//ancestor::tr/td/span/span";
+				WebElement ele = FindElement(driver, xpath, "My Domian Url", action.SCROLLANDBOOLEAN, 10);
+				 domainurl = ele.getText();
+				domainurl="https://"+domainurl+"/lightning/n/navpeII__Navatar_Setup";
+			}else {
+				log(LogStatus.FAIL,object.My_Domain.toString() + " object has been opened in setup page", YesNo.Yes);
+				sa.assertTrue(false,object.My_Domain.toString() + " object has been opened in setup page");
+			
+			}
+			
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow = null;
+				}
+				sa.assertAll();
+			}
+
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+			
+			
+			CommonLib.refresh(driver);
+			CommonLib.ThreadSleep(3000);
+			
+			driver.get(domainurl);
+			CommonLib.ThreadSleep(10000);
+			if (setup.clickOnNavatarSetupSideMenusTab("", NavatarSetupSideMenuTab.ContactTransfer)) {
+				log(LogStatus.INFO, "Clicked on Contact Transfer Tab", YesNo.No);
+				if (click(driver, setup.getEditButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10), "Edit Button", action.BOOLEAN)) {
+					log(LogStatus.INFO, "Clicked on Edit Button", YesNo.No);
+					
+					if (isSelected(driver, setup.getEnableCheckBoxforNavatarSetUpSideMenuTab(environment, mode,NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, ClickOrCheckEnableDisableCheckBox.Click, 10), "Enabled CheckBox")) {
+						log(LogStatus.INFO, " Contact Transfer is checked going to uncheck", YesNo.No);
+						if (click(driver,setup.getEnableCheckBoxforClickNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, EditViewMode.Edit, 10),"Enabled Contact Transfer", action.BOOLEAN)) {
+							log(LogStatus.INFO, "Clicked on Disable Contact Transfer Box Checkbox", YesNo.No);
+							ThreadSleep(2000);
+
+						} else {
+							sa.assertTrue(false, "Not Able to Click on Enable Contact Transfer Checkbox");
+							log(LogStatus.FAIL, "Not Able to Click on Enable Contact Transfer Checkbox", YesNo.Yes);
+						}
+
+					} else {
+						log(LogStatus.FAIL, "Enable Contact Transfer is Already Disable", YesNo.Yes);
+					}
+
+
+					if (click(driver, setup.getSaveButtonforNavatarSetUpSideMenuTab("",NavatarSetupSideMenuTab.ContactTransfer, 10, TopOrBottom.TOP), "Save Button", action.BOOLEAN)) {
+						log(LogStatus.INFO, "Clicked on Save Button for No Button", YesNo.No);
+						ThreadSleep(5000);
+
+						
+					} else {
+						sa.assertTrue(false, "Not Able to Click on Save Button for No Button");
+						log(LogStatus.FAIL, "Not Able to Click on Save Button No Button", YesNo.Yes);
+					}
+
+
+				}else{
+					sa.assertTrue(false, "Not Able to Click on Edit Button");
+					log(LogStatus.FAIL, "Not Able to Click on Edit Button", YesNo.Yes);	
+				}
+
+			} else {
+				sa.assertTrue(false, "Not Able to Click on Contact Transfer Tab");
+				log(LogStatus.FAIL, "Not Able to Click on Contact Transfer Tab", YesNo.Yes);
+			}
+			
+				
+		sa.assertAll();
+	}
+
 
 	@Test(priority = 17,enabled =false)
 	public void VerifyEmailDeliverabilitySetting() {

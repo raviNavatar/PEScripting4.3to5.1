@@ -20348,11 +20348,11 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 		int horizon=0;
 		int vertical=0;
 		 if(className.equalsIgnoreCase("Pre_CheckScript")) {
-				 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script FAILED</center> <br><center> STOP!!! DO NOT EXECUTE ANY MORE SCRIPTS!!</center></br><br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\\LogFile\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
+				 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><br> </br><center>  Automation Script FAILED</center> <br><center> STOP!!! DO NOT EXECUTE ANY MORE SCRIPTS!!</center></br><br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
 				 horizon =700;
 				 vertical=170;
 		 }else {
-			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><center>  Automation Script FAILED</center> <br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\\LogFile\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
+			 markup = "<html><body><font=inherit color="+"#FF0000"+" size=+0><center>  Automation Script FAILED</center> <br><center> Please connect with the Product Team and send the latest report file to the Product Team.</br><br> <center>Go to the \"Reports\" folder to get the log file.</center></br><br> </br></center></br></font></body></html>";
 			 horizon =700;
 			 vertical=150;
 		 }
