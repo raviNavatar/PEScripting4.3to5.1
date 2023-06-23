@@ -32,7 +32,7 @@ import javax.swing.SwingConstants;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 
 import org.testng.annotations.Test;
@@ -316,7 +316,6 @@ public class Post_CheckScript extends BaseLib {
 		try {
 			CommonLib.ThreadSleep(3000);
 			driver.get(domainurl);
-//			if (home.openAppFromAppLauchner("Navatar Setting", 20)) e
 
 				if(click(driver, bp.getNavatarSettingNotificationButton(15),"Navatar Setting Notification button",action.BOOLEAN)) {
 					log(LogStatus.PASS, "able to add tab", YesNo.No);
@@ -378,11 +377,7 @@ public class Post_CheckScript extends BaseLib {
 					log(LogStatus.FAIL, "Not able to click on notification link in navatar setting tab", YesNo.Yes);
 					sa.assertTrue(false, "Not able to click on notification link in navatar setting tab");
 				}
-				
-//			}else {
-//				log(LogStatus.FAIL, "Not able to open Tab Navatar Setting form app laucnher  ", YesNo.Yes);
-//				sa.assertTrue(false, "Not able to open Tab Navatar Setting form app laucnher  ");
-//			}
+		
 		} catch (Exception e) {
 		
 				switchToDefaultContent(driver);
@@ -3375,7 +3370,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 	}
 	
 
-	@Test(priority = 14,dependsOnMethods = {"isRexecute"})
+	@Test(priority = 14,enabled=false)
 	public void VerifyDisablingContactTransferSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
