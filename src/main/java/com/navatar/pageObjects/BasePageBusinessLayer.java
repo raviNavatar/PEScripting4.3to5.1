@@ -20453,13 +20453,22 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 			LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
 
 			boolean flag = false;
-			if (click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {
+			if (click(driver, lp.getAppLuncherXpath(timeOut), "App launcher icon", action.BOOLEAN)) {				
+				log(LogStatus.PASS, " click on app launcher icon", YesNo.No);
+				
+				ThreadSleep(2000);
+				
+				WebElement viewAll = FindElement(driver, "//button[text()='View All']", " App Name", action.BOOLEAN, timeOut);
+				
+				if(clickUsingJavaScript(driver, viewAll,
+						"View ALl button", action.BOOLEAN)) {
+					log(LogStatus.PASS, " click on View ALl button of app launcher", YesNo.No);
 
-				AppListeners.appLog.info(" click on app launcher icon");
-				ThreadSleep(1000);
+				ThreadSleep(3000);
 				if (sendKeys(driver, lp.getSearchAppTextBoxInAppLuncher(timeOut), objectName, "Search box in app launcher",
 						action.BOOLEAN)) {
-					AppListeners.appLog.info("entered value in app launcher search box value:" + objectName);
+					log(LogStatus.PASS, "entered value in app launcher search box value:"+objectName, YesNo.Yes);
+
 					ThreadSleep(3000);
 					if (clickUsingJavaScript(driver, lp.getAppNameLabelInAppLuncher(objectName, timeOut),
 							objectName + ":app label in app launcher", action.BOOLEAN)) {
@@ -20467,7 +20476,7 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						ThreadSleep(7000);
 
-						String fullXpath = "//span[text()='" + objectName + "']";
+						String fullXpath = "//span[@title='" + objectName + "' or text()='"+objectName+"']";
 						WebElement ele = FindElement(driver, fullXpath, " App Name", action.BOOLEAN, timeOut);
 
 						String pageName = ele.getText();
@@ -20477,24 +20486,32 @@ public class BasePageBusinessLayer extends BasePage implements BasePageErrorMess
 
 						} else {
 
-							AppListeners.appLog.info(objectName + " page not loaded");
+							log(LogStatus.PASS, objectName + " page not loaded", YesNo.Yes);
+
 							return false;
 						}
 
 					} else {
 
-						AppListeners.appLog.info("Not able to click on label in app launcher" + objectName);
+						log(LogStatus.PASS, "Not able to click on label in app launcher"+objectName, YesNo.Yes);
+
 						return false;
 					}
 				} else {
 
-					AppListeners.appLog.info("Not able to entered value in app launcher search box value:" + objectName);
+					log(LogStatus.PASS, "Not able to entered value in app launcher search box value:", YesNo.Yes);
+
+					return false;
+				}
+				}else {
+					log(LogStatus.FAIL, "Not able to click on View ALl button of app launcher", YesNo.No);
 					return false;
 				}
 
 			} else {
 
 				AppListeners.appLog.info("Not able to click on app launcher icon");
+				log(LogStatus.PASS, "Not able to click on app launcher icon", YesNo.Yes);
 				return false;
 			}
 			return flag;

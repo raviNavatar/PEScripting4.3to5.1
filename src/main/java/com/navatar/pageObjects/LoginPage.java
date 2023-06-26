@@ -345,7 +345,7 @@ public class LoginPage extends BasePageBusinessLayer{
 		return isDisplayed(driver, appLuncherXpath, "Visibility", timeOut, "app luncher xpath");
 	}
 	
-	@FindBy(xpath = "//input[@placeholder='Search apps and items...']")
+	@FindBy(xpath = "//input[contains(@placeholder,'Search apps')]")
 	private WebElement searchAppTextBoxInAppLuncher;
 
 	public WebElement getSearchAppTextBoxInAppLuncher(int timeOut) {
@@ -373,7 +373,7 @@ public class LoginPage extends BasePageBusinessLayer{
 	}
 	
 	public WebElement getAppNameLabelInAppLuncher(String appName, int timeOut) {
-		String xpath="//img[contains(@src ,'my.salesforce')]/ancestor::one-app-launcher-menu-item//a[@data-label='"+ appName +"']";
+		String xpath="//one-app-launcher-app-tile[@data-name='"+appName+"']//*[contains(@title,'Lightning View')]/..//a";
 		return isDisplayed(driver, FindElement(driver,xpath,appName+" app name in App luncher Name ", action.BOOLEAN,timeOut), "visibility", timeOut,appName+" app name in App luncher Name ");	
 	
 	}
