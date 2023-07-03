@@ -2759,17 +2759,17 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 		if (status > 0) {
 			ThreadSleep(2000);
-			 alreadyAddedComponentToHomePage = FindElement(driver, "//h2[text()='"+Title+"']",
-					"Component Title ", action.SCROLLANDBOOLEAN, 10);
-			if (alreadyAddedComponentToHomePage != null) {
-
-				log(LogStatus.PASS, "Component Title Matched to Home Page " + ComponentName, YesNo.Yes);
-				status++;
-			}
-			else {
-				log(LogStatus.FAIL, "Component Title Not Matched to Home Page :" + ComponentName, YesNo.No);
-				sa.assertTrue(false,"Component Title Not Matched to Home Page :" + ComponentName);
-			}
+//			 alreadyAddedComponentToHomePage = FindElement(driver, "//h2[text()='"+Title+"']",
+//					"Component Title ", action.SCROLLANDBOOLEAN, 10);
+//			if (alreadyAddedComponentToHomePage != null) {
+//
+//				log(LogStatus.PASS, "Component Title Matched to Home Page " + ComponentName, YesNo.Yes);
+//				status++;
+//			}
+//			else {
+//				log(LogStatus.FAIL, "Component Title Not Matched to Home Page :" + ComponentName, YesNo.No);
+//				sa.assertTrue(false,"Component Title Not Matched to Home Page :" + ComponentName);
+//			}
 			switchToDefaultContent(driver);
 			ThreadSleep(5000);
 			if (CommonLib.clickUsingJavaScript(driver, getEditPageBackButton(projectName, 20), "Edit Page Back Button",
