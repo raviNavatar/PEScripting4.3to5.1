@@ -9377,6 +9377,64 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		return flag;
 	}
 	
+	public boolean searchStandardOrCustomObjectFieldAndRelationshipApi(String api, int timeout) {
+		int q = 0;
+		WebElement ele=null;
+		boolean flag = false;	
+		
+			String XpathelementTOSearch ="//td[2]//span[text()='"+api+"']/../preceding-sibling::td/a";
+				int widgetTotalScrollingHeight = Integer.parseInt(String.valueOf(((JavascriptExecutor) driver)
+						.executeScript("return arguments[0].scrollHeight", getSelectProspectsGridScrollBox(10))));
+				((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(0,0)", getSelectProspectsGridScrollBox(10));
+				ThreadSleep(2000);
+				for (int i = 0; i <= widgetTotalScrollingHeight / 5; i++) {
+             ThreadSleep(2000);
+					boolean t =!driver.findElements(By.xpath(XpathelementTOSearch)).isEmpty();
+             if (t) {
+            		appLog.info("Element Successfully Found and displayed");
+					ThreadSleep(500);
+					ele = FindElement(driver, XpathelementTOSearch, "", action.BOOLEAN, 10);
+					if (ele != null) {
+						if (click(driver, ele, "", action.BOOLEAN)) {
+							appLog.info("clicked on Contact Name : "+"");
+							flag=true;
+							break;
+						}
+					
+					
+                    }else {
+						System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
+						((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 500) + ")",
+								getSelectProspectsGridScrollBox(10));
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						if (i == widgetTotalScrollingHeight / 20) {
+						
+						}
+					}
+				}else {
+					System.out.println("Not FOund: " + By.xpath(XpathelementTOSearch).toString());
+					((JavascriptExecutor) driver).executeScript("arguments[0].scrollTo(" + q + "," + (q = q + 500) + ")",
+							getSelectProspectsGridScrollBox(10));
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					if (i == widgetTotalScrollingHeight / 20) {
+					
+					}
+				}
+				}
+		
+		return flag;
+	}
+	
 	public boolean CreateNewCustomMetaData(String label, String description,int timeOut) {
 		boolean flag = false;
 		

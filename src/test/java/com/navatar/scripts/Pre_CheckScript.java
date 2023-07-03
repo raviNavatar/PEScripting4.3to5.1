@@ -284,7 +284,7 @@ public class Pre_CheckScript extends BaseLib {
 								fieldName ="Type";
 							}else {
 								fields=AccountSource;
-								fieldName ="Account Source";
+								fieldName ="AccountSource";
 							}
 							
 							if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
@@ -292,14 +292,14 @@ public class Pre_CheckScript extends BaseLib {
 								log(LogStatus.PASS, "clicked on page layout of object feature of "
 										+ api + " object", YesNo.Yes);
 								
-							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
-								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
+							if (setup.searchStandardOrCustomObjectFieldAndRelationshipApi(fieldName,20)) {
+								log(LogStatus.INFO, "Field value has been found in " + api, YesNo.No);
 								CommonLib.ThreadSleep(6000);
-								xpath = "//span[text()='" + fieldName + "']";
-								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
-								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
-									
+//								xpath = "//span[text()='" + fieldName + "']/../preceding-sibling::td/a";
+//								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
+//								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
+//									
 									for(String value:fields) {
 										
 											CommonLib.ThreadSleep(3000);
@@ -328,10 +328,10 @@ public class Pre_CheckScript extends BaseLib {
 										parentWindow=null;
 									}
 
-								}else {
-									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
-									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ api + " object");
-								}
+//								}else {
+//									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+//									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ api + " object");
+//								}
 							} else {
 								log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
 								sa.assertTrue(false,"Not able to click on Record type of object feature of " + api + " object");

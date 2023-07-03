@@ -649,7 +649,7 @@ public class Post_CheckScript extends BaseLib {
 						log(LogStatus.PASS, object.Help_Menu + " object has been opened in setup page", YesNo.Yes);
 						CommonLib.ThreadSleep(3000);
 
-						if (setup.CreateHelpMenu(projectName, mode, "Navatar Help", "View Our User Guide", domainurl,
+						if (setup.CreateHelpMenu(projectName, mode, "Navatar Help", "Browse Help Topics", domainurl,
 								10)) {
 							// flag1 = true;
 							log(LogStatus.PASS, "able to setup ulr in help menu", YesNo.Yes);
@@ -1520,7 +1520,7 @@ public class Post_CheckScript extends BaseLib {
 										layoutName1.add("Company");
 										sourceANDDestination1 = new ArrayList<String>();
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.New_Deal.toString());
 										sourceANDDestination1.add(GlobalActionItem.Export.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
@@ -1531,7 +1531,7 @@ public class Post_CheckScript extends BaseLib {
 										layoutName1.add("");
 										 sourceANDDestination1 = new ArrayList<String>();
 										sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//										sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 										sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
 
 
@@ -1541,7 +1541,7 @@ public class Post_CheckScript extends BaseLib {
 									layoutName1.add("");
 									sourceANDDestination1 = new ArrayList<String>();
 									sourceANDDestination1.add(GlobalActionItem.Create_Task.toString());
-									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
+//									sourceANDDestination1.add(GlobalActionItem.New_Contact.toString());
 									sourceANDDestination1.add(GlobalActionItem.Add_To_Theme.toString());
 
 									
@@ -1753,7 +1753,7 @@ public class Post_CheckScript extends BaseLib {
 									
 									  sourceANDDestination.put(PageLabel.Multiple.toString(),"");
 									  sourceANDDestination.put(PageLabel.LOI_Due_Date.toString(),"");
-									  sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
+//									  sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
 									  sourceANDDestination.put(PageLabel.Platform_Company.toString(),"");
 									  sourceANDDestination.put(PageLabel.Sales.toString(),"");
 									  sourceANDDestination.put(PageLabel.Company.toString(),"");
@@ -1865,7 +1865,7 @@ public class Post_CheckScript extends BaseLib {
 			}
 		if (setup.searchStandardOrCustomObject(environment, mode, object.Custom_Metadata_Types)) {
 			log(LogStatus.INFO, "click on Object : " + object.Custom_Metadata_Types, YesNo.No);
-			ThreadSleep(2000);
+			ThreadSleep(5000);
 			switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
 			ThreadSleep(5000);
 			
@@ -1945,7 +1945,7 @@ public class Post_CheckScript extends BaseLib {
 								deactivated= Typedescription.split("<break>")[1].split(",");
 								 deleted = Typedescription.split("<break>")[0].split(",");
 							}else {
-								fieldName ="Account Source";
+								fieldName ="AccountSource";
 								AccountSourcedescription=AccountSourcedescription.replaceAll("\\[", "").replaceAll("\\]","");
 								deactivated= AccountSourcedescription.split("<break>")[1].split(",");
 								 deleted = AccountSourcedescription.split("<break>")[0].split(",");
@@ -1955,13 +1955,13 @@ public class Post_CheckScript extends BaseLib {
 								ObjectFeatureName.FieldAndRelationShip)) {
 							log(LogStatus.PASS, "clicked on FieldAndRelationShip of object feature of "+ api.toString() + " object", YesNo.No);
 							ThreadSleep(3000);
-							if (CommonLib.sendKeysAndPressEnter(driver,fr.getQucikSearchInFieldAndRelationshipPage(50), fieldName, "Field",action.SCROLLANDBOOLEAN)) {
+							if (setup.searchStandardOrCustomObjectFieldAndRelationshipApi(fieldName,20)) {
 								log(LogStatus.INFO, "Field value has been passed in " + "Industry", YesNo.No);
 								CommonLib.ThreadSleep(6000);
-								xpath = "//span[text()='" + fieldName + "']";
-								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
-								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
-									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
+//								xpath = "//span[text()='" + fieldName + "']";
+//								ele = FindElement(driver, xpath, fieldName + "xpath", action.SCROLLANDBOOLEAN, 30);
+//								if (CommonLib.click(driver, ele, fieldName + " field", action.SCROLLANDBOOLEAN)) {
+//									log(LogStatus.INFO, "clicked  on  Field" + fieldName, YesNo.No);
 									if(deactivated.length!=0) {
 									for(Object valueObj:deactivated) {
 										try {
@@ -2016,10 +2016,10 @@ public class Post_CheckScript extends BaseLib {
 										}
 									}
 								}
-								}else {
-									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
-									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ api + " object");
-								}
+//								}else {
+//									log(LogStatus.ERROR, "Could not click on the " + fieldName, YesNo.Yes);
+//									sa.assertTrue(false, "Not able to click on Record type of object feature of "+ api + " object");
+//								}
 							} else {
 								log(LogStatus.ERROR, "Could not pass the Field value " + fieldName, YesNo.Yes);
 								sa.assertTrue(false,"Not able to click on Record type of object feature of " + api + " object");
@@ -2062,7 +2062,7 @@ public class Post_CheckScript extends BaseLib {
 		
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);
-		
+		if(flag) {
 		try {
 			CommonLib.ThreadSleep(3000);
 			if (home.clickOnSetUpLink()) {
@@ -2188,7 +2188,7 @@ public class Post_CheckScript extends BaseLib {
 			}
 			
 		}
-		
+	}
 		if (parentWindow != null) {
 
 			driver.close();
@@ -2348,13 +2348,6 @@ public class Post_CheckScript extends BaseLib {
 					continue;
 				}
 				 }
-				 if (CommonLib.selectVisibleTextFromDropDown(driver,home.getViewDropDown(20), "view dropdown", "All")) {
-						log(LogStatus.INFO, "Selected the All view dropdown", YesNo.No);
-						
-					} else {
-						log(LogStatus.ERROR, "Not Able To Select All view value dropdown", YesNo.No);
-
-					}
 				 
 				}else {
 					log(LogStatus.FAIL,

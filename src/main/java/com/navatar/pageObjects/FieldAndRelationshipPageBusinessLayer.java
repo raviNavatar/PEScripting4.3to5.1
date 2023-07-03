@@ -36,19 +36,22 @@ public class FieldAndRelationshipPageBusinessLayer extends FieldAndRelationshipP
 		WebElement ele;
 		
 		boolean flag=false;
-		
+		CommonLib.ThreadSleep(3000);
 		
 				String xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
-				ele = CommonLib.isDisplayed(driver, FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 10), "visibility", 20, "");
+				ele = CommonLib.isDisplayed(driver, FindElement(driver, xpath, "", action.SCROLLANDBOOLEAN, 30), "visibility", 20, "");
 				if(ele!=null) {
-					 xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
-					ele =FindElement(driver, xpath, "", action.BOOLEAN, 10);
+//					 xpath="//th[@scope='row' and text()='"+value+"']/preceding-sibling::td//a[contains(@title,'ctivate')]";
+//					ele =FindElement(driver, xpath, "", action.BOOLEAN, 10);
 					String actionStatus=CommonLib.getText(driver, ele, value+" Field", action.SCROLLANDBOOLEAN);
 					if(condition.toString().equals("activate"))
 					{
+
 						if(!actionStatus.equalsIgnoreCase("Deactivate"))
 						{
-							if (CommonLib.click(driver, ele,value+" activate button" , action.SCROLLANDBOOLEAN)) {
+							log(LogStatus.INFO, "going to activate" +value, YesNo.No);
+
+							if (CommonLib.clickUsingJavaScript(driver, ele,value+" activate button" , action.SCROLLANDBOOLEAN)) {
 								log(LogStatus.INFO, "clicked on the activate button of " +value, YesNo.No);
 								CommonLib.ThreadSleep(5000);
 								CommonLib.switchToDefaultContent(driver);
