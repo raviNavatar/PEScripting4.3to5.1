@@ -2138,7 +2138,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		
 		
 		removeTimeline(removeActivityTimeline);
-		String xPat = "//div[@role='dialog']//button[contains(@title,'Close')]";
+		String xPat = "//button[contains(@title,'Close')]";
 		List<WebElement> closeButton = FindElements(driver, xPat);
 
 		for (WebElement elem : closeButton) {
@@ -2250,7 +2250,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			
 			switchToDefaultContent(driver);
 			ThreadSleep(2000);
-			String xPath = "//div[@role='dialog']//button[contains(@title,'Close')]";
+			String xPath = "//button[contains(@title,'Close')]";
 			List<WebElement> closeButtons = FindElements(driver, xPath);
 
 			for (WebElement elem : closeButtons) {
@@ -2285,7 +2285,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									if (CommonLib.selectVisibleTextFromDropDown(driver, getDefaultTab(30),
 											"Acuity", "Acuity")) {
 									CommonLib.ThreadSleep(4000);
-									String xPath1 = "//div[@role='dialog']//button[contains(@title,'Close')]";
+									String xPath1 = "//button[contains(@title,'Close')]";
 									List<WebElement> closeButtons1 = FindElements(driver, xPath1);
 
 									for (WebElement elem : closeButtons1) {
@@ -2486,7 +2486,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 							
 							}
 						
-							String xPath1 = "//div[@role='dialog']//button[contains(@title,'Close')]";
+							String xPath1 = "//button[contains(@title,'Close')]";
 							List<WebElement> closeButtons1 = FindElements(driver, xPath1);
 
 							for (WebElement elem : closeButtons1) {

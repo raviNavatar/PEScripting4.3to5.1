@@ -762,7 +762,7 @@ public class Post_CheckScript extends BaseLib {
 									}
 
 										CommonLib.ThreadSleep(10000);
-										xPath = "//div[@role='dialog']//button[contains(@title,'Close')]";
+										xPath = "//button[contains(@title,'Close')]";
 										List<WebElement> closeButtons = FindElements(driver, xPath);
 
 										for (WebElement elem : closeButtons) {
