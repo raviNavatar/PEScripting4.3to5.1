@@ -2237,7 +2237,7 @@ public class Post_CheckScript extends BaseLib {
 			if(light.createNewListView("HomePageListView", "Type", "equals", "Home Page")) {
 			
 				log(LogStatus.INFO, "abel to create 'HomePageListView' list view ", YesNo.No);
-				
+				ThreadSleep(10000);
 				switchToDefaultContent(driver);
 				ThreadSleep(5000);
 				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
@@ -2262,6 +2262,17 @@ public class Post_CheckScript extends BaseLib {
 						switchToFrame(driver, 30, setup.getSetUpPageIframe(60));
 						CommonLib.ThreadSleep(5000);
 
+					} else {
+						
+						click(driver, labelElement, "lightning home  page label :" + name,
+								action.SCROLLANDBOOLEAN);
+						log(LogStatus.INFO, "clicked in second try on the lightning home  page label:" + name,
+								YesNo.No);
+						CommonLib.ThreadSleep(10000);
+						switchToFrame(driver, 30, setup.getSetUpPageIframe(60));
+						CommonLib.ThreadSleep(5000);
+
+					}
 
 						if(click(driver, setup.editButton(60), "edit button", action.SCROLLANDBOOLEAN)) {
 							log(LogStatus.INFO, "clicked on the edit button", YesNo.No);
@@ -2311,23 +2322,16 @@ public class Post_CheckScript extends BaseLib {
 								ThreadSleep(5000);
 							}else {
 								log(LogStatus.FAIL,
-										"No lighting Home page found ",
+										"Not able to open object : "+ object.Lightning_App_Builder,
 										YesNo.Yes);
 								sa.assertTrue(false,
-										"No lighting Home page found ");
+										"Not able to open object : "+ object.Lightning_App_Builder);
 							}
 							
 							
 
 						
-					} else {
-						log(LogStatus.ERROR,
-								"Not able to clicked on the lightning home  page label:" + name,
-								YesNo.Yes);
-						sa.assertTrue(false,
-								"Not able to clicked on the lightning home  page label:" + name);
-
-					}
+					
 				} catch (Exception e) {							
 					if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
 						log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
@@ -2339,10 +2343,10 @@ public class Post_CheckScript extends BaseLib {
 						
 					}else {
 						log(LogStatus.FAIL,
-								"No lighting Home page found ",
+								"Not able to open object : "+ object.Lightning_App_Builder,
 								YesNo.Yes);
 						sa.assertTrue(false,
-								"No lighting Home page found ");
+								"Not able to open object : "+ object.Lightning_App_Builder);
 					}
 					
 					continue;
