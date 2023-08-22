@@ -62,7 +62,6 @@ import org.testng.annotations.Parameters;
 import static com.navatar.generic.CommonLib.*;
 import com.relevantcodes.extentreports.ExtentReports;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
  * 
@@ -116,14 +115,13 @@ public class BaseLib extends AppListeners {
 		extentReport.loadConfig(new File(System.getProperty("user.dir") + "\\ConfigFiles\\extent-config.xml"));
 	}
 
-	
 	@Parameters(value = "browser")
 	@BeforeClass
 	public void config(String browserName){
 		if (browserName.equalsIgnoreCase("Chrome")) {
 //			System.setProperty("webdriver.chrome.driver",
 //					System.getProperty("user.dir") + "\\exefiles\\chromedriver.exe");
-			WebDriverManager.chromedriver().setup();
+			//WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			String OsName= System.getProperty("os.name");
 
@@ -151,19 +149,19 @@ public class BaseLib extends AppListeners {
 		} else if (browserName.equalsIgnoreCase("firefox")) {
 //			System.setProperty("webdriver.gecko.driver",
 //					System.getProperty("user.dir") + "\\exefiles\\geckodriver.exe");
-			WebDriverManager.firefoxdriver().setup();
-			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-			FirefoxOptions options = new FirefoxOptions();
-			options.addPreference("log", "{level: trace}");
-			capabilities.setCapability("marionette", true);
-			capabilities.setCapability("moz:firefoxOptions", options);
-			edriver = new FirefoxDriver(capabilities);
+			//WebDriverManager.firefoxdriver().setup();
+//			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+//			FirefoxOptions options = new FirefoxOptions();
+//			options.addPreference("log", "{level: trace}");
+//			capabilities.setCapability("marionette", true);
+//			capabilities.setCapability("moz:firefoxOptions", options);
+//			edriver = new FirefoxDriver(capabilities);
 		} else if (browserName.equalsIgnoreCase("IE Edge")) {
 			 System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") +"\\exefiles\\MicrosoftWebDriver.exe");
 			 edriver = new EdgeDriver();
 		}else if (browserName.equalsIgnoreCase("safari")) {
 			 //System.setProperty("webdriver.edge.driver", System.getProperty("user.dir") +"\\exefiles\\MicrosoftWebDriver.exe");
-			 WebDriverManager.safaridriver().setup();
+			 //WebDriverManager.safaridriver().setup();
 			 edriver = new SafariDriver();
 		}
 		else {

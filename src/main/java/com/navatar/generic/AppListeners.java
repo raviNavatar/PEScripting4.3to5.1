@@ -32,7 +32,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.FindsByXPath;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.testng.*;
 import org.testng.annotations.ITestAnnotation;
@@ -52,7 +51,7 @@ import com.relevantcodes.extentreports.model.Test;
  */
 
 public class AppListeners extends By implements ITestListener, IInvokedMethodListener, WebDriverEventListener, ExceptionListener,
-		ITestNGListener, IExecutionListener,SearchContext,FindsByXPath {
+		ITestNGListener, IExecutionListener,SearchContext {
 
 	public static int iPassCount;
 	public static int iFailCount;
@@ -487,17 +486,7 @@ public class AppListeners extends By implements ITestListener, IInvokedMethodLis
 		return null;
 	}
 
-	@Override
-	public WebElement findElementByXPath(String using) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<WebElement> findElementsByXPath(String using) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public <X> void afterGetScreenshotAs(OutputType<X> arg0, X arg1) {

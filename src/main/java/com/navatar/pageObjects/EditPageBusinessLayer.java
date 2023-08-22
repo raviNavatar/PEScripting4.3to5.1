@@ -20,10 +20,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Interaction;import org.openqa.selenium.interactions.Keyboard;
-import org.openqa.selenium.interactions.Mouse;
+import org.openqa.selenium.interactions.Interaction;
 import org.openqa.selenium.interactions.PointerInput;
-import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -654,7 +652,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		CommonLib.clickUsingJavaScript(driver, dealHeader(20), "Deal Element");
 		ThreadSleep(2000);
-		WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+		WebElement addComp = new WebDriverWait(driver,  Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(
 				"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 		js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 		CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -1115,7 +1113,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			} else {
 				JavascriptExecutor js = (JavascriptExecutor) driver;
 				CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "Deal Element");
-				WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+				WebElement addComp = new WebDriverWait(driver, Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 						.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 
 				js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
@@ -1150,7 +1148,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 										log(LogStatus.INFO, "Back icon has been clicked", YesNo.No);
 										CommonLib.ThreadSleep(9000);
 										try {
-											ele = new WebDriverWait(driver, 50)
+											ele = new WebDriverWait(driver,  Duration.ofSeconds(50))
 													.until(ExpectedConditions.presenceOfElementLocated(
 															By.xpath("//a[text()='" + tableName + "']")));
 										} catch (Exception ex) {
@@ -1342,7 +1340,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			CommonLib.clickUsingJavaScript(driver, sdgHeaderElement(referencedComponentHeading, 40),
 					referencedComponentHeading);
 			CommonLib.ThreadSleep(2000);
-			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+			WebElement addComp = new WebDriverWait(driver,  Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 			CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -1720,7 +1718,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			CommonLib.clickUsingJavaScript(driver, getsldHeader(50), "SDG Header Element", action.SCROLLANDBOOLEAN);
-			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+			WebElement addComp = new WebDriverWait(driver,  Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 			js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 			if (CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -2435,7 +2433,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 								JavascriptExecutor js = (JavascriptExecutor) driver;
 								CommonLib.clickUsingJavaScript(driver, getSectionOfComponent(20),"");
 								CommonLib.ThreadSleep(2000);
-								WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+								WebElement addComp = new WebDriverWait(driver,  Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']")));
 										js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 										CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -2657,7 +2655,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 			if(alreadyAddedComponentToHomePage==null) {
 			CommonLib.clickUsingJavaScript(driver, getFirstComponent(20),"");
 			CommonLib.ThreadSleep(2000);
-			WebElement addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+			WebElement addComp = new WebDriverWait(driver,  Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 					js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 					CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
@@ -2678,7 +2676,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 							int size = getLastComponent(20).size();
 							CommonLib.clickUsingJavaScript(driver, getLastComponent(20).get(size-1),"",action.SCROLLANDBOOLEAN);
 							CommonLib.ThreadSleep(2000);
-							addComp = new WebDriverWait(driver, 25).until(ExpectedConditions.presenceOfElementLocated(By
+							addComp = new WebDriverWait(driver,  Duration.ofSeconds(25)).until(ExpectedConditions.presenceOfElementLocated(By
 									.xpath("//div[@class='actualNode']/following-sibling::div//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']")));
 							js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 							CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
