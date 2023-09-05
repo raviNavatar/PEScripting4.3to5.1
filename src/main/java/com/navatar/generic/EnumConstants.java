@@ -442,7 +442,7 @@ Fundraising_ContactPage, Financial_Performance, Marketing_Initiative, FundDrawdo
 	
 	public static enum ObjectFeatureName{
 		
-		pageLayouts{
+		Details,pageLayouts{
 			@Override
 			public String toString() {
 					return "Page Layouts";

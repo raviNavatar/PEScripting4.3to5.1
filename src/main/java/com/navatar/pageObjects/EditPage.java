@@ -881,7 +881,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@data-label=\"Today's Tasks\" and @data-instance-type='COMPONENT']//div//a[@title='Delete']")
+	@FindBy(xpath = "//div[@data-label=\"Today's Tasks\" and @data-instance-type='COMPONENT']//span[@title='Delete']")
 	private WebElement TodaystaskComponentDeleteButton;
 
 	public WebElement TodaystaskComponentDeleteButton(int timeOut) {
@@ -889,7 +889,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@data-label=\"Today's Events\" and @data-instance-type='COMPONENT']//div//a[@title='Delete']")
+	@FindBy(xpath = "//div[@data-label=\"Today's Events\" and @data-instance-type='COMPONENT']//span[@title='Delete']")
 	private WebElement TodaysEventComponentDeleteButton;
 
 	public WebElement TodaysEventComponentDeleteButton(int timeOut) {
@@ -897,7 +897,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 
-	@FindBy(xpath = "(//span[text()=\"Details\" and @class=\"uiOutputText\"])[2]/parent::a")
+	@FindBy(xpath = "(//li[@role='option']//span[text()='Details'])[2]/parent::a")
 	private WebElement detailTabCreatedAfterAddTab;
 
 	public WebElement detailTabCreatedAfterAddTab(int timeOut) {
