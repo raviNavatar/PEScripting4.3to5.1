@@ -791,10 +791,10 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement tabNameElementInEditPage(String tabName, int timeOut) {
 
 		try {
-			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()='" + tabName + "' and (@class='uiOutputText' or @data-aura-class='uiOutputText')]/parent::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, "//span[text()=\"" + tabName + "\" and @class=\"uiOutputText\"]/parent::a",
+			return FindElement(driver, "//span[text()='" + tabName + "' and (@class='uiOutputText' or @data-aura-class='uiOutputText')]/parent::a",
 					"Tab Name: " + tabName, action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -803,10 +803,10 @@ public class EditPage extends BasePageBusinessLayer {
 	public WebElement FirsttabNameElementInEditPage( int timeOut) {
 
 		try {
-			return FindElement(driver, "(//span[@class='uiOutputText']/parent::a)[1]//ancestor::fieldset/*[text()='Tabs']",
+			return FindElement(driver, "//span[@class='uiOutputText' or @data-aura-class='uiOutputText']//ancestor::fieldset/*[text()='Tabs']",
 					"First Tab : ", action.SCROLLANDBOOLEAN, timeOut);
 		} catch (StaleElementReferenceException e) {
-			return FindElement(driver, "(//span[@class='uiOutputText']/parent::a)[1]",
+			return FindElement(driver, "//span[@class='uiOutputText' or @data-aura-class='uiOutputText']//ancestor::fieldset/*[text()='Tabs']",
 					" first Tab : ", action.SCROLLANDBOOLEAN, timeOut);
 		}
 
@@ -873,7 +873,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@data-label='Activities']//ancestor::div[@data-instance-type='COMPONENT']//a[@title='Delete']")
+	@FindBy(xpath = "//div[@data-label='Activities']//ancestor::div[@data-instance-type='COMPONENT']//*[@title='Delete']")
 	private WebElement activityTimelineComponentDeleteButton;
 
 	public WebElement activityTimelineComponentDeleteButton(int timeOut) {
@@ -881,7 +881,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@data-label=\"Today's Tasks\" and @data-instance-type='COMPONENT']//span[@title='Delete']")
+	@FindBy(xpath = "//div[@data-label=\"Today's Tasks\" and @data-instance-type='COMPONENT']//*[@title='Delete']")
 	private WebElement TodaystaskComponentDeleteButton;
 
 	public WebElement TodaystaskComponentDeleteButton(int timeOut) {
@@ -889,7 +889,7 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
-	@FindBy(xpath = "//div[@data-label=\"Today's Events\" and @data-instance-type='COMPONENT']//span[@title='Delete']")
+	@FindBy(xpath = "//div[@data-label=\"Today's Events\" and @data-instance-type='COMPONENT']//*[@title='Delete']")
 	private WebElement TodaysEventComponentDeleteButton;
 
 	public WebElement TodaysEventComponentDeleteButton(int timeOut) {

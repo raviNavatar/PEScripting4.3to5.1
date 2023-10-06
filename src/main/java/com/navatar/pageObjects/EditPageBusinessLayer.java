@@ -2437,7 +2437,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 										.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']")));
 										js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 										CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']/a")),
+										"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']//span[contains(@title,'Insert a component')]")),
 									"Add Link");
 										ThreadSleep(2000);
 								//CommonLib.switchToDefaultContent(driver);
@@ -2659,7 +2659,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 					.xpath("//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']")));
 					js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 					CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']/a")),
+					"//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentBefore']//span[contains(@title,'Insert a component')]")),
 				"Add Link");
 			CommonLib.switchToDefaultContent(driver);
 			if (CommonLib.sendKeys(driver, getComponentSearchBox(20), ComponentName, "SearchBox",
@@ -2680,7 +2680,7 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 									.xpath("//div[@class='actualNode']/following-sibling::div//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']")));
 							js.executeScript("arguments[0].setAttribute('style.display', 'block')", addComp);
 							CommonLib.clickUsingJavaScript(driver, driver.findElement(By.xpath(
-									"//div//div[@class='actualNode']/following-sibling::div//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']/a")),
+									"//div//div[@class='actualNode']/following-sibling::div//div[@class='sf-interactions-proxy sf-interactions-proxyAddComponent sf-interactions-proxyAddComponentAfter']//span[contains(@title,'Insert a component')]")),
 									"Add Link");
 							CommonLib.switchToDefaultContent(driver);
 						if (CommonLib.sendKeys(driver, getComponentSearchBox(20), Component, "SearchBox",

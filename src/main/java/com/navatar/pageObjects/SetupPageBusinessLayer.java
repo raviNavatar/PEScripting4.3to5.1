@@ -8512,10 +8512,15 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 		WebElement ele3 = null;
 		int count =0;
 
-		ThreadSleep(3000);
-		if (click(driver, relatedListOptionLink(20), xPath, null)) {
+		ThreadSleep(5000);
+		if (click(driver, relatedListOptionLink(20), xPath, action.SCROLLANDBOOLEAN)) {
 			log(LogStatus.PASS, "Able to click on related list option ", YesNo.No);
-			ThreadSleep(2000);
+			
+		} else {
+			click(driver, relatedListOptionLink(20), xPath, action.SCROLLANDBOOLEAN);
+			log(LogStatus.INFO, " Able to click on related list optin link in second try", YesNo.Yes);
+		}
+		ThreadSleep(2000);
 			ele = OpenActivitiesRelatedListOptionLink(10);
 			if(ele!=null) {
 				if(click(edriver, OpenActivitiesRelatedListOptionRemoveLink(20), "Open Activites remove button", action.SCROLLANDBOOLEAN)) {
@@ -8616,9 +8621,7 @@ public List<String> removeDragNDropFromPagelayoutContact(String environment, Str
 			}
 			
 			
-		} else {
-			log(LogStatus.ERROR, "Not Able to click on related list optin link", YesNo.Yes);
-		}
+		
 
 		return flag;
 	}

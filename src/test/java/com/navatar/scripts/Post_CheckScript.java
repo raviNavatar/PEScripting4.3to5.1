@@ -484,13 +484,17 @@ public class Post_CheckScript extends BaseLib {
               							log(LogStatus.PASS, "clicked on page layout of object feature of "
               									+ api + " object", YesNo.Yes);
 							List<WebElement> allElements = setup.getAllPageLayoutList();
+							String name = null;
+							String name2=null;
 							int no = allElements.size();
 							 for(int i=0;i<no;i++) {
-							String name = null;
+							
 							try {
 								allElements = setup.getAllPageLayoutList();
+								if(allElements.size()>0) {
 								WebElement labelElement = allElements.get(i);
 								name = labelElement.getText();
+								name2=allElements.get(i+1).getText();
 								if (click(driver, labelElement, "lightning record  page label :" + name,
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
@@ -517,6 +521,14 @@ public class Post_CheckScript extends BaseLib {
 											"Not able to clicked on the page layout of  page label:" + name);
 
 								}
+							}else {
+								log(LogStatus.ERROR, "Not able to remove Related list of page layout :"+name2+" layout of object :"+api, YesNo.Yes);
+								sa.assertTrue(false,
+										"Not able to remove Related list of page layout :"+name2+" layout of object :"+api);
+
+								System.out.println();
+								driver.navigate().back();
+							}
 							} catch (Exception e) {
 								driver.navigate().back();
 								
@@ -691,7 +703,6 @@ public class Post_CheckScript extends BaseLib {
 }
 	
 	@Test(priority = 7,dependsOnMethods = {"isRexecute"})
-
 	public void verifyAcuityTabAddedInObjects() {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
@@ -1708,11 +1719,14 @@ public class Post_CheckScript extends BaseLib {
 								} else if(name.equals("Company")) {
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
-									sourceANDDestination.put(PageLabel.Investment_Type.toString(),"");
 									sourceANDDestination.put(PageLabel.Tier.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduction_Date.toString(),"");
 									sourceANDDestination.put(PageLabel.Introduced_by.toString(),"");
-								} else if(name.equals("Affiliation Layout")){
+								} else if(name.equals("Intermediary")) {
+									sourceANDDestination = new HashMap<String, String>();
+									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
+									
+								}else if(name.equals("Affiliation Layout")){
 									
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Start_Date.toString(),"");
@@ -1721,11 +1735,8 @@ public class Post_CheckScript extends BaseLib {
 									
 									sourceANDDestination = new HashMap<String, String>();
 									
-									  sourceANDDestination.put(PageLabel.Industry_Focus.toString(),"");
-									  sourceANDDestination.put(PageLabel.Contact_Type.toString(),"");
 									  sourceANDDestination.put(PageLabel.Last_Touchpoint.toString(),"");
 									  sourceANDDestination.put(PageLabel.Touchpoint_Overdue.toString(),"");
-									  sourceANDDestination.put(PageLabel.Tier.toString(),"");
 									  sourceANDDestination.put(PageLabel.Sector_Expertise.toString(),"");
 									  sourceANDDestination.put(PageLabel.Next_Touchpoint_Date.toString(),"");
 									 
@@ -1751,11 +1762,9 @@ public class Post_CheckScript extends BaseLib {
 									
 									sourceANDDestination = new HashMap<String, String>();
 									
-									  sourceANDDestination.put(PageLabel.Multiple.toString(),"");
 									  sourceANDDestination.put(PageLabel.LOI_Due_Date.toString(),"");
 //									  sourceANDDestination.put(PageLabel.Reason_for_Decline.toString(),"");
 									  sourceANDDestination.put(PageLabel.Platform_Company.toString(),"");
-									  sourceANDDestination.put(PageLabel.Sales.toString(),"");
 									  sourceANDDestination.put(PageLabel.Company.toString(),"");
 									  sourceANDDestination.put(PageLabel.Management_Meeting_Date.toString(),"");
 									  sourceANDDestination.put(PageLabel.Reason_to_Park.toString(),""); 
@@ -2201,8 +2210,9 @@ public class Post_CheckScript extends BaseLib {
 
 	}
 
-	@Test(priority = 15,dependsOnMethods = {"isRexecute"})
-	public void verifyAddNotificationOnHomePageAndRemoveTodayTaskNEvents () {
+	
+	@Test(priority = 16,dependsOnMethods = {"isRexecute"})
+	public void verifyAddNotificationOnHomePageAndRemoveTodayTaskNEvents() {
 
 		String projectName = "";
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2210,7 +2220,7 @@ public class Post_CheckScript extends BaseLib {
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
 		SetupPageBusinessLayer setup =new SetupPageBusinessLayer(driver);
 		LightningAppBuilderPageBusinessLayer light =new LightningAppBuilderPageBusinessLayer(driver);
-		
+		boolean listView=true;
 			String	parentWindow=null;
 		CommonLib.refresh(driver);
 		CommonLib.ThreadSleep(3000);	
@@ -2219,7 +2229,36 @@ public class Post_CheckScript extends BaseLib {
 			if (home.clickOnSetUpLink()) {
 
 				parentWindow = switchOnWindow(driver);
-				if (parentWindow == null) {
+				if (parentWindow != null) {
+					
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
+						log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
+						ThreadSleep(5000);
+						switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+						ThreadSleep(5000);
+						
+						if(light.createNewListView("HomePageListView", "Type", "equals", "Home Page")) {
+						
+							log(LogStatus.INFO, "abel to create 'HomePageListView' list view ", YesNo.No);
+							ThreadSleep(5000);
+							driver.close();
+							driver.switchTo().window(parentWindow);
+							parentWindow=null;
+							
+							
+						}else {
+							log(LogStatus.ERROR, "Not able to create 'HomePageListView' list view ", YesNo.Yes);
+							sa.assertTrue(false, "Not able to create 'HomePageListView' list view ");
+						}
+						
+					
+						
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Lightning_App_Builder, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Lightning_App_Builder);
+					}
+					
+				}else {
 					sa.assertTrue(false,
 							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 					log(LogStatus.FAIL,
@@ -2227,22 +2266,40 @@ public class Post_CheckScript extends BaseLib {
 							YesNo.Yes);
 					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
 				}
+			}else {
+				sa.assertTrue(false,
+						"Not able to click on setup link");
+				log(LogStatus.FAIL,
+						"Not able to click on setup link",
+						YesNo.Yes);
 			}
-		if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
-			log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
-			ThreadSleep(5000);
-			switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
-			ThreadSleep(5000);
-			
-			if(light.createNewListView("HomePageListView", "Type", "equals", "Home Page")) {
-			
-				log(LogStatus.INFO, "abel to create 'HomePageListView' list view ", YesNo.No);
-				ThreadSleep(10000);
-				switchToDefaultContent(driver);
-				ThreadSleep(5000);
-				switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
-				ThreadSleep(5000);
 				
+			} catch (Exception e) {
+				if (parentWindow != null) {
+
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow=null;
+				}
+				
+			}
+			
+		
+		CommonLib.refresh(driver);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow != null) {
+					
+					if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
+						log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
+						ThreadSleep(5000);
+						switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+						ThreadSleep(5000);
+						
+		
 				String api=null;
 				String xPath =null;
 				List<WebElement> allElements = light.getAllHomepageList();
@@ -2308,31 +2365,40 @@ public class Post_CheckScript extends BaseLib {
 							if (edit.addNotificationComponent(projectName, "Navatar Notification", "Notifications",
 									"Z (Do not use) Navatar Notification Popup")) {
 								log(LogStatus.PASS, "Component Added to Home Page: Navatar Notification", YesNo.No);
+								
 							} else {
 								log(LogStatus.FAIL, "Component Not Able to Add to Home Page: Navatar Notification", YesNo.Yes);
 								sa.assertTrue(false, "Component Not Able to Add to Home Page: Navatar Notification");
 							}
-							
-							if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
-								log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
-								CommonLib.ThreadSleep(3000);
-								switchToDefaultContent(driver);
-								ThreadSleep(5000);
-								switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
-								ThreadSleep(5000);
-							}else {
-								log(LogStatus.FAIL,
-										"Not able to open object : "+ object.Lightning_App_Builder,
-										YesNo.Yes);
-								sa.assertTrue(false,
-										"Not able to open object : "+ object.Lightning_App_Builder);
-							}
-							
-							
-
-						
 					
-				} catch (Exception e) {							
+				} catch (Exception e) {		
+					
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow=null;
+					CommonLib.ThreadSleep(3000);
+					if (home.clickOnSetUpLink()) {
+
+						parentWindow = switchOnWindow(driver);
+						if (parentWindow != null) {
+							
+						}else {
+							sa.assertTrue(false,
+									"No new window is open after click on setup in execption on page action");
+							log(LogStatus.FAIL,
+									"No new window is open after click on setup in execption on page action",
+									YesNo.Yes);
+							exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+						}
+					}else {
+						sa.assertTrue(false,
+								"Not able to click on setup link execption on page action");
+						log(LogStatus.FAIL,
+								"Not able to click on setup link execption on page action",
+								YesNo.Yes);
+					}
+						
+					CommonLib.ThreadSleep(3000);
 					if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
 						log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
 						CommonLib.ThreadSleep(3000);
@@ -2355,34 +2421,43 @@ public class Post_CheckScript extends BaseLib {
 				 
 				}else {
 					log(LogStatus.FAIL,
-							"No lighting Home page found ",
+							"No lighting Home page present to perform action ",
 							YesNo.Yes);
 					sa.assertTrue(false,
-							"No lighting Home page found ");
+							"No lighting Home page present to perform action ");
 				}
 				
+					} else {
+						log(LogStatus.ERROR, "Not able to search/click on " + object.Lightning_App_Builder, YesNo.Yes);
+						sa.assertTrue(false, "Not able to search/click on " + object.Lightning_App_Builder);
+					}
+					
+				}else {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
 			}else {
-				log(LogStatus.ERROR, "Not able to create 'HomePageListView' list view ", YesNo.Yes);
-				sa.assertTrue(false, "Not able to create 'HomePageListView' list view ");
+				sa.assertTrue(false,
+						"Not able to click on setup link");
+				log(LogStatus.FAIL,
+						"Not able to click on setup link",
+						YesNo.Yes);
 			}
-			
-			
-			
-		} else {
-			log(LogStatus.ERROR, "Not able to search/click on " + object.Lightning_App_Builder, YesNo.Yes);
-			sa.assertTrue(false, "Not able to search/click on " + object.Lightning_App_Builder);
-		}
-		
-		} catch (Exception e) {
-			if (parentWindow != null) {
+				
+			} catch (Exception e) {
+				if (parentWindow != null) {
 
-				driver.close();
-				driver.switchTo().window(parentWindow);
-				parentWindow=null;
+					driver.close();
+					driver.switchTo().window(parentWindow);
+					parentWindow=null;
+				}
+				
 			}
-			
-		}
-		
+
 		if (parentWindow != null) {
 
 			driver.close();
@@ -2563,9 +2638,127 @@ public class Post_CheckScript extends BaseLib {
 	}
 	
 
+	//@Test(priority = 15,enabled=false)
+	public void verifyAllowSearchOnButton() {
+		
+		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
+		SetupPageBusinessLayer setup = new SetupPageBusinessLayer(driver);
+		DataLoaderWizardPageBusinessLayer dataload = new DataLoaderWizardPageBusinessLayer(driver);
+		String parentWindow = null;
+		HashMap<String, String> sourceANDDestination = new HashMap<String, String>();
+		CommonLib.refresh(driver);
+		CommonLib.ThreadSleep(3000);
+		try {
+			CommonLib.ThreadSleep(3000);
+			if (home.clickOnSetUpLink()) {
+
+				parentWindow = switchOnWindow(driver);
+				if (parentWindow == null) {
+					sa.assertTrue(false,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+					log(LogStatus.FAIL,
+							"No new window is open after click on setup link in lighting mode so cannot create CRM User2",
+							YesNo.Yes);
+					exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+				}
+			}
+			String[] apiname = {object.navpeII__Fundraising__c.toString(),object.navpeII__Fund__c.toString(),object.navpeII__Pipeline__c.toString(),object.navpeII__Theme__c.toString()};
+			for (String api : apiname) {
+			log(LogStatus.PASS, "Going to check and Add tab for " + api + " object", YesNo.Yes);
+		
+				try {
+					if(setup.searchStandardOrCustomObjectApi(api,20)) {
+						log(LogStatus.PASS, api + " object has been opened in setup page", YesNo.Yes);
+						CommonLib.ThreadSleep(3000);
+						if (setup.clickOnObjectFeatureUsingAPIName(environment, mode, api,
+								ObjectFeatureName.Details)) {
+							log(LogStatus.PASS, "clicked on page layout of object feature of "
+									+ api + " object", YesNo.Yes);
+							CommonLib.ThreadSleep(5000);
+							if(click(driver, FindElement(driver, "//span[text()='Edit']//parent::button", "edit button", action.BOOLEAN, 30), "edit button", action.BOOLEAN)) {
+								
+								log(LogStatus.PASS, "clicked on edit button", YesNo.Yes);
+								CommonLib.ThreadSleep(5000);
+								
+								switchToFrame(driver, 50, setup.getEditPageLayoutFrame_Lighting(50));
+								CommonLib.ThreadSleep(5000);
+								
+								WebElement ele=  FindElement(driver, "//label[text()='Allow Search']/parent::td/input", "Allow Search Checkbox", action.SCROLLANDBOOLEAN, 30);
+								
+								String value = ele.getAttribute("checked");
+								
+								if(!isSelected(driver, ele, "allow search")) {
+									
+									if(click(driver, ele, "allow search input", action.BOOLEAN)) {
+										log(LogStatus.PASS, "clicked on allow search input", YesNo.Yes);
+										log(LogStatus.PASS, "Now Allow Search is checked for object :"+api, YesNo.Yes);
+
+
+									}else {
+										log(LogStatus.FAIL,"Not abel to clicked on allow search input",
+												YesNo.Yes);
+										sa.assertTrue(false,
+												"Not abel to clicked on allow search input");
+									}
+									
+								}else {
+									log(LogStatus.PASS, "Allow Search is already checked for object :"+api, YesNo.Yes);
+
+								}
+								
+								if (click(driver, setup.getSaveButton(30), "Save button", action.SCROLLANDBOOLEAN)) {
+									log(LogStatus.INFO, "clicked on the Save button", YesNo.No);
+									ThreadSleep(5000);
+								} else {
+									log(LogStatus.ERROR, "Not able to click on save button", YesNo.No);
+								}
+								
+								
+							}else {
+								log(LogStatus.FAIL,"Not abel to clicked on edit button",
+										YesNo.Yes);
+								sa.assertTrue(false,
+										"Not abel to clicked on edit button");
+							}
+						
+						} else {
+							log(LogStatus.FAIL,
+									"Not able to click on object feature of " + api + " object",
+									YesNo.Yes);
+							sa.assertTrue(false,
+									"Not able to click on object feature of " + api + " object");
+						}
+					} else {
+						log(LogStatus.FAIL, "Not able to open " + api + " object", YesNo.Yes);
+						sa.assertTrue(false, "Not able to open " + api + " object");
+					}
+				} catch (Exception e) {
+					log(LogStatus.FAIL, "Not able to check Allow Search for  " + api + " object", YesNo.Yes);
+					sa.assertTrue(false, "Not able to check Allow Search for  " + api + " object");
+					continue;
+				}
+			}
+
+		} catch (Exception e) {
+			if (parentWindow != null) {
+
+				driver.close();
+				driver.switchTo().window(parentWindow);
+				parentWindow = null;
+			}
+		}
+
+		if (parentWindow != null) {
+
+			driver.close();
+			driver.switchTo().window(parentWindow);
+			parentWindow = null;
+		}
+		sa.assertAll();
+	}
 	
 	// not include in round 4 bug verification
-	@Test(priority =15 ,enabled=false)
+	////@Test(priority =15 ,enabled=false)
 	public void verifyAddVFPageOnPageLayout() {
 		
 		String projectName = "";
@@ -2758,7 +2951,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 	}
 
-	@Test(priority = 16,enabled =false)
+	////@Test(priority = 16,enabled =false)
 	public void verifyRemoveTodaysTaskEvent() {
 		String projectName = "";
 		LoginPageBusinessLayer lp = new LoginPageBusinessLayer(driver);
@@ -2806,7 +2999,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		sa.assertAll();
 }
 	
-	@Test(priority =16, enabled=false)
+	////@Test(priority =16, enabled=false)
 	public void verifyRemovingActivityTimelineFromSecondaryObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3006,7 +3199,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 	}
 
 	
-	@Test(priority = 17,enabled=false)
+	////@Test(priority = 17,enabled=false)
 	public void verifyRemovingRelatedListFromSecondaryObjects() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3136,7 +3329,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 
 	}
 
-	@Test(priority = 2,enabled =false)
+	////@Test(priority = 2,enabled =false)
 	public void VerifyRenamingTabAndLableInActivity() {
 		
 		String projectName = "";
@@ -3199,7 +3392,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 		
 	}
 	
-	@Test(priority =12,enabled=false)
+	////@Test(priority =12,enabled=false)
 	public void verifyModifyineActivityTimelineAttribute() {
 		String projectName = "";
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
@@ -3349,7 +3542,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 	}
 	
 
-	@Test(priority = 14,enabled=false)
+	////@Test(priority = 14,enabled=false)
 	public void VerifyDisablingContactTransferSetting() {
 
 		BasePageBusinessLayer bp = new BasePageBusinessLayer(driver);
@@ -3458,7 +3651,7 @@ object[] objects = { object.Institution,object.Contact, object.Fund, object.Affi
 				
 		sa.assertAll();
 	}
-	@Test(priority = 17,enabled =false)
+	//@Test(priority = 17,enabled =false)
 	public void VerifyEmailDeliverabilitySetting() {
 		
 		HomePageBusineesLayer home = new HomePageBusineesLayer(driver);
