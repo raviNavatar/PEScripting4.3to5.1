@@ -2310,6 +2310,9 @@ public class Post_CheckScript extends BaseLib {
 				try {
 					allElements = light.getAllHomepageList();
 					WebElement labelElement = allElements.get(i);
+					if(labelElement==null) {
+						i=i-1;
+					}
 					name = labelElement.getText();
 					if(click(driver, labelElement, "lightning home  page label :" + name,
 								action.SCROLLANDBOOLEAN)) {
@@ -2370,6 +2373,51 @@ public class Post_CheckScript extends BaseLib {
 								log(LogStatus.FAIL, "Component Not Able to Add to Home Page: Navatar Notification", YesNo.Yes);
 								sa.assertTrue(false, "Component Not Able to Add to Home Page: Navatar Notification");
 							}
+							
+							if(parentWindow!=null) {
+								driver.close();
+								driver.switchTo().window(parentWindow);
+								parentWindow=null;
+								CommonLib.ThreadSleep(3000);
+								if (home.clickOnSetUpLink()) {
+
+									parentWindow = switchOnWindow(driver);
+									if (parentWindow != null) {
+										
+									}else {
+										sa.assertTrue(false,
+												"No new window is open after click on setup in execption on page action");
+										log(LogStatus.FAIL,
+												"No new window is open after click on setup in execption on page action",
+												YesNo.Yes);
+										exit("No new window is open after click on setup link in lighting mode so cannot create CRM User2");
+									}
+								}else {
+									sa.assertTrue(false,
+											"Not able to click on setup link execption on page action");
+									log(LogStatus.FAIL,
+											"Not able to click on setup link execption on page action",
+											YesNo.Yes);
+								}
+									
+								CommonLib.ThreadSleep(3000);
+								if (setup.searchStandardOrCustomObject(environment, mode, object.Lightning_App_Builder)) {
+									log(LogStatus.INFO, "click on Object : " + object.Lightning_App_Builder, YesNo.No);
+									CommonLib.ThreadSleep(3000);
+									switchToDefaultContent(driver);
+									ThreadSleep(5000);
+									switchToFrame(driver, 60, setup.getSetUpPageIframe(120));
+									ThreadSleep(5000);
+									
+								}else {
+									log(LogStatus.FAIL,
+											"Not able to open object : "+ object.Lightning_App_Builder,
+											YesNo.Yes);
+									sa.assertTrue(false,
+											"Not able to open object : "+ object.Lightning_App_Builder);
+								}
+							}
+					
 					
 				} catch (Exception e) {		
 					
