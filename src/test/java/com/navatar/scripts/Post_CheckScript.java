@@ -2310,10 +2310,10 @@ public class Post_CheckScript extends BaseLib {
 				try {
 					allElements = light.getAllHomepageList();
 					WebElement labelElement = allElements.get(i);
-					if(labelElement==null) {
-						i=i-1;
-					}
+					
 					name = labelElement.getText();
+					log(LogStatus.INFO, "Page name going to action performed:" + name,
+							YesNo.No);
 					if(click(driver, labelElement, "lightning home  page label :" + name,
 								action.SCROLLANDBOOLEAN)) {
 						log(LogStatus.INFO, "clicked on the lightning home  page label:" + name,
@@ -2354,7 +2354,14 @@ public class Post_CheckScript extends BaseLib {
 
 							}
 							
-
+							if(edit.verifyToRemoveLeadObjectFromRecentItemComponent(true)) {
+								log(LogStatus.INFO, "able to remove lead object from recent item", YesNo.No);
+								CommonLib.ThreadSleep(2000);
+							}else {
+								log(LogStatus.ERROR, "Not able to remove lead object from recent item", YesNo.Yes);
+								sa.assertTrue(false, "Not able to remove lead object from recent item");
+							}
+							
 							if (edit.removeToadysTask(true)) {
 								log(LogStatus.INFO, "able to add tab", YesNo.No);
 								CommonLib.ThreadSleep(2000);
@@ -2364,6 +2371,8 @@ public class Post_CheckScript extends BaseLib {
 								sa.assertTrue(false, "Not able to able to add tab");
 
 							}
+							
+							
 							
 							if (edit.addNotificationComponent(projectName, "Navatar Notification", "Notifications",
 									"Z (Do not use) Navatar Notification Popup")) {

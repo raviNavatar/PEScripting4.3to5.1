@@ -2128,6 +2128,116 @@ public class EditPageBusinessLayer extends EditPage implements EditPageErrorMess
 		return true;
 	}
 
+	
+	public boolean verifyToRemoveLeadObjectFromRecentItemComponent(boolean isRemove) {
+		boolean flag=false;
+		
+		String xPath =null;
+		boolean delete=true;
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(3000);
+
+		CommonLib.switchToFrame(driver, 20, getAppBuilderIframe(20));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		if(isRemove) {
+			ThreadSleep(5000);
+		WebElement activity =isDisplayed(driver, RecentItemComponent(30), "visibility", 30, "");
+			
+		if(activity!=null) {
+			
+			click(driver, activity, " ", action.BOOLEAN);
+		//	mouseOverClickOperation(driver, activity);
+			ThreadSleep(3000);
+			
+			CommonLib.switchToDefaultContent(driver);
+			ThreadSleep(3000);
+
+			if(clickUsingJavaScript(driver, RecentItemComponentObjectSelectButton(10), "select object button", action.BOOLEAN)) {
+				log(LogStatus.PASS, "click on recent item object select button", YesNo.Yes);
+				ThreadSleep(3000);
+				 WebElement modal =isDisplayed(driver, RecentItemComponentObjectSelectionPopup(10), "visibility", 10, "object selection popup");
+				if(modal!=null) {
+					
+				WebElement obj=	FindElement(driver, "//span[contains(@id,'selected-list')]/parent::div//span[@title='Lead']", "Lead option", action.SCROLLANDBOOLEAN, 30);
+				
+					if(obj!=null) {
+						log(LogStatus.PASS, "Lead object is present in selected options so going to remove", YesNo.No);
+						
+						try {
+							click(driver, obj, "", action.SCROLLANDBOOLEAN);
+							log(LogStatus.PASS, "click on lead object name in selected list", YesNo.Yes);
+
+						}catch(Exception e) {
+							
+							click(driver, obj, "", action.SCROLLANDBOOLEAN);
+							log(LogStatus.PASS, "click on lead object name in selected list in second try", YesNo.No);
+
+						}
+						ThreadSleep(2000);
+						WebElement moveRightToLeft=	FindElement(driver, "//button[@title='Move selection to Available']", "move right to left button", action.SCROLLANDBOOLEAN, 30);
+
+						if(click(driver, moveRightToLeft, "", action.BOOLEAN)) {
+							log(LogStatus.PASS, "click on lead object name in selected list in second try", YesNo.No);
+
+							ThreadSleep(2000);
+							WebElement ok=	FindElement(driver, "//button[text()='OK']", "OK button", action.BOOLEAN, 30);
+
+							if(click(driver, ok, "", action.BOOLEAN)) {
+								log(LogStatus.PASS, "click on lead object name in selected list in second try", YesNo.No);
+								flag=true;
+							}else {
+								log(LogStatus.ERROR, "Could not be click on select component object button", YesNo.Yes);
+								sa.assertTrue(false, "Could not be click on select component object button");
+							}
+						}else {
+							log(LogStatus.ERROR, "Could not be click on select component object button", YesNo.Yes);
+							sa.assertTrue(false, "Could not be click on select component object button");
+						}
+
+						
+					}else {
+						log(LogStatus.PASS, "Lead object is not selected already remove from selected options", YesNo.No);
+						flag=true;
+						
+					}
+					
+				}else {
+					
+					log(LogStatus.ERROR, "Object Selection/removal popup is not open so not able to remove lead object", YesNo.Yes);
+					sa.assertTrue(false, "Object Selection/removal popup is not open so not able to remove lead object");
+				}
+				
+			}else {
+				log(LogStatus.ERROR, "Could not be click on select component object button", YesNo.Yes);
+				sa.assertTrue(false, "Could not be click on select component object button");
+
+			}
+			
+		}else {
+			log(LogStatus.PASS, "Recent Item component is Not present so need to remove lead object", YesNo.No);
+			System.out.println("Recent Item component is Not present so need to remove lead object");
+			
+		}
+		
+		}else {
+			return true;
+
+		}
+		CommonLib.switchToDefaultContent(driver);
+		ThreadSleep(2000);
+		if (CommonLib.click(driver, getSaveButton(20), " Save Button",
+				action.SCROLLANDBOOLEAN)) {
+			log(LogStatus.INFO, " save button has been clicked", YesNo.No);
+			return true;
+		}else {
+			log(LogStatus.ERROR, "Could not be click on save button", YesNo.Yes);
+			sa.assertTrue(false, "Could not be click on save button");
+
+		}
+		
+		return flag;
+		
+	}
 	public boolean verifyAndAddAcuityTabInPages(String ComponentName, String tabName,
 			String dropTabTo,String[] otherComponent,boolean removeActivityTimeline,String name) {
 		int status = 0;

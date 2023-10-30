@@ -873,6 +873,30 @@ public class EditPage extends BasePageBusinessLayer {
 
 	}
 	
+	@FindBy(xpath = "//div[@data-label='Recent Items' and @data-instance-type='COMPONENT']")
+	private WebElement RecentItemComponent;
+
+	public WebElement RecentItemComponent(int timeOut) {
+		return isDisplayed(driver, RecentItemComponent, "Visibility", timeOut, "RecentItemComponent");
+
+	}
+	
+	@FindBy(xpath = "//div[@class='multiselectEditor']//button")
+	private WebElement RecentItemComponentObjectSelectButton;
+
+	public WebElement RecentItemComponentObjectSelectButton(int timeOut) {
+		return isDisplayed(driver, RecentItemComponentObjectSelectButton, "", timeOut, "RecentItemComponentSelect button");
+
+	}
+	
+	@FindBy(xpath = "//h2[contains(@class,'heading') and text()='Objects']/ancestor::div[contains(@class,'modal__container')]")
+	private WebElement RecentItemComponentObjectSelectionPopup;
+
+	public WebElement RecentItemComponentObjectSelectionPopup(int timeOut) {
+		return isDisplayed(driver, RecentItemComponentObjectSelectionPopup, "Visibility", timeOut, "RecentItemComponentObjectSelectionPopup");
+
+	}
+	
 	@FindBy(xpath = "//div[@data-label='Activities']//ancestor::div[@data-instance-type='COMPONENT']//*[@title='Delete']")
 	private WebElement activityTimelineComponentDeleteButton;
 
