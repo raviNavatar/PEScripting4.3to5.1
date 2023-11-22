@@ -494,7 +494,9 @@ public class Post_CheckScript extends BaseLib {
 								if(allElements.size()>0) {
 								WebElement labelElement = allElements.get(i);
 								name = labelElement.getText();
+								if(allElements.size()>i+1) {
 								name2=allElements.get(i+1).getText();
+								}
 								if (click(driver, labelElement, "lightning record  page label :" + name,
 										action.SCROLLANDBOOLEAN)) {
 									log(LogStatus.INFO, "clicked on the lightning record  page label:" + name,
@@ -530,6 +532,9 @@ public class Post_CheckScript extends BaseLib {
 								driver.navigate().back();
 							}
 							} catch (Exception e) {
+								log(LogStatus.FAIL,
+										"Some error found while removing relates list so skiping for layout "+name+" object" + api + " object",
+										YesNo.Yes);
 								driver.navigate().back();
 								
 							}
@@ -1711,7 +1716,7 @@ public class Post_CheckScript extends BaseLib {
 								allElements = setup.getAllPageLayoutList();
 								WebElement labelElement = allElements.get(i);
 								name = labelElement.getText();
-								if((name.equals("Institution")) || (name.equals("Company")) || (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.contains("Contact")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
+								if((name.equals("Institution")) || name.equals("Intermediary")||(name.equals("Company")) || (name.equals("Individual Investor")) || (name.equals("Affiliation Layout")) || (name.contains("Contact")) || (name.equals("Financing Layout")) || (name.equals("Fundraising Layout")) || (name.equals("Pipeline Layout"))) {
 								if(name.equals("Institution") || name.equals("Individual Investor")) {
 									sourceANDDestination = new HashMap<String, String>();
 									sourceANDDestination.put(PageLabel.Entity_Type.toString(),"");
@@ -2694,7 +2699,8 @@ public class Post_CheckScript extends BaseLib {
 			sa.assertAll();
 	}
 	
-
+	// not include in round 4 bug verification
+	
 	//@Test(priority = 15,enabled=false)
 	public void verifyAllowSearchOnButton() {
 		
@@ -2814,7 +2820,7 @@ public class Post_CheckScript extends BaseLib {
 		sa.assertAll();
 	}
 	
-	// not include in round 4 bug verification
+	
 	////@Test(priority =15 ,enabled=false)
 	public void verifyAddVFPageOnPageLayout() {
 		
